@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" total="1" passed="1">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Default suite" duration-ms="9776" started-at="2016-01-05T20:21:14Z" finished-at="2016-01-05T20:21:24Z">
+    <groups>
+    </groups>
+    <test name="Default test" duration-ms="9776" started-at="2016-01-05T20:21:14Z" finished-at="2016-01-05T20:21:24Z">
+      <class name="Test.VerifyZoomOperation">
+        <test-method status="PASS" signature="SetUp(java.lang.String)[pri:0, instance:Test.VerifyZoomOperation@cd3509c]" name="SetUp" is-config="true" duration-ms="4685" started-at="2016-01-05T14:21:14Z" finished-at="2016-01-05T14:21:19Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[chrome]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- SetUp -->
+        <test-method status="PASS" signature="tt()[pri:0, instance:Test.VerifyZoomOperation@cd3509c]" name="tt" duration-ms="5068" started-at="2016-01-05T14:21:19Z" finished-at="2016-01-05T14:21:24Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tt -->
+      </class> <!-- Test.VerifyZoomOperation -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>
