@@ -2,6 +2,7 @@ package Test;
 
 import java.awt.AWTException;
 import java.awt.Robot;
+import java.io.IOException;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -14,6 +15,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
+
+import Utility.ConfigRd;
+
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.AfterTest;
 import org.openqa.selenium.Keys;
@@ -35,17 +39,18 @@ public class VerifyZoomOperation {
  
   @BeforeTest
   @Parameters({"browser"})
-  public void SetUp(@Optional("chrome")String browser) throws AWTException, InterruptedException { 
+  public void SetUp(@Optional("chrome")String browser) throws AWTException, InterruptedException, IOException { 
+	ConfigRd Conf= new ConfigRd();	
    if (browser.equalsIgnoreCase("chrome")){
-   System.setProperty("webdriver.chrome.driver", "C:\\Users\\uyr27b0\\Desktop\\selenium\\selenium//chromedriver.exe");
+   System.setProperty("webdriver.chrome.driver", Conf.GetChromePath());
    driver = new ChromeDriver();            
     }else if(browser.equalsIgnoreCase("ie")){
-	System.setProperty("webdriver.ie.driver", "C:\\Users\\uyr27b0\\Desktop\\selenium\\selenium\\ie32\\IEDriverServer.exe");
+	System.setProperty("webdriver.ie.driver", Conf.GetIEPath());
 	driver=new InternetExplorerDriver();
 	 	  }
     
    p= new SysnetPage(driver);
-   driver.get(p.SysnetMap);
+   driver.get(Conf.GetSysnetSitURL());
    driver.manage().window().maximize(); 
 	  
   }
