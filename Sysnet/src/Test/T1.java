@@ -66,7 +66,7 @@ public class T1 {
 		for (ArrayList<String> line : TrailerGRID) {
 			System.out.print("\n");
 			for (String information : line) {
-				System.out.print(information + " 7777");
+				System.out.print(information + "  cee");
 			}
 		}
 	}
