@@ -1,0 +1,72 @@
+package Utility;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import org.apache.commons.dbcp2.BasicDataSource;
+
+public class DBCPconnection {
+	static BasicDataSource ds = null;
+	static {
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			ds = new BasicDataSource();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	public static Connection GetDevConnection() {
+
+		ConfigRd conf = new ConfigRd();
+		ds.setUrl(conf.GetDevDatabase());
+		ds.setUsername(conf.GetDbUserName());
+		ds.setPassword(conf.GetDbPassword());
+		ds.setInitialSize(1);
+		ds.setMaxTotal(5);
+		ds.setTimeBetweenEvictionRunsMillis(60 * 1000);
+		Connection Con = null;
+		try {
+			Con = ds.getConnection();
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		try {
+			Con.createStatement().execute("alter session set current_schema=" + conf.GetDevUserSchema() + " ");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return Con;
+	}
+
+	public static void CloseDB(Connection cn, Statement stat, ResultSet rs) {
+		try {
+			if (rs != null)
+				rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (stat != null)
+					stat.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+
+				try {
+					if (cn != null)
+						cn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+}

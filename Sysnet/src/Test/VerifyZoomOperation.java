@@ -19,7 +19,6 @@ import org.testng.annotations.Test;
 import Utility.ConfigRd;
 
 import org.testng.annotations.BeforeTest;
-import org.testng.annotations.AfterTest;
 import org.openqa.selenium.Keys;
 import page.SysnetPage;
 
