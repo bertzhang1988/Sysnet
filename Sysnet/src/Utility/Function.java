@@ -37,13 +37,13 @@ public class Function {
 		ArrayList<Date> Range = GetDstRange(year);
 		if (Daylight_Savings_IN.equalsIgnoreCase("Y")) {
 			if (Utctime.after(Range.get(0)) && Utctime.before(Range.get(1))) {
-				cal.add(Calendar.HOUR, Offset_NB + 1);
+				cal.add(Calendar.HOUR, -Offset_NB + 2 + 1);
 
 			} else {
-				cal.add(Calendar.HOUR, Offset_NB);
+				cal.add(Calendar.HOUR, -Offset_NB + 2);
 			}
 		} else {
-			cal.add(Calendar.HOUR, Offset_NB);
+			cal.add(Calendar.HOUR, -Offset_NB + 2);
 		}
 		Date ConvertedTime = cal.getTime();
 		return ConvertedTime;
@@ -73,14 +73,14 @@ public class Function {
 		ArrayList<Date> Range = GetDstRange(year);
 		if (Daylight_Savings_IN.equalsIgnoreCase("Y")) {
 			if (Utctime.after(Range.get(0)) && Utctime.before(Range.get(1))) {
-				cal.add(Calendar.HOUR, Offset_NB + 1);
+				cal.add(Calendar.HOUR, -Offset_NB + 2 + 1);
 				TIME_ZONE_CD = TIME_ZONE_CD.replace("S", "D");
 
 			} else {
-				cal.add(Calendar.HOUR, Offset_NB);
+				cal.add(Calendar.HOUR, -Offset_NB + 2);
 			}
 		} else {
-			cal.add(Calendar.HOUR, Offset_NB);
+			cal.add(Calendar.HOUR, -Offset_NB + 2);
 		}
 		Date ConvertedTime = cal.getTime();
 		SimpleDateFormat LSRformat = new SimpleDateFormat("MM-dd-yy HH:mm");

@@ -65,9 +65,10 @@ public class CheckInterReginalReport {
 		(new WebDriverWait(driver, 50)).until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-bar")));
 		(new WebDriverWait(driver, 50)).until(ExpectedConditions.visibilityOf(page.InterRegionalATLddTrailerInforGrid));
 		LinkedHashSet<ArrayList<String>> TrailerGRID = page
-				.GetTrailerReportList(page.InterRegionalATLddTrailerInforGrid);
+				.GetTrailerReportLasReportTime(page.InterRegionalATLddTrailerInforGrid);
 
-		System.out.println("totally " + TrailerGRID.size());
+		System.out.println("\n Inter-Regional ldd totally " + TrailerGRID.size());
+
 		int i = 0;
 		int j = 0;
 		DataDAO DA = new DataDAO();
@@ -78,16 +79,17 @@ public class CheckInterReginalReport {
 			String SCAC = trailer.get(0);
 			String TrailerNB = trailer.get(1);
 			String Expected = ExpectedTrailerInforReport.get(j).get(4);
-			String Actual = trailer.get(9);
+			String Actual = trailer.get(3);
 			j = j + 1;
 			if (!Expected.equals(Actual)) {
 				i = i + 1;
-				System.out.println(j + " Lst Rptd Time is wrong for trailer " + SCAC + "-" + TrailerNB + "  "
-						+ "expected: " + Expected + " but found: " + Actual);
+				System.out.println(
+						j + " Lst Rptd Time is wrong for trailer " + SCAC + "-" + TrailerNB + " CurrentTerminal "
+								+ trailer.get(2) + "  " + "expected: " + Expected + " but found: " + Actual);
 			}
 		}
 
-		System.out.println("\n" + m.getName() + " form totally " + TrailerGRID.size() + "  mismatch " + i);
+		System.out.println("\n" + m.getName() + " form totally " + TrailerGRID.size() + "  mismatch " + i + "\n");
 
 		// get back to
 		driver.close();
@@ -109,8 +111,8 @@ public class CheckInterReginalReport {
 		(new WebDriverWait(driver, 50)).until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-bar")));
 		(new WebDriverWait(driver, 50)).until(ExpectedConditions.visibilityOf(page.InterRegionalATArrTrailerInforGrid));
 		LinkedHashSet<ArrayList<String>> TrailerGRID = page
-				.GetTrailerReportList(page.InterRegionalATArrTrailerInforGrid);
-		System.out.println("\n totally " + TrailerGRID.size());
+				.GetTrailerReportLasReportTime(page.InterRegionalATArrTrailerInforGrid);
+		System.out.println("\n Inter-Regional ARR totally " + TrailerGRID.size());
 		int i = 0;
 		int j = 0;
 		DataDAO DA = new DataDAO();
@@ -121,16 +123,17 @@ public class CheckInterReginalReport {
 			String SCAC = trailer.get(0);
 			String TrailerNB = trailer.get(1);
 			String Expected = ExpectedTrailerInforReport.get(j).get(4);
-			String Actual = trailer.get(9);
+			String Actual = trailer.get(3);
 			j = j + 1;
 			if (!Expected.equals(Actual)) {
 				i = i + 1;
-				System.out.println(j + " Lst Rptd Time is wrong for trailer " + SCAC + "-" + TrailerNB + "  "
-						+ "expected: " + Expected + " but found: " + Actual);
+				System.out.println(
+						j + " Lst Rptd Time is wrong for trailer " + SCAC + "-" + TrailerNB + " CurrentTerminal "
+								+ trailer.get(2) + "  " + "expected: " + Expected + " but found: " + Actual);
 			}
 		}
 
-		System.out.println("\n" + m.getName() + " form totally " + TrailerGRID.size() + "  mismatch " + i);
+		System.out.println("\n" + m.getName() + " form totally " + TrailerGRID.size() + "  mismatch " + i + "\n");
 
 		// get back to
 		driver.close();

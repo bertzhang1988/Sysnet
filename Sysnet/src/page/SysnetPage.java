@@ -74,12 +74,9 @@ public class SysnetPage {
 		driver.manage().window().maximize();
 		int line = TrailerInforGrid.findElements(By.xpath("div")).size();
 		JavascriptExecutor jse = (JavascriptExecutor) driver;
-		// Set<ArrayList<String>> ProInfo= new HashSet<ArrayList<String>>(); //
-		// dont sort the pro list
 		LinkedHashSet<ArrayList<String>> ProInfo = new LinkedHashSet<ArrayList<String>>();
-		int base = line;
+		int lastLine;
 		do {
-
 			for (int j = 1; j <= line; j++) {
 				// String[]
 				// Proline1=ArrayUtils.remove(TrailerInforGrid.findElement(By.xpath("div["
@@ -87,12 +84,13 @@ public class SysnetPage {
 				String[] Proline1 = TrailerInforGrid.findElement(By.xpath("div[" + j + "]")).getText().split("\\n");
 				ArrayList<String> e1 = new ArrayList<String>(Arrays.asList(Proline1));
 				ProInfo.add(e1);
-
 			}
+
 			jse.executeScript("arguments[0].scrollIntoView(true);",
 					TrailerInforGrid.findElement(By.xpath("div[" + line + "]")));
+			lastLine = line;
 			line = TrailerInforGrid.findElements(By.xpath("div")).size();
-		} while (line > base);
+		} while (line >= lastLine);
 
 		for (int j = 1; j <= line; j++) {
 			// String[]
@@ -101,8 +99,53 @@ public class SysnetPage {
 			String[] Proline1 = TrailerInforGrid.findElement(By.xpath("div[" + j + "]")).getText().split("\\n");
 			ArrayList<String> e1 = new ArrayList<String>(Arrays.asList(Proline1));
 			ProInfo.add(e1);
-
 		}
 		return ProInfo;
 	}
+
+	public LinkedHashSet<ArrayList<String>> GetTrailerReportLasReportTime(WebElement TrailerInforGrid) {
+		driver.manage().window().maximize();
+		int line = TrailerInforGrid.findElements(By.xpath("div")).size();
+		JavascriptExecutor jse = (JavascriptExecutor) driver;
+		LinkedHashSet<ArrayList<String>> ProInfo = new LinkedHashSet<ArrayList<String>>();
+		int lastLine;
+		String SCAC;
+		String Trailer;
+		String CurrentTerminal;
+		String LstRptdTime;
+		do {
+			for (int j = 1; j <= line; j++) {
+				SCAC = TrailerInforGrid.findElement(By.xpath("div[" + j + "]/div/div[1]")).getText();
+				Trailer = TrailerInforGrid.findElement(By.xpath("div[" + j + "]/div/div[2]")).getText();
+				CurrentTerminal = TrailerInforGrid.findElement(By.xpath("div[" + j + "]/div/div[6]")).getText();
+				LstRptdTime = TrailerInforGrid.findElement(By.xpath("div[" + j + "]/div/div[11]")).getText();
+				ArrayList<String> e1 = new ArrayList<String>();
+				e1.add(SCAC);
+				e1.add(Trailer);
+				e1.add(CurrentTerminal);
+				e1.add(LstRptdTime);
+				ProInfo.add(e1);
+			}
+
+			jse.executeScript("arguments[0].scrollIntoView(true);",
+					TrailerInforGrid.findElement(By.xpath("div[" + line + "]")));
+			lastLine = line;
+			line = TrailerInforGrid.findElements(By.xpath("div")).size();
+		} while (line >= lastLine);
+
+		for (int j = 1; j <= line; j++) {
+			SCAC = TrailerInforGrid.findElement(By.xpath("div[" + j + "]/div/div[1]")).getText();
+			Trailer = TrailerInforGrid.findElement(By.xpath("div[" + j + "]/div/div[2]")).getText();
+			CurrentTerminal = TrailerInforGrid.findElement(By.xpath("div[" + j + "]/div/div[6]")).getText();
+			LstRptdTime = TrailerInforGrid.findElement(By.xpath("div[" + j + "]/div/div[11]")).getText();
+			ArrayList<String> e1 = new ArrayList<String>();
+			e1.add(SCAC);
+			e1.add(Trailer);
+			e1.add(CurrentTerminal);
+			e1.add(LstRptdTime);
+			ProInfo.add(e1);
+		}
+		return ProInfo;
+	}
+
 }
