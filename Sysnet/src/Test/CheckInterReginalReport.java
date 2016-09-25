@@ -129,7 +129,7 @@ public class CheckInterReginalReport {
 				i = i + 1;
 				System.out.println(
 						j + " Lst Rptd Time is wrong for trailer " + SCAC + "-" + TrailerNB + " CurrentTerminal "
-								+ trailer.get(2) + "  " + "expected: " + Expected + " but found: " + Actual);
+								+ trailer.get(2) + "  " + "expected: " + Expected + " but found111: " + Actual);
 			}
 		}
 
