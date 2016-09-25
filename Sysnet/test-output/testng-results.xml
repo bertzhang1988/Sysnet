@@ -2,12 +2,12 @@
 <testng-results skipped="0" failed="0" total="2" passed="2">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="223038" started-at="2016-09-22T21:33:31Z" finished-at="2016-09-22T21:37:14Z">
+  <suite name="Default suite" duration-ms="291723" started-at="2016-09-24T00:01:10Z" finished-at="2016-09-24T00:06:02Z">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="223038" started-at="2016-09-22T21:33:31Z" finished-at="2016-09-22T21:37:14Z">
+    <test name="Default test" duration-ms="291723" started-at="2016-09-24T00:01:10Z" finished-at="2016-09-24T00:06:02Z">
       <class name="Test.CheckInterReginalReport">
-        <test-method status="PASS" signature="SetUp(java.lang.String)[pri:0, instance:Test.CheckInterReginalReport@4667ae56]" name="SetUp" is-config="true" duration-ms="5172" started-at="2016-09-22T21:33:31Z" finished-at="2016-09-22T21:33:36Z">
+        <test-method status="PASS" signature="SetUp(java.lang.String)[pri:0, instance:Test.CheckInterReginalReport@4667ae56]" name="SetUp" is-config="true" duration-ms="18568" started-at="2016-09-24T00:01:10Z" finished-at="2016-09-24T00:01:29Z">
           <params>
             <param index="0">
               <value>
@@ -18,7 +18,7 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- SetUp -->
-        <test-method status="PASS" signature="InterRegionalAtLddTrailerReport(java.lang.reflect.Method)[pri:1, instance:Test.CheckInterReginalReport@4667ae56]" name="InterRegionalAtLddTrailerReport" duration-ms="129221" started-at="2016-09-22T21:33:36Z" finished-at="2016-09-22T21:35:45Z">
+        <test-method status="PASS" signature="InterRegionalAtLddTrailerReport(java.lang.reflect.Method)[pri:1, instance:Test.CheckInterReginalReport@4667ae56]" name="InterRegionalAtLddTrailerReport" duration-ms="163391" started-at="2016-09-24T00:01:29Z" finished-at="2016-09-24T00:04:12Z">
           <params>
             <param index="0">
               <value>
@@ -29,7 +29,7 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- InterRegionalAtLddTrailerReport -->
-        <test-method status="PASS" signature="InterRegionalAtArrTrailerReport(java.lang.reflect.Method)[pri:2, instance:Test.CheckInterReginalReport@4667ae56]" name="InterRegionalAtArrTrailerReport" duration-ms="88619" started-at="2016-09-22T21:35:45Z" finished-at="2016-09-22T21:37:14Z">
+        <test-method status="PASS" signature="InterRegionalAtArrTrailerReport(java.lang.reflect.Method)[pri:2, instance:Test.CheckInterReginalReport@4667ae56]" name="InterRegionalAtArrTrailerReport" duration-ms="109741" started-at="2016-09-24T00:04:12Z" finished-at="2016-09-24T00:06:02Z">
           <params>
             <param index="0">
               <value>
