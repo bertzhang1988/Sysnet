@@ -305,13 +305,13 @@ public class CheckIntraRegionalReport {
 			String SCAC = trailer.get(0);
 			String TrailerNB = trailer.get(1);
 			String Expected = ExpectedTrailerInforReport.get(j).get(4);
-			String Actual = trailer.get(10);
+			String Actual = trailer.get(7);
 			j = j + 1;
 			if (!Expected.equals(Actual)) {
 				i = i + 1;
-				System.out.println(
-						j + " Lst Rptd Time is wrong for trailer " + SCAC + "-" + TrailerNB + " CurrentTerminal "
-								+ trailer.get(5) + "  " + "expected: " + Expected + " but found: " + Actual);
+				System.out.println(j + " Lst Rptd Time is wrong for trailer " + SCAC + "-" + TrailerNB
+						+ " CurrentTerminal " + ExpectedTrailerInforReport.get(j).get(3) + "  " + "expected: "
+						+ Expected + " but found: " + Actual);
 			}
 		}
 
