@@ -35,7 +35,7 @@ public class SysnetPage {
 	public WebElement InterRegionalATLddArr;
 
 	@FindBy(how = How.CSS, using = "div#yrcinterLDDARV>div:nth-of-type(2)>div>div:nth-of-type(3) div.ui-grid-canvas")
-	public WebElement InterRegionalATLddArvTrailerInforGrid;
+	public WebElement InterRegionalATLddArrTrailerInforGrid;
 
 	@FindBy(how = How.XPATH, using = ".//div[@id='inter_regional']//span[text()='Average Time on LDD Status in Hours']")
 	public WebElement InterRegionalATLdd;
@@ -48,6 +48,12 @@ public class SysnetPage {
 
 	@FindBy(how = How.CSS, using = "div#yrcinterARV>div:nth-of-type(2)>div>div:nth-of-type(3) div.ui-grid-canvas")
 	public WebElement InterRegionalATArrTrailerInforGrid;
+
+	@FindBy(how = How.XPATH, using = ".//div[@id='inter_regional']//td[contains(text(), 'Total Inter-Regional Road Empties')]")
+	public WebElement InterRegionalRoadEmpties;
+
+	@FindBy(how = How.CSS, using = "div#yrcinter>div:nth-of-type(2)>div>div:nth-of-type(3) div.ui-grid-canvas")
+	public WebElement InterRegionalRoadEmptiesTrailerInforGrid;
 
 	@FindBy(how = How.ID, using = "intra_regional")
 	public WebElement IntraRegionalform;
@@ -70,6 +76,24 @@ public class SysnetPage {
 	@FindBy(how = How.CSS, using = "div#yrcintraARV>div:nth-of-type(2)>div>div:nth-of-type(3) div.ui-grid-canvas")
 	public WebElement IntraRegionalformATArrTrailerInforGrid;
 
+	@FindBy(how = How.XPATH, using = ".//div[@id='intra_regional']//td[contains(text(), 'Total Intra-Regional LDD + ARR DC-Sat Loads')]")
+	public WebElement IntraRegionalATLddArrDC_SAT;
+
+	@FindBy(how = How.CSS, using = "div#yrcintraDC_SAT>div:nth-of-type(2)>div>div:nth-of-type(3) div.ui-grid-canvas")
+	public WebElement IntraRegionalformATLddArrDC_SATInforGrid;
+
+	@FindBy(how = How.XPATH, using = ".//div[@id='intra_regional']//td[contains(text(), 'Total Intra-Regional LDD + ARR Sat-DC Loads')]")
+	public WebElement IntraRegionalATLddArrSAT_DC;
+
+	@FindBy(how = How.CSS, using = "div#yrcintraSAT_DC>div:nth-of-type(2)>div>div:nth-of-type(3) div.ui-grid-canvas")
+	public WebElement IntraRegionalformATLddArrSAT_DCInforGrid;
+
+	@FindBy(how = How.XPATH, using = ".//div[@id='inter_regional']//td[contains(text(), 'Total Intra-Regional Road Empties')]")
+	public WebElement IntraRegionalRoadEmpties;
+
+	@FindBy(how = How.CSS, using = "div#yrcintra>div:nth-of-type(2)>div>div:nth-of-type(3) div.ui-grid-canvas")
+	public WebElement IntraRegionalRoadEmptiesTrailerInforGrid;
+
 	public LinkedHashSet<ArrayList<String>> GetTrailerReportList(WebElement TrailerInforGrid) {
 		driver.manage().window().maximize();
 		int line = TrailerInforGrid.findElements(By.xpath("div")).size();
@@ -83,6 +107,8 @@ public class SysnetPage {
 				// + j + "]")).getText().split("\\n"),0);
 				String[] Proline1 = TrailerInforGrid.findElement(By.xpath("div[" + j + "]")).getText().split("\\n");
 				ArrayList<String> e1 = new ArrayList<String>(Arrays.asList(Proline1));
+				if (!Proline1[2].equals("+"))
+					e1.add(2, "");
 				ProInfo.add(e1);
 			}
 
@@ -98,6 +124,8 @@ public class SysnetPage {
 			// + j + "]")).getText().split("\\n"),0);
 			String[] Proline1 = TrailerInforGrid.findElement(By.xpath("div[" + j + "]")).getText().split("\\n");
 			ArrayList<String> e1 = new ArrayList<String>(Arrays.asList(Proline1));
+			if (!Proline1[2].equals("+"))
+				e1.add(2, "");
 			ProInfo.add(e1);
 		}
 		return ProInfo;

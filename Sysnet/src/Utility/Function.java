@@ -14,6 +14,11 @@ import java.util.TimeZone;
 
 public class Function {
 
+	public static Date gettime(String timezone) {
+		Calendar c = Calendar.getInstance(TimeZone.getTimeZone(timezone));
+		return c.getTime();
+	}
+
 	public static Date getLocalTime(String terminal, Date Utctime) throws SQLException {
 		Connection conn2 = DataConnection.getConnection();
 		String query2 = " SELECT TERMINAL,TIME_ZONE,DAYLIGHT_SAVINGS_IN,TIME_ZONE_CD FROM SLH_TERMINAL where terminal=? ";
