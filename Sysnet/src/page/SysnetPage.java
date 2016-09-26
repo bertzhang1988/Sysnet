@@ -88,7 +88,7 @@ public class SysnetPage {
 	@FindBy(how = How.CSS, using = "div#yrcintraSAT_DC>div:nth-of-type(2)>div>div:nth-of-type(3) div.ui-grid-canvas")
 	public WebElement IntraRegionalformATLddArrSAT_DCInforGrid;
 
-	@FindBy(how = How.XPATH, using = ".//div[@id='inter_regional']//td[contains(text(), 'Total Intra-Regional Road Empties')]")
+	@FindBy(how = How.XPATH, using = ".//div[@id='intra_regional']//td[contains(text(), 'Total Intra-Regional Road Empties')]")
 	public WebElement IntraRegionalRoadEmpties;
 
 	@FindBy(how = How.CSS, using = "div#yrcintra>div:nth-of-type(2)>div>div:nth-of-type(3) div.ui-grid-canvas")
@@ -116,7 +116,7 @@ public class SysnetPage {
 					TrailerInforGrid.findElement(By.xpath("div[" + line + "]")));
 			lastLine = line;
 			line = TrailerInforGrid.findElements(By.xpath("div")).size();
-		} while (line >= lastLine);
+		} while (line >= lastLine && lastLine > 39);
 
 		for (int j = 1; j <= line; j++) {
 			// String[]
