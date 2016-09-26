@@ -3,12 +3,15 @@
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
   <test name="Default test(failed)">
     <classes>
-      <class name="Test.CheckInterReginalReport">
+      <class name="Test.CheckInterRegionalReport">
         <methods>
+          <include name="InterRegionalAtLddTrailerReport" invocation-numbers="0"/>
+          <include name="InterRegionalRoadEmptiesTrailerReport" invocation-numbers="0"/>
+          <include name="InterRegionalAtLddArrTrailerReport" invocation-numbers="0"/>
           <include name="SetUp"/>
-          <include name="InterRegionalAtLddTrailerReport"/>
+          <include name="InterRegionalAtArrTrailerReport" invocation-numbers="0"/>
         </methods>
-      </class> <!-- Test.CheckInterReginalReport -->
+      </class> <!-- Test.CheckInterRegionalReport -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

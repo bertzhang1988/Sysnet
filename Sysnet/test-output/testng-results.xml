@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="0" total="2" passed="2">
+<testng-results skipped="0" failed="0" total="1" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="291723" started-at="2016-09-24T00:01:10Z" finished-at="2016-09-24T00:06:02Z">
+  <suite name="Default suite" duration-ms="68798" started-at="2016-09-26T15:14:38Z" finished-at="2016-09-26T15:15:47Z">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="291723" started-at="2016-09-24T00:01:10Z" finished-at="2016-09-24T00:06:02Z">
-      <class name="Test.CheckInterReginalReport">
-        <test-method status="PASS" signature="SetUp(java.lang.String)[pri:0, instance:Test.CheckInterReginalReport@4667ae56]" name="SetUp" is-config="true" duration-ms="18568" started-at="2016-09-24T00:01:10Z" finished-at="2016-09-24T00:01:29Z">
+    <test name="Default test" duration-ms="68798" started-at="2016-09-26T15:14:38Z" finished-at="2016-09-26T15:15:47Z">
+      <class name="Test.CheckInterRegionalReport">
+        <test-method status="PASS" signature="SetUp(java.lang.String)[pri:0, instance:Test.CheckInterRegionalReport@754ba872]" name="SetUp" is-config="true" duration-ms="5055" started-at="2016-09-26T15:14:38Z" finished-at="2016-09-26T15:14:43Z">
           <params>
             <param index="0">
               <value>
@@ -18,29 +18,18 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- SetUp -->
-        <test-method status="PASS" signature="InterRegionalAtLddTrailerReport(java.lang.reflect.Method)[pri:1, instance:Test.CheckInterReginalReport@4667ae56]" name="InterRegionalAtLddTrailerReport" duration-ms="163391" started-at="2016-09-24T00:01:29Z" finished-at="2016-09-24T00:04:12Z">
+        <test-method status="PASS" signature="InterRegionalAtArrTrailerReport(java.lang.reflect.Method)[pri:2, instance:Test.CheckInterRegionalReport@754ba872]" name="InterRegionalAtArrTrailerReport" duration-ms="63713" started-at="2016-09-26T15:14:43Z" finished-at="2016-09-26T15:15:47Z">
           <params>
             <param index="0">
               <value>
-                <![CDATA[public void Test.CheckInterReginalReport.InterRegionalAtLddTrailerReport(java.lang.reflect.Method) throws java.lang.ClassNotFoundException,java.sql.SQLException]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- InterRegionalAtLddTrailerReport -->
-        <test-method status="PASS" signature="InterRegionalAtArrTrailerReport(java.lang.reflect.Method)[pri:2, instance:Test.CheckInterReginalReport@4667ae56]" name="InterRegionalAtArrTrailerReport" duration-ms="109741" started-at="2016-09-24T00:04:12Z" finished-at="2016-09-24T00:06:02Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[public void Test.CheckInterReginalReport.InterRegionalAtArrTrailerReport(java.lang.reflect.Method) throws java.lang.ClassNotFoundException,java.sql.SQLException]]>
+                <![CDATA[public void Test.CheckInterRegionalReport.InterRegionalAtArrTrailerReport(java.lang.reflect.Method) throws java.lang.ClassNotFoundException,java.sql.SQLException]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- InterRegionalAtArrTrailerReport -->
-      </class> <!-- Test.CheckInterReginalReport -->
+      </class> <!-- Test.CheckInterRegionalReport -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
 </testng-results>
