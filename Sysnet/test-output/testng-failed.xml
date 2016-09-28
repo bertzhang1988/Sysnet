@@ -6,10 +6,7 @@
       <class name="Test.CheckInterRegionalReport">
         <methods>
           <include name="InterRegionalAtLddTrailerReport" invocation-numbers="0"/>
-          <include name="InterRegionalRoadEmptiesTrailerReport" invocation-numbers="0"/>
-          <include name="InterRegionalAtLddArrTrailerReport" invocation-numbers="0"/>
           <include name="SetUp"/>
-          <include name="InterRegionalAtArrTrailerReport" invocation-numbers="0"/>
         </methods>
       </class> <!-- Test.CheckInterRegionalReport -->
     </classes>

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="0" total="1" passed="1">
+<testng-results skipped="0" failed="1" total="1" passed="0">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="68798" started-at="2016-09-26T15:14:38Z" finished-at="2016-09-26T15:15:47Z">
+  <suite name="Default suite" duration-ms="68443" started-at="2016-09-27T22:01:19Z" finished-at="2016-09-27T22:02:27Z">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="68798" started-at="2016-09-26T15:14:38Z" finished-at="2016-09-26T15:15:47Z">
+    <test name="Default test" duration-ms="68443" started-at="2016-09-27T22:01:19Z" finished-at="2016-09-27T22:02:27Z">
       <class name="Test.CheckInterRegionalReport">
-        <test-method status="PASS" signature="SetUp(java.lang.String)[pri:0, instance:Test.CheckInterRegionalReport@754ba872]" name="SetUp" is-config="true" duration-ms="5055" started-at="2016-09-26T15:14:38Z" finished-at="2016-09-26T15:14:43Z">
+        <test-method status="PASS" signature="SetUp(java.lang.String)[pri:0, instance:Test.CheckInterRegionalReport@754ba872]" name="SetUp" is-config="true" duration-ms="7493" started-at="2016-09-27T22:01:19Z" finished-at="2016-09-27T22:01:26Z">
           <params>
             <param index="0">
               <value>
@@ -18,17 +18,77 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- SetUp -->
-        <test-method status="PASS" signature="InterRegionalAtArrTrailerReport(java.lang.reflect.Method)[pri:2, instance:Test.CheckInterRegionalReport@754ba872]" name="InterRegionalAtArrTrailerReport" duration-ms="63713" started-at="2016-09-26T15:14:43Z" finished-at="2016-09-26T15:15:47Z">
+        <test-method status="FAIL" signature="InterRegionalAtLddTrailerReport(java.lang.reflect.Method)[pri:1, instance:Test.CheckInterRegionalReport@754ba872]" name="InterRegionalAtLddTrailerReport" duration-ms="60915" started-at="2016-09-27T22:01:26Z" finished-at="2016-09-27T22:02:27Z">
           <params>
             <param index="0">
               <value>
-                <![CDATA[public void Test.CheckInterRegionalReport.InterRegionalAtArrTrailerReport(java.lang.reflect.Method) throws java.lang.ClassNotFoundException,java.sql.SQLException]]>
+                <![CDATA[public void Test.CheckInterRegionalReport.InterRegionalAtLddTrailerReport(java.lang.reflect.Method) throws java.lang.ClassNotFoundException,java.sql.SQLException]]>
               </value>
             </param>
           </params>
+          <exception class="org.openqa.selenium.WebDriverException">
+            <message>
+              <![CDATA[chrome not reachable
+  (Session info: chrome=53.0.2785.116)
+  (Driver info: chromedriver=2.24.417431 (9aea000394714d2fbb20850021f6204f2256b9cf),platform=Windows NT 6.1.7601 SP1 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 2.00 seconds
+Build info: version: 'unknown', revision: '31c43c8', time: '2016-08-02 21:57:56 -0700'
+System info: host: 'N700278', ip: '10.51.235.212', os.name: 'Windows 7', os.arch: 'amd64', os.version: '6.1', java.version: '1.8.0_101'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.24.417431 (9aea000394714d2fbb20850021f6204f2256b9cf), userDataDir=C:\Users\uyr27b0\AppData\Local\Temp\scoped_dir12640_9212}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=53.0.2785.116, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=true, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true}]
+Session ID: c5c846178d82ee0aa388bf5d6703e3c9]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[org.openqa.selenium.WebDriverException: chrome not reachable
+  (Session info: chrome=53.0.2785.116)
+  (Driver info: chromedriver=2.24.417431 (9aea000394714d2fbb20850021f6204f2256b9cf),platform=Windows NT 6.1.7601 SP1 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 2.00 seconds
+Build info: version: 'unknown', revision: '31c43c8', time: '2016-08-02 21:57:56 -0700'
+System info: host: 'N700278', ip: '10.51.235.212', os.name: 'Windows 7', os.arch: 'amd64', os.version: '6.1', java.version: '1.8.0_101'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.24.417431 (9aea000394714d2fbb20850021f6204f2256b9cf), userDataDir=C:\Users\uyr27b0\AppData\Local\Temp\scoped_dir12640_9212}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=53.0.2785.116, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=true, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true}]
+Session ID: c5c846178d82ee0aa388bf5d6703e3c9
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:683)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:706)
+	at org.openqa.selenium.remote.RemoteWebDriver.close(RemoteWebDriver.java:526)
+	at Test.CheckInterRegionalReport.InterRegionalAtLddTrailerReport(CheckInterRegionalReport.java:101)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:100)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:646)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:811)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1129)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:129)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:112)
+	at org.testng.TestRunner.privateRun(TestRunner.java:746)
+	at org.testng.TestRunner.run(TestRunner.java:600)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:366)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:361)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:319)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:268)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1264)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1189)
+	at org.testng.TestNG.runSuites(TestNG.java:1104)
+	at org.testng.TestNG.run(TestNG.java:1076)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:126)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:152)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:57)
+]]>
+            </full-stacktrace>
+          </exception> <!-- org.openqa.selenium.WebDriverException -->
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- InterRegionalAtArrTrailerReport -->
+        </test-method> <!-- InterRegionalAtLddTrailerReport -->
       </class> <!-- Test.CheckInterRegionalReport -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->

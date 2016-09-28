@@ -25,6 +25,7 @@ import org.testng.asserts.SoftAssert;
 import Data.DataDAO;
 import Utility.ConfigRd;
 import Utility.Function;
+import Utility.Utility;
 import page.SysnetPage;
 
 public class CheckInterRegionalReport {
@@ -67,7 +68,7 @@ public class CheckInterRegionalReport {
 		(new WebDriverWait(driver, 50)).until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-bar")));
 		(new WebDriverWait(driver, 50)).until(ExpectedConditions.visibilityOf(page.InterRegionalATLddTrailerInforGrid));
 		Date d = Function.gettime("UTC");
-
+		Utility.takescreenshot(driver, m.getName());
 		LinkedHashSet<ArrayList<String>> TrailerGRID = page
 				.GetTrailerReportList(page.InterRegionalATLddTrailerInforGrid);
 		Date d2 = Function.gettime("UTC");
