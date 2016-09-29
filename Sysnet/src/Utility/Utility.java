@@ -2,7 +2,6 @@ package Utility;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
@@ -21,9 +20,10 @@ public class Utility {
 			File SrcFile = scrShot.getScreenshotAs(OutputType.FILE);
 
 			// Move image file to new destination
-			String CDate = new SimpleDateFormat("YYYY-MM-dd").format(Calendar.getInstance().getTime());
 
-			File DestFile = new File("./SysnetScreenshot/" + CDate + "/ " + shotname + ".png");
+			String CDate = new SimpleDateFormat("YYYY-MM-dd--HH-mm-ss").format(Function.gettime("America/Chicago"));
+
+			File DestFile = new File("./SysnetScreenshot/" + shotname + "/ " + CDate + ".png");
 
 			// Copy file at destination
 

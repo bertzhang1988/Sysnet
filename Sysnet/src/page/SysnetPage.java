@@ -109,14 +109,21 @@ public class SysnetPage {
 				ArrayList<String> e1 = new ArrayList<String>(Arrays.asList(Proline1));
 				if (!Proline1[2].equals("+"))
 					e1.add(2, "");
+				if ((TrailerInforGrid != this.InterRegionalRoadEmptiesTrailerInforGrid)
+						&& (TrailerInforGrid != this.IntraRegionalRoadEmptiesTrailerInforGrid)) {
+					if (e1.get(10).length() < 7)
+						e1.add(9, "");
+				}
 				ProInfo.add(e1);
 			}
 
 			jse.executeScript("arguments[0].scrollIntoView(true);",
 					TrailerInforGrid.findElement(By.xpath("div[" + line + "]")));
+			// System.out.println((Long) jse.executeScript("return
+			// window.scrollY"));
 			lastLine = line;
 			line = TrailerInforGrid.findElements(By.xpath("div")).size();
-		} while (line >= lastLine && lastLine > 39);
+		} while (line >= lastLine && line > 48);
 
 		for (int j = 1; j <= line; j++) {
 			// String[]
@@ -126,6 +133,11 @@ public class SysnetPage {
 			ArrayList<String> e1 = new ArrayList<String>(Arrays.asList(Proline1));
 			if (!Proline1[2].equals("+"))
 				e1.add(2, "");
+			if ((TrailerInforGrid != this.InterRegionalRoadEmptiesTrailerInforGrid)
+					&& (TrailerInforGrid != this.IntraRegionalRoadEmptiesTrailerInforGrid)) {
+				if (e1.get(10).length() < 7)
+					e1.add(9, "");
+			}
 			ProInfo.add(e1);
 		}
 		return ProInfo;
