@@ -75,7 +75,7 @@ public class DataDAO {
 			ExpectedTrailerReportList.add(ExpectedTrailerLine);
 		}
 		conn2.close();
-		DataConnection.CloseDB(cn, stat, rs);
+
 		return ExpectedTrailerReportList;
 	}
 

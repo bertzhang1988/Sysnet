@@ -109,11 +109,13 @@ public class SysnetPage {
 				ArrayList<String> e1 = new ArrayList<String>(Arrays.asList(Proline1));
 				if (!Proline1[2].equals("+"))
 					e1.add(2, "");
-				if ((TrailerInforGrid != this.InterRegionalRoadEmptiesTrailerInforGrid)
-						&& (TrailerInforGrid != this.IntraRegionalRoadEmptiesTrailerInforGrid)) {
-					if (e1.get(10).length() < 7)
-						e1.add(9, "");
-				}
+				// if ((TrailerInforGrid !=
+				// this.InterRegionalRoadEmptiesTrailerInforGrid)
+				// && (TrailerInforGrid !=
+				// this.IntraRegionalRoadEmptiesTrailerInforGrid)) {
+				// if (e1.get(10).length() < 7)
+				// e1.add(9, "");
+				// }
 				ProInfo.add(e1);
 			}
 
@@ -133,11 +135,13 @@ public class SysnetPage {
 			ArrayList<String> e1 = new ArrayList<String>(Arrays.asList(Proline1));
 			if (!Proline1[2].equals("+"))
 				e1.add(2, "");
-			if ((TrailerInforGrid != this.InterRegionalRoadEmptiesTrailerInforGrid)
-					&& (TrailerInforGrid != this.IntraRegionalRoadEmptiesTrailerInforGrid)) {
-				if (e1.get(10).length() < 7)
-					e1.add(9, "");
-			}
+			// if ((TrailerInforGrid !=
+			// this.InterRegionalRoadEmptiesTrailerInforGrid)
+			// && (TrailerInforGrid !=
+			// this.IntraRegionalRoadEmptiesTrailerInforGrid)) {
+			// if (e1.get(10).length() < 7)
+			// e1.add(9, "");
+			// }
 			ProInfo.add(e1);
 		}
 		return ProInfo;

@@ -7,10 +7,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.TimeZone;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -32,7 +32,6 @@ import org.testng.annotations.Test;
 import Data.DataDAO;
 import Utility.ConfigRd;
 import Utility.Function;
-import Utility.Utility;
 import page.SysnetPage;
 
 public class CheckInterRegionalReport2 {
@@ -42,11 +41,14 @@ public class CheckInterRegionalReport2 {
 	private XSSFWorkbook workbook;
 	private XSSFSheet sheet;
 	private int R;
+	private DataDAO DA;
 
 	@BeforeClass
 	@Parameters({ "browser" })
-	public void SetUp(@Optional("chrome") String browser) throws AWTException, InterruptedException, IOException {
+	public void SetUp(@Optional("chrome") String browser)
+			throws AWTException, InterruptedException, IOException, SQLException {
 		ConfigRd Conf = new ConfigRd();
+		DA = new DataDAO();
 		if (browser.equalsIgnoreCase("chrome")) {
 			System.setProperty("webdriver.chrome.driver", Conf.GetChromePath());
 			driver = new ChromeDriver();
@@ -63,7 +65,7 @@ public class CheckInterRegionalReport2 {
 		(new WebDriverWait(driver, 50)).until(ExpectedConditions.visibilityOf(page.InterRegionalform));
 		// create excel sheet and title
 		workbook = new XSSFWorkbook();
-		sheet = workbook.createSheet(CheckIntraRegionalReport2.class.getName());
+		sheet = workbook.createSheet(Function.GetDisplayTime().replace(":", "-"));
 		String[] TitleLine = { "Line", "Lst Rptd Time is wrong for trailer", " CurrentTerminal", "expected:",
 				"but found:" };
 		Row r = sheet.createRow(R);
@@ -88,7 +90,6 @@ public class CheckInterRegionalReport2 {
 		}
 		(new WebDriverWait(driver, 50)).until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-bar")));
 		(new WebDriverWait(driver, 50)).until(ExpectedConditions.visibilityOf(page.InterRegionalATLddTrailerInforGrid));
-		Utility.takescreenshot(driver, m.getName());
 		LinkedHashSet<ArrayList<String>> TrailerGRID = page
 				.GetTrailerReportList(page.InterRegionalATLddTrailerInforGrid);
 		System.out.println("\n Inter-Regional ldd totally " + TrailerGRID.size());
@@ -98,7 +99,6 @@ public class CheckInterRegionalReport2 {
 		subtitle.createCell(1).setCellValue(TrailerGRID.size());
 		int i = 0;
 		int j = 0;
-		DataDAO DA = new DataDAO();
 		ArrayList<ArrayList<String>> ExpectedTrailerInforReport = new ArrayList<ArrayList<String>>(
 				DA.GetTrailerInforReport(TrailerGRID));
 
@@ -149,7 +149,6 @@ public class CheckInterRegionalReport2 {
 		}
 		(new WebDriverWait(driver, 50)).until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-bar")));
 		(new WebDriverWait(driver, 50)).until(ExpectedConditions.visibilityOf(page.InterRegionalATArrTrailerInforGrid));
-		Utility.takescreenshot(driver, m.getName());
 		LinkedHashSet<ArrayList<String>> TrailerGRID = page
 				.GetTrailerReportList(page.InterRegionalATArrTrailerInforGrid);
 		System.out.println("\n Inter-Regional ARR totally " + TrailerGRID.size());
@@ -158,7 +157,6 @@ public class CheckInterRegionalReport2 {
 		subtitle.createCell(1).setCellValue(TrailerGRID.size());
 		int i = 0;
 		int j = 0;
-		DataDAO DA = new DataDAO();
 		ArrayList<ArrayList<String>> ExpectedTrailerInforReport = new ArrayList<ArrayList<String>>(
 				DA.GetTrailerInforReport(TrailerGRID));
 
@@ -210,7 +208,6 @@ public class CheckInterRegionalReport2 {
 		(new WebDriverWait(driver, 50)).until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-bar")));
 		(new WebDriverWait(driver, 50))
 				.until(ExpectedConditions.visibilityOf(page.InterRegionalATLddArrTrailerInforGrid));
-		Utility.takescreenshot(driver, m.getName());
 		LinkedHashSet<ArrayList<String>> TrailerGRID = page
 				.GetTrailerReportList(page.InterRegionalATLddArrTrailerInforGrid);
 		System.out.println("\n Inter-Regional LDD AND ARR totally " + TrailerGRID.size());
@@ -219,7 +216,6 @@ public class CheckInterRegionalReport2 {
 		subtitle.createCell(1).setCellValue(TrailerGRID.size());
 		int i = 0;
 		int j = 0;
-		DataDAO DA = new DataDAO();
 		ArrayList<ArrayList<String>> ExpectedTrailerInforReport = new ArrayList<ArrayList<String>>(
 				DA.GetTrailerInforReport(TrailerGRID));
 
@@ -271,7 +267,6 @@ public class CheckInterRegionalReport2 {
 		(new WebDriverWait(driver, 50)).until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-bar")));
 		(new WebDriverWait(driver, 50))
 				.until(ExpectedConditions.visibilityOf(page.InterRegionalRoadEmptiesTrailerInforGrid));
-		Utility.takescreenshot(driver, m.getName());
 		LinkedHashSet<ArrayList<String>> TrailerGRID = page
 				.GetTrailerReportList(page.InterRegionalRoadEmptiesTrailerInforGrid);
 		System.out.println("\n Inter-Regional Road Empties totally " + TrailerGRID.size());
@@ -280,7 +275,6 @@ public class CheckInterRegionalReport2 {
 		subtitle.createCell(1).setCellValue(TrailerGRID.size());
 		int i = 0;
 		int j = 0;
-		DataDAO DA = new DataDAO();
 		ArrayList<ArrayList<String>> ExpectedTrailerInforReport = new ArrayList<ArrayList<String>>(
 				DA.GetTrailerInforReport(TrailerGRID));
 
@@ -288,13 +282,13 @@ public class CheckInterRegionalReport2 {
 			String SCAC = trailer.get(0);
 			String TrailerNB = trailer.get(1);
 			String Expected = ExpectedTrailerInforReport.get(j).get(4);
+			String CurrentTerminal = ExpectedTrailerInforReport.get(j).get(3);
 			String Actual = trailer.get(7);
 			j = j + 1;
 			if (!Expected.equals(Actual)) {
 				i = i + 1;
 				System.out.println(j + " Lst Rptd Time is wrong for trailer " + SCAC + "-" + TrailerNB
-						+ " CurrentTerminal " + ExpectedTrailerInforReport.get(j).get(3) + "  " + "expected: "
-						+ Expected + " but found: " + Actual);
+						+ " CurrentTerminal " + CurrentTerminal + "expected: " + Expected + " but found: " + Actual);
 				R = 1 + R;
 				Row r = sheet.createRow(R);
 				r.createCell(0).setCellValue(j);
@@ -320,7 +314,7 @@ public class CheckInterRegionalReport2 {
 	@AfterClass
 	public void Close() {
 		driver.close();
-		String CDate = new SimpleDateFormat("YYYY-MM-dd--HH-mm-ss").format(Function.gettime("America/Chicago"));
+		String CDate = Function.GetTimeValue(TimeZone.getDefault().getID());
 		File file2 = new File("./Report/" + CDate);
 		file2.mkdir();
 		File file = new File(file2, this.getClass().getName() + ".xlsx");

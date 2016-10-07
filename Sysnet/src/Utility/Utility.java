@@ -1,7 +1,7 @@
 package Utility;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
+import java.util.TimeZone;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
@@ -21,7 +21,7 @@ public class Utility {
 
 			// Move image file to new destination
 
-			String CDate = new SimpleDateFormat("YYYY-MM-dd--HH-mm-ss").format(Function.gettime("America/Chicago"));
+			String CDate = Function.GetTimeValue(TimeZone.getDefault().getID());
 
 			File DestFile = new File("./SysnetScreenshot/" + shotname + "/ " + CDate + ".png");
 

@@ -6,10 +6,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.TimeZone;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -27,7 +27,6 @@ import org.testng.asserts.SoftAssert;
 import Data.DataDAO;
 import Utility.ConfigRd;
 import Utility.Function;
-import Utility.Utility;
 import page.SysnetPage;
 
 public class CheckIntraRegionalReport2 {
@@ -55,7 +54,7 @@ public class CheckIntraRegionalReport2 {
 		page.SystemSummaryButton.click();
 		(new WebDriverWait(driver, 50)).until(ExpectedConditions.visibilityOf(page.InterRegionalform));
 		// create text file
-		String CDate = new SimpleDateFormat("YYYY-MM-dd--HH-mm-ss").format(Function.gettime("America/Chicago"));
+		String CDate = Function.GetTimeValue(TimeZone.getDefault().getID());
 		File file2 = new File("./Report/" + CDate);
 		file2.mkdir();
 		File file = new File(file2, this.getClass().getName() + ".txt");
@@ -80,7 +79,6 @@ public class CheckIntraRegionalReport2 {
 				.until(ExpectedConditions.visibilityOf(page.IntraRegionalformATLddTrailerInforGrid));
 		LinkedHashSet<ArrayList<String>> TrailerGRID = page
 				.GetTrailerReportList(page.IntraRegionalformATLddTrailerInforGrid);
-		Utility.takescreenshot(driver, m.getName());
 		System.out.println("\n Intra-Regional ldd totally " + TrailerGRID.size());
 		fw.write(Nl + " Intra-Regional ldd totally " + TrailerGRID.size() + Nl);
 		int i = 0;
@@ -130,7 +128,6 @@ public class CheckIntraRegionalReport2 {
 		(new WebDriverWait(driver, 50)).until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-bar")));
 		(new WebDriverWait(driver, 50))
 				.until(ExpectedConditions.visibilityOf(page.IntraRegionalformATArrTrailerInforGrid));
-		Utility.takescreenshot(driver, m.getName());
 		LinkedHashSet<ArrayList<String>> TrailerGRID = page
 				.GetTrailerReportList(page.IntraRegionalformATArrTrailerInforGrid);
 		System.out.println("\n Intra-Regional ARR totally " + TrailerGRID.size());
@@ -179,7 +176,6 @@ public class CheckIntraRegionalReport2 {
 		(new WebDriverWait(driver, 50)).until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-bar")));
 		(new WebDriverWait(driver, 50))
 				.until(ExpectedConditions.visibilityOf(page.IntraRegionalformATLddArvTrailerInforGrid));
-		Utility.takescreenshot(driver, m.getName());
 		LinkedHashSet<ArrayList<String>> TrailerGRID = page
 				.GetTrailerReportList(page.IntraRegionalformATLddArvTrailerInforGrid);
 		System.out.println("\n Intra-Regional LDD AND ARR totally " + TrailerGRID.size());
@@ -225,10 +221,9 @@ public class CheckIntraRegionalReport2 {
 				driver.switchTo().window(windowHandle);
 			}
 		}
-		(new WebDriverWait(driver, 50)).until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-bar")));
+		(new WebDriverWait(driver, 100)).until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-bar")));
 		(new WebDriverWait(driver, 50))
 				.until(ExpectedConditions.visibilityOf(page.IntraRegionalformATLddArrDC_SATInforGrid));
-		Utility.takescreenshot(driver, m.getName());
 		LinkedHashSet<ArrayList<String>> TrailerGRID = page
 				.GetTrailerReportList(page.IntraRegionalformATLddArrDC_SATInforGrid);
 		System.out.println("\n Intra-Regional DC_SAT totally " + TrailerGRID.size());
@@ -277,7 +272,6 @@ public class CheckIntraRegionalReport2 {
 		(new WebDriverWait(driver, 50)).until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-bar")));
 		(new WebDriverWait(driver, 50))
 				.until(ExpectedConditions.visibilityOf(page.IntraRegionalformATLddArrSAT_DCInforGrid));
-		Utility.takescreenshot(driver, m.getName());
 		LinkedHashSet<ArrayList<String>> TrailerGRID = page
 				.GetTrailerReportList(page.IntraRegionalformATLddArrSAT_DCInforGrid);
 		System.out.println("\n Intra-Regional SAT_DC totally " + TrailerGRID.size());
@@ -329,7 +323,6 @@ public class CheckIntraRegionalReport2 {
 				.until(ExpectedConditions.visibilityOf(page.IntraRegionalRoadEmptiesTrailerInforGrid));
 		LinkedHashSet<ArrayList<String>> TrailerGRID = page
 				.GetTrailerReportList(page.IntraRegionalRoadEmptiesTrailerInforGrid);
-		Utility.takescreenshot(driver, m.getName());
 		System.out.println("\n Intra-Regional Road Empties totally " + TrailerGRID.size());
 		fw.write(Nl + " Intra-Regional Road Empties totally " + TrailerGRID.size() + Nl);
 		int i = 0;
@@ -342,16 +335,16 @@ public class CheckIntraRegionalReport2 {
 			String SCAC = trailer.get(0);
 			String TrailerNB = trailer.get(1);
 			String Expected = ExpectedTrailerInforReport.get(j).get(4);
+			String CurrentTerminal = ExpectedTrailerInforReport.get(j).get(3);
 			String Actual = trailer.get(7);
 			j = j + 1;
 			if (!Expected.equals(Actual)) {
 				i = i + 1;
-				System.out.println(j + " Lst Rptd Time is wrong for trailer " + SCAC + "-" + TrailerNB
-						+ " CurrentTerminal " + ExpectedTrailerInforReport.get(j).get(3) + "  " + "expected: "
-						+ Expected + " but found: " + Actual);
+				System.out.println(
+						j + " Lst Rptd Time is wrong for trailer " + SCAC + "-" + TrailerNB + " CurrentTerminal "
+								+ CurrentTerminal + "  " + "expected: " + Expected + " but found: " + Actual);
 				fw.write(Nl + j + " Lst Rptd Time is wrong for trailer " + SCAC + "-" + TrailerNB + " CurrentTerminal "
-						+ ExpectedTrailerInforReport.get(j).get(3) + "  " + "expected: " + Expected + " but found: "
-						+ Actual);
+						+ CurrentTerminal + "  " + "expected: " + Expected + " but found: " + Actual);
 			}
 
 		}
@@ -364,12 +357,11 @@ public class CheckIntraRegionalReport2 {
 
 	@AfterClass
 	public void Close() {
-		driver.close();
 
 		try {
 			fw.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 	}

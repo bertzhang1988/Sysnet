@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,6 +18,14 @@ public class Function {
 	public static Date gettime(String timezone) {
 		Calendar c = Calendar.getInstance(TimeZone.getTimeZone(timezone));
 		return c.getTime();
+	}
+
+	public static String GetTimeValue(String timezone) {
+		SimpleDateFormat f = new SimpleDateFormat("YYYY-MM-dd--HH-mm-ss");
+		Calendar c = Calendar.getInstance();
+		f.setTimeZone(TimeZone.getTimeZone(timezone));
+		return f.format(c.getTime());
+
 	}
 
 	public static Date getLocalTime(String terminal, Date Utctime) throws SQLException {
@@ -173,6 +182,17 @@ public class Function {
 		cal.setTime(BASE);
 		cal.add(Calendar.MINUTE, LAST_REPORTED_TIME);
 		return cal.getTime();
+	}
+
+	public static String GetDisplayTime() throws SQLException {
+		Connection cn = DataConnection.getConnection();
+		String query = "select DISPLAY_TIME from SLH_CONTROL ";
+		Statement st = cn.createStatement();
+		ResultSet rs = st.executeQuery(query);
+		rs.next();
+		String DISPLAY_TIME = rs.getString("DISPLAY_TIME");
+		DataConnection.CloseDB(cn, st, rs);
+		return DISPLAY_TIME;
 	}
 
 }
