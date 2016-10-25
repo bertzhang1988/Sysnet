@@ -28,6 +28,8 @@ public class SysnetPage {
 
 	/* SystemSummary */
 
+	// inter-regional form
+
 	@FindBy(how = How.ID, using = "inter_regional")
 	public WebElement InterRegionalform;
 
@@ -54,6 +56,8 @@ public class SysnetPage {
 
 	@FindBy(how = How.CSS, using = "div#yrcinter>div:nth-of-type(2)>div>div:nth-of-type(3) div.ui-grid-canvas")
 	public WebElement InterRegionalRoadEmptiesTrailerInforGrid;
+
+	// intra-regional form
 
 	@FindBy(how = How.ID, using = "intra_regional")
 	public WebElement IntraRegionalform;
@@ -94,6 +98,17 @@ public class SysnetPage {
 	@FindBy(how = How.CSS, using = "div#yrcintra>div:nth-of-type(2)>div>div:nth-of-type(3) div.ui-grid-canvas")
 	public WebElement IntraRegionalRoadEmptiesTrailerInforGrid;
 
+	// rail form
+	@FindBy(how = How.ID, using = "rail")
+	public WebElement Railform;
+
+	@FindBy(how = How.XPATH, using = ".//div[@id='rail']//td[contains(text(), 'Total Empty Rail')]")
+	public WebElement TotalEmptyRail;
+
+	@FindBy(how = How.XPATH, using = ".//div[@id='rail']//td[contains(text(), 'Total Loaded Rail')]")
+	public WebElement TotalLoadedRail;
+
+	/* UI method */
 	public LinkedHashSet<ArrayList<String>> GetTrailerReportList(WebElement TrailerInforGrid) {
 		driver.manage().window().maximize();
 		int line = TrailerInforGrid.findElements(By.xpath("div")).size();

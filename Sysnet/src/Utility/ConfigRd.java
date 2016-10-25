@@ -18,7 +18,7 @@ public class ConfigRd {
 
 			fis.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 	}

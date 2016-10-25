@@ -19,37 +19,13 @@ public final class DataConnection {
 		try {
 			cn = DriverManager.getConnection(conf.GetDatabase(), conf.GetDbUserName(), conf.GetDbPassword());
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			cn.createStatement().execute("alter session set current_schema=" + conf.GetUserSchema() + " ");
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return cn;
-	}
 
-	public static Connection getConnection2() {
-		ConfigRd conf = new ConfigRd();
-		try {
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		Connection cn = null;
-		try {
-			// cn = BasicDataSourceFactory.createDataSource();
-			cn = DriverManager.getConnection(conf.GetDatabase(), conf.GetDbUserName(), conf.GetDbPassword());
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
 			cn.createStatement().execute("alter session set current_schema=" + conf.GetUserSchema() + " ");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 		return cn;
@@ -66,13 +42,11 @@ public final class DataConnection {
 		try {
 			cn = DriverManager.getConnection(conf.GetSitDatabase(), conf.GetDbUserName(), conf.GetDbPassword());
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
 			cn.createStatement().execute("alter session set current_schema=" + conf.GetSitUserSchema() + " ");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return cn;
@@ -89,13 +63,11 @@ public final class DataConnection {
 		try {
 			cn = DriverManager.getConnection(conf.GetDevDatabase(), conf.GetDbUserName(), conf.GetDbPassword());
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
 			cn.createStatement().execute("alter session set current_schema=" + conf.GetDevUserSchema() + " ");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return cn;

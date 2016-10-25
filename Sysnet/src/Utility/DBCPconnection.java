@@ -14,7 +14,6 @@ public class DBCPconnection {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			ds = new BasicDataSource();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -39,7 +38,7 @@ public class DBCPconnection {
 		try {
 			Con.createStatement().execute("alter session set current_schema=" + conf.GetDevUserSchema() + " ");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 

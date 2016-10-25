@@ -47,7 +47,7 @@ public class DataDAO {
 	public LinkedHashSet<ArrayList<String>> GetTrailerInforReport(LinkedHashSet<ArrayList<String>> TrailerReportList)
 			throws SQLException {
 		Connection cn = DataConnection.getConnection();
-		Connection conn2 = DataConnection.getDevConnection();
+		Connection conn2 = DataConnection.getConnection();
 		String query3 = "select * from  SLH_TRAILER  where TRAILER_NUMBER=? and TRAILER_PREFIX=?";
 		PreparedStatement stat = cn.prepareStatement(query3);
 		String SCAC;

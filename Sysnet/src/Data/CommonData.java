@@ -12,6 +12,7 @@ import Utility.DataConnection;
 import Utility.Function;
 
 public class CommonData {
+
 	public static HashMap<String, Object> CheckEQPStatusUpdate(String SCAC, String TrailerNB) throws SQLException {
 
 		Connection conn3 = DataConnection.getConnection();
@@ -36,4 +37,28 @@ public class CommonData {
 		return TrailerInfo;
 	}
 
+	public static String GetScheduleForLoadedRail() throws SQLException {
+		Connection cn = DataConnection.getConnection();
+		Statement stat = cn.createStatement();
+		ResultSet rs = stat.executeQuery(Query.query2);
+		rs.next();
+		int pup = rs.getInt("pup");
+		int van = rs.getInt("VAN");
+		DataConnection.CloseDB(cn, stat, rs);
+		String schedule = String.valueOf(pup / 2 + van);
+		return schedule;
+	}
+
+	public static String GetScheduleForEmptyRail() throws SQLException {
+		Connection cn = DataConnection.getConnection();
+		Statement stat = cn.createStatement();
+		ResultSet rs = stat.executeQuery(Query.query1);
+		rs.next();
+		int pup = rs.getInt("pup");
+		int van = rs.getInt("VAN");
+		DataConnection.CloseDB(cn, stat, rs);
+		String schedule = String.valueOf(pup / 2 + van);
+		return schedule;
+
+	}
 }
