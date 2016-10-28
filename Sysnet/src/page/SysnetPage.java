@@ -105,8 +105,14 @@ public class SysnetPage {
 	@FindBy(how = How.XPATH, using = ".//div[@id='rail']//td[contains(text(), 'Total Empty Rail')]")
 	public WebElement TotalEmptyRail;
 
+	@FindBy(how = How.CSS, using = "div#yrcemptyRail>div:nth-of-type(2)>div>div:nth-of-type(3) div.ui-grid-canvas")
+	public WebElement TotalEmptyRailForm;
+
 	@FindBy(how = How.XPATH, using = ".//div[@id='rail']//td[contains(text(), 'Total Loaded Rail')]")
 	public WebElement TotalLoadedRail;
+
+	@FindBy(how = How.CSS, using = "div#yrcloadedRail>div:nth-of-type(2)>div>div:nth-of-type(3) div.ui-grid-canvas")
+	public WebElement TotalLoadedRailForm;
 
 	/* UI method */
 	public LinkedHashSet<ArrayList<String>> GetTrailerReportList(WebElement TrailerInforGrid) {

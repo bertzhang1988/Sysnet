@@ -65,6 +65,7 @@ public class DataDAO {
 			String DEST_TERMINAL = rs.getString("DEST_TERMINAL");
 			String LastReportTerminal = rs.getString("LAST_REPORTED_TRM");
 			Date LAST_REPORTED_TIME_DT = rs.getTimestamp("LAST_REPORTED_TIME_DT");
+			System.out.println(LAST_REPORTED_TIME_DT + SCAC + TrailerNB);
 			String LstReportTime = Function.getLocalTimeReport(LastReportTerminal, LAST_REPORTED_TIME_DT, conn2);
 			ArrayList<String> ExpectedTrailerLine = new ArrayList<String>();
 			ExpectedTrailerLine.add(SCAC);

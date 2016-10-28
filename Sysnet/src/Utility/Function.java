@@ -121,7 +121,9 @@ public class Function {
 			Range.add(Dstformat.parse(DstRange[year - 2016][0]));
 			Range.add(Dstformat.parse(DstRange[year - 2016][1]));
 		} catch (ParseException e) {
-			e.printStackTrace();
+			System.out.println(year + " is out of range can not check daylight saving");
+			e.getStackTrace();
+
 		}
 
 		return Range;

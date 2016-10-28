@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.TimeZone;
@@ -37,28 +38,25 @@ public class CommonData {
 		return TrailerInfo;
 	}
 
-	public static String GetScheduleForLoadedRail() throws SQLException {
+	public static String GetSchedule(String query) throws SQLException {
 		Connection cn = DataConnection.getConnection();
 		Statement stat = cn.createStatement();
-		ResultSet rs = stat.executeQuery(Query.query2);
+		ResultSet rs = stat.executeQuery(query);
 		rs.next();
 		int pup = rs.getInt("pup");
 		int van = rs.getInt("VAN");
 		DataConnection.CloseDB(cn, stat, rs);
-		String schedule = String.valueOf(pup / 2 + van);
+		DecimalFormat df = new DecimalFormat("#.#");
+		String schedule = String.valueOf(df.format((float) pup / 2 + van));
 		return schedule;
 	}
 
+	public static String GetScheduleForLoadedRail() throws SQLException {
+		return GetSchedule(Query.query2);
+	}
+
 	public static String GetScheduleForEmptyRail() throws SQLException {
-		Connection cn = DataConnection.getConnection();
-		Statement stat = cn.createStatement();
-		ResultSet rs = stat.executeQuery(Query.query1);
-		rs.next();
-		int pup = rs.getInt("pup");
-		int van = rs.getInt("VAN");
-		DataConnection.CloseDB(cn, stat, rs);
-		String schedule = String.valueOf(pup / 2 + van);
-		return schedule;
+		return GetSchedule(Query.query1);
 
 	}
 }
