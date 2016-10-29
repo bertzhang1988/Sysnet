@@ -19,7 +19,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
-import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import Data.CommonData;
@@ -230,7 +229,7 @@ public class T1 {
 		System.out.println("totally " + TrailerGRID.size() + "  mismatch " + i);
 	}
 
-	@Test(priority = 6)
+	// @Test(priority = 6)
 	public void example5(Method m) throws SQLException, ClassNotFoundException {
 		SoftAssert SA = new SoftAssert();
 		(new WebDriverWait(driver, 50)).until(ExpectedConditions.visibilityOf(page.SystemSummaryButton));
