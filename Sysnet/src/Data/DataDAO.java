@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.TimeZone;
@@ -18,7 +19,7 @@ public class DataDAO {
 
 	public Trailer GetTrailer(String SCAC, String TrailerNB) throws SQLException {
 		Connection cn = DataConnection.getConnection();
-		Connection conn2 = DataConnection.getDevConnection();
+		Connection conn2 = DataConnection.getConnection();
 		Statement stat;
 		Trailer trailer;
 		ResultSet rs;
@@ -32,13 +33,16 @@ public class DataDAO {
 		String DEST_TERMINAL = rs.getString("DEST_TERMINAL");
 		String LastReportTerminal = rs.getString("LAST_REPORTED_TRM");
 		Date LAST_REPORTED_TIME_DT = rs.getTimestamp("LAST_REPORTED_TIME_DT");
+		Date NEXT_TTMS_1_DT = rs.getTimestamp("NEXT_TTMS_1_DT");
 		String LstReportTime = Function.getLocalTimeReport(LastReportTerminal, LAST_REPORTED_TIME_DT, conn2);
+		String TTMS = Function.getLocalTimeReport(LastReportTerminal, NEXT_TTMS_1_DT, conn2);
 		trailer.setSCAC(SCAC);
 		trailer.setTrailerNb(TrailerNB);
 		trailer.setDest(DEST_TERMINAL);
 		trailer.setCurTerminal(LastReportTerminal);
 		trailer.setDest(DEST_TERMINAL);
 		trailer.setLastReportTime(LstReportTime);
+		trailer.setTTMS(TTMS);
 		conn2.close();
 		DataConnection.CloseDB(cn, stat, rs);
 		return trailer;
@@ -65,14 +69,18 @@ public class DataDAO {
 			String DEST_TERMINAL = rs.getString("DEST_TERMINAL");
 			String LastReportTerminal = rs.getString("LAST_REPORTED_TRM");
 			Date LAST_REPORTED_TIME_DT = rs.getTimestamp("LAST_REPORTED_TIME_DT");
-			System.out.println(LAST_REPORTED_TIME_DT + SCAC + TrailerNB);
+			Date NEXT_TTMS_1_DT = rs.getTimestamp("NEXT_TTMS_1_DT");
+			// System.out.println(LAST_REPORTED_TIME_DT + SCAC + TrailerNB);
 			String LstReportTime = Function.getLocalTimeReport(LastReportTerminal, LAST_REPORTED_TIME_DT, conn2);
+			String TTMS = Function.getLocalTimeReport(LastReportTerminal, NEXT_TTMS_1_DT, conn2);
 			ArrayList<String> ExpectedTrailerLine = new ArrayList<String>();
 			ExpectedTrailerLine.add(SCAC);
 			ExpectedTrailerLine.add(TrailerNB);
 			ExpectedTrailerLine.add(DEST_TERMINAL);
 			ExpectedTrailerLine.add(LastReportTerminal);
 			ExpectedTrailerLine.add(LstReportTime);
+			ExpectedTrailerLine.add(TTMS);
+			Collections.replaceAll(ExpectedTrailerLine, null, "");
 			ExpectedTrailerReportList.add(ExpectedTrailerLine);
 		}
 		conn2.close();

@@ -168,7 +168,7 @@ public class SysnetPage {
 		return ProInfo;
 	}
 
-	public LinkedHashSet<ArrayList<String>> GetTrailerReportLasReportTime(WebElement TrailerInforGrid) {
+	public LinkedHashSet<ArrayList<String>> GetTrailerReportTime(WebElement TrailerInforGrid) {
 		driver.manage().window().maximize();
 		int line = TrailerInforGrid.findElements(By.xpath("div")).size();
 		JavascriptExecutor jse = (JavascriptExecutor) driver;
@@ -177,17 +177,20 @@ public class SysnetPage {
 		String SCAC;
 		String Trailer;
 		String CurrentTerminal;
+		String TTMS;
 		String LstRptdTime;
 		do {
 			for (int j = 1; j <= line; j++) {
 				SCAC = TrailerInforGrid.findElement(By.xpath("div[" + j + "]/div/div[1]")).getText();
 				Trailer = TrailerInforGrid.findElement(By.xpath("div[" + j + "]/div/div[2]")).getText();
 				CurrentTerminal = TrailerInforGrid.findElement(By.xpath("div[" + j + "]/div/div[6]")).getText();
+				TTMS = TrailerInforGrid.findElement(By.xpath("div[" + j + "]/div/div[10]")).getText();
 				LstRptdTime = TrailerInforGrid.findElement(By.xpath("div[" + j + "]/div/div[11]")).getText();
 				ArrayList<String> e1 = new ArrayList<String>();
 				e1.add(SCAC);
 				e1.add(Trailer);
 				e1.add(CurrentTerminal);
+				e1.add(TTMS);
 				e1.add(LstRptdTime);
 				ProInfo.add(e1);
 			}
@@ -202,11 +205,13 @@ public class SysnetPage {
 			SCAC = TrailerInforGrid.findElement(By.xpath("div[" + j + "]/div/div[1]")).getText();
 			Trailer = TrailerInforGrid.findElement(By.xpath("div[" + j + "]/div/div[2]")).getText();
 			CurrentTerminal = TrailerInforGrid.findElement(By.xpath("div[" + j + "]/div/div[6]")).getText();
+			TTMS = TrailerInforGrid.findElement(By.xpath("div[" + j + "]/div/div[10]")).getText();
 			LstRptdTime = TrailerInforGrid.findElement(By.xpath("div[" + j + "]/div/div[11]")).getText();
 			ArrayList<String> e1 = new ArrayList<String>();
 			e1.add(SCAC);
 			e1.add(Trailer);
 			e1.add(CurrentTerminal);
+			e1.add(TTMS);
 			e1.add(LstRptdTime);
 			ProInfo.add(e1);
 		}

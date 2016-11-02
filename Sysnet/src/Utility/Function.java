@@ -65,6 +65,8 @@ public class Function {
 
 	public static String getLocalTimeReport(String terminal, Date Utctime, Connection conn2) throws SQLException {
 
+		if (Utctime == null)
+			return null;
 		// Connection conn2 = DataConnection.getDevConnection();
 		String query2 = " SELECT TERMINAL,TIME_ZONE,DAYLIGHT_SAVINGS_IN,TIME_ZONE_CD FROM SLH_TERMINAL where terminal=? ";
 		PreparedStatement stat = conn2.prepareStatement(query2, ResultSet.TYPE_SCROLL_SENSITIVE,

@@ -6,6 +6,7 @@ public class Trailer {
 	private String Dest;
 	private String CurTerminal;
 	private String lastReportTime;
+	private String TTMS;
 
 	public String getTrailerNb() {
 		return TrailerNb;
@@ -44,7 +45,19 @@ public class Trailer {
 	}
 
 	public void setLastReportTime(String lastReportTime) {
+		if (lastReportTime == null)
+			lastReportTime = "";
 		this.lastReportTime = lastReportTime;
+	}
+
+	public String getTTMS() {
+		return TTMS;
+	}
+
+	public void setTTMS(String tTMS) {
+		if (tTMS == null)
+			tTMS = "";
+		TTMS = tTMS;
 	}
 
 }

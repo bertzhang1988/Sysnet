@@ -66,8 +66,8 @@ public class CheckInterRegionalReport2 {
 		// create excel sheet and title
 		workbook = new XSSFWorkbook();
 		sheet = workbook.createSheet(Function.GetDisplayTime().replace(":", "-"));
-		String[] TitleLine = { "Line", "Lst Rptd Time is wrong for trailer", " CurrentTerminal", "expected:",
-				"but found:" };
+		String[] TitleLine = { "Line", "Time is wrong for trailer", " CurrentTerminal", "LstReport time expected:",
+				"but found: ", "TTMS expected: ", " but found: " };
 		Row r = sheet.createRow(R);
 		int ColumnOfFirstline = 0;
 		for (String value : TitleLine) {
@@ -91,7 +91,7 @@ public class CheckInterRegionalReport2 {
 		(new WebDriverWait(driver, 50)).until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-bar")));
 		(new WebDriverWait(driver, 50)).until(ExpectedConditions.visibilityOf(page.InterRegionalATLddTrailerInforGrid));
 		LinkedHashSet<ArrayList<String>> TrailerGRID = page
-				.GetTrailerReportList(page.InterRegionalATLddTrailerInforGrid);
+				.GetTrailerReportTime(page.InterRegionalATLddTrailerInforGrid);
 		System.out.println("\n Inter-Regional ldd totally " + TrailerGRID.size());
 
 		Row subtitle = sheet.createRow(++R);
@@ -105,22 +105,34 @@ public class CheckInterRegionalReport2 {
 		for (ArrayList<String> trailer : TrailerGRID) {
 			String SCAC = trailer.get(0);
 			String TrailerNB = trailer.get(1);
-			String Expected = ExpectedTrailerInforReport.get(j).get(4);
-			String Actual = trailer.get(10);
+			String ExpectedTTMS = ExpectedTrailerInforReport.get(j).get(5);
+			String ExpectedLstReportT = ExpectedTrailerInforReport.get(j).get(4);
+			String ActualTTMS = trailer.get(3);
+			String ActualLstReportT = trailer.get(4);
+			String CurrentTerminal = trailer.get(2);
 			j = j + 1;
-			if (!Expected.equals(Actual)) {
+			boolean FlagLst = ExpectedLstReportT.equals(ActualLstReportT);
+			boolean FlagTTMS = ExpectedTTMS.equals(ActualTTMS);
+			if (!(FlagLst && FlagTTMS)) {
 				i = i + 1;
-				System.out.println(
-						j + " Lst Rptd Time is wrong for trailer " + SCAC + "-" + TrailerNB + " CurrentTerminal "
-								+ trailer.get(5) + "  " + "expected: " + Expected + " but found: " + Actual);
 				R = 1 + R;
 				Row r = sheet.createRow(R);
 				r.createCell(0).setCellValue(j);
 				r.createCell(1).setCellValue(SCAC + "-" + TrailerNB);
-				r.createCell(2).setCellValue(trailer.get(5));
-				r.createCell(3).setCellValue(Expected);
-				r.createCell(4).setCellValue(Actual);
-
+				r.createCell(2).setCellValue(CurrentTerminal);
+				System.out.println("\n" + j + " Time is wrong for trailer " + SCAC + "-" + TrailerNB
+						+ " CurrentTerminal " + CurrentTerminal);
+				if (FlagLst == false) {
+					r.createCell(3).setCellValue(ExpectedLstReportT);
+					r.createCell(4).setCellValue(ActualLstReportT);
+					System.out.printf(
+							"  " + "Lst Result expected: " + ExpectedLstReportT + " but found: " + ActualLstReportT);
+				}
+				if (FlagTTMS == false) {
+					r.createCell(5).setCellValue(ExpectedTTMS);
+					r.createCell(6).setCellValue(ActualTTMS);
+					System.out.printf("  " + "TTMS expected: " + ExpectedTTMS + " but found: " + ActualTTMS);
+				}
 			}
 		}
 
@@ -150,7 +162,7 @@ public class CheckInterRegionalReport2 {
 		(new WebDriverWait(driver, 50)).until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-bar")));
 		(new WebDriverWait(driver, 50)).until(ExpectedConditions.visibilityOf(page.InterRegionalATArrTrailerInforGrid));
 		LinkedHashSet<ArrayList<String>> TrailerGRID = page
-				.GetTrailerReportList(page.InterRegionalATArrTrailerInforGrid);
+				.GetTrailerReportTime(page.InterRegionalATArrTrailerInforGrid);
 		System.out.println("\n Inter-Regional ARR totally " + TrailerGRID.size());
 		Row subtitle = sheet.createRow(++R);
 		subtitle.createCell(0).setCellValue("Inter-Regional ARR totally :");
@@ -159,26 +171,37 @@ public class CheckInterRegionalReport2 {
 		int j = 0;
 		ArrayList<ArrayList<String>> ExpectedTrailerInforReport = new ArrayList<ArrayList<String>>(
 				DA.GetTrailerInforReport(TrailerGRID));
-
 		for (ArrayList<String> trailer : TrailerGRID) {
 			String SCAC = trailer.get(0);
 			String TrailerNB = trailer.get(1);
-			String Expected = ExpectedTrailerInforReport.get(j).get(4);
-			String Actual = trailer.get(10);
+			String ExpectedTTMS = ExpectedTrailerInforReport.get(j).get(5);
+			String ExpectedLstReportT = ExpectedTrailerInforReport.get(j).get(4);
+			String ActualTTMS = trailer.get(3);
+			String ActualLstReportT = trailer.get(4);
+			String CurrentTerminal = trailer.get(2);
 			j = j + 1;
-			if (!Expected.equals(Actual)) {
+			boolean FlagLst = ExpectedLstReportT.equals(ActualLstReportT);
+			boolean FlagTTMS = ExpectedTTMS.equals(ActualTTMS);
+			if (!(FlagLst && FlagTTMS)) {
 				i = i + 1;
-				System.out.println(
-						j + " Lst Rptd Time is wrong for trailer " + SCAC + "-" + TrailerNB + " CurrentTerminal "
-								+ trailer.get(5) + "  " + "expected: " + Expected + " but found: " + Actual);
 				R = 1 + R;
 				Row r = sheet.createRow(R);
 				r.createCell(0).setCellValue(j);
 				r.createCell(1).setCellValue(SCAC + "-" + TrailerNB);
-				r.createCell(2).setCellValue(trailer.get(5));
-				r.createCell(3).setCellValue(Expected);
-				r.createCell(4).setCellValue(Actual);
-
+				r.createCell(2).setCellValue(CurrentTerminal);
+				System.out.println("\n" + j + " Time is wrong for trailer " + SCAC + "-" + TrailerNB
+						+ " CurrentTerminal " + CurrentTerminal);
+				if (FlagLst == false) {
+					r.createCell(3).setCellValue(ExpectedLstReportT);
+					r.createCell(4).setCellValue(ActualLstReportT);
+					System.out.printf(
+							"  " + "Lst Result expected: " + ExpectedLstReportT + " but found: " + ActualLstReportT);
+				}
+				if (FlagTTMS == false) {
+					r.createCell(5).setCellValue(ExpectedTTMS);
+					r.createCell(6).setCellValue(ActualTTMS);
+					System.out.printf("  " + "TTMS expected: " + ExpectedTTMS + " but found: " + ActualTTMS);
+				}
 			}
 		}
 
@@ -209,7 +232,7 @@ public class CheckInterRegionalReport2 {
 		(new WebDriverWait(driver, 50))
 				.until(ExpectedConditions.visibilityOf(page.InterRegionalATLddArrTrailerInforGrid));
 		LinkedHashSet<ArrayList<String>> TrailerGRID = page
-				.GetTrailerReportList(page.InterRegionalATLddArrTrailerInforGrid);
+				.GetTrailerReportTime(page.InterRegionalATLddArrTrailerInforGrid);
 		System.out.println("\n Inter-Regional LDD AND ARR totally " + TrailerGRID.size());
 		Row subtitle = sheet.createRow(++R);
 		subtitle.createCell(0).setCellValue("Inter-Regional LDD AND ARR totally :");
@@ -222,25 +245,36 @@ public class CheckInterRegionalReport2 {
 		for (ArrayList<String> trailer : TrailerGRID) {
 			String SCAC = trailer.get(0);
 			String TrailerNB = trailer.get(1);
-			String Expected = ExpectedTrailerInforReport.get(j).get(4);
-			String Actual = trailer.get(10);
+			String ExpectedTTMS = ExpectedTrailerInforReport.get(j).get(5);
+			String ExpectedLstReportT = ExpectedTrailerInforReport.get(j).get(4);
+			String ActualTTMS = trailer.get(3);
+			String ActualLstReportT = trailer.get(4);
+			String CurrentTerminal = trailer.get(2);
 			j = j + 1;
-			if (!Expected.equals(Actual)) {
+			boolean FlagLst = ExpectedLstReportT.equals(ActualLstReportT);
+			boolean FlagTTMS = ExpectedTTMS.equals(ActualTTMS);
+			if (!(FlagLst && FlagTTMS)) {
 				i = i + 1;
-				System.out.println(
-						j + " Lst Rptd Time is wrong for trailer " + SCAC + "-" + TrailerNB + " CurrentTerminal "
-								+ trailer.get(5) + "  " + "expected: " + Expected + " but found: " + Actual);
 				R = 1 + R;
 				Row r = sheet.createRow(R);
 				r.createCell(0).setCellValue(j);
 				r.createCell(1).setCellValue(SCAC + "-" + TrailerNB);
-				r.createCell(2).setCellValue(trailer.get(5));
-				r.createCell(3).setCellValue(Expected);
-				r.createCell(4).setCellValue(Actual);
-
+				r.createCell(2).setCellValue(CurrentTerminal);
+				System.out.println("\n" + j + " Time is wrong for trailer " + SCAC + "-" + TrailerNB
+						+ " CurrentTerminal " + CurrentTerminal);
+				if (FlagLst == false) {
+					r.createCell(3).setCellValue(ExpectedLstReportT);
+					r.createCell(4).setCellValue(ActualLstReportT);
+					System.out.printf(
+							"  " + "Lst Result expected: " + ExpectedLstReportT + " but found: " + ActualLstReportT);
+				}
+				if (FlagTTMS == false) {
+					r.createCell(5).setCellValue(ExpectedTTMS);
+					r.createCell(6).setCellValue(ActualTTMS);
+					System.out.printf("  " + "TTMS expected: " + ExpectedTTMS + " but found: " + ActualTTMS);
+				}
 			}
 		}
-
 		System.out.println("\n" + m.getName() + " form totally " + TrailerGRID.size() + "  mismatch " + i + "\n");
 		Row summary = sheet.createRow(++R);
 		summary.createCell(0).setCellValue(m.getName() + " form totally: ");
@@ -268,7 +302,7 @@ public class CheckInterRegionalReport2 {
 		(new WebDriverWait(driver, 50))
 				.until(ExpectedConditions.visibilityOf(page.InterRegionalRoadEmptiesTrailerInforGrid));
 		LinkedHashSet<ArrayList<String>> TrailerGRID = page
-				.GetTrailerReportList(page.InterRegionalRoadEmptiesTrailerInforGrid);
+				.GetTrailerReportTime(page.InterRegionalRoadEmptiesTrailerInforGrid);
 		System.out.println("\n Inter-Regional Road Empties totally " + TrailerGRID.size());
 		Row subtitle = sheet.createRow(++R);
 		subtitle.createCell(0).setCellValue("Inter-Regional Road Empties totally :");
@@ -281,22 +315,34 @@ public class CheckInterRegionalReport2 {
 		for (ArrayList<String> trailer : TrailerGRID) {
 			String SCAC = trailer.get(0);
 			String TrailerNB = trailer.get(1);
-			String Expected = ExpectedTrailerInforReport.get(j).get(4);
-			String CurrentTerminal = ExpectedTrailerInforReport.get(j).get(3);
-			String Actual = trailer.get(7);
+			String ExpectedTTMS = ExpectedTrailerInforReport.get(j).get(5);
+			String ExpectedLstReportT = ExpectedTrailerInforReport.get(j).get(4);
+			String ActualTTMS = trailer.get(3);
+			String ActualLstReportT = trailer.get(4);
+			String CurrentTerminal = trailer.get(2);
 			j = j + 1;
-			if (!Expected.equals(Actual)) {
+			boolean FlagLst = ExpectedLstReportT.equals(ActualLstReportT);
+			boolean FlagTTMS = ExpectedTTMS.equals(ActualTTMS);
+			if (!(FlagLst && FlagTTMS)) {
 				i = i + 1;
-				System.out.println(j + " Lst Rptd Time is wrong for trailer " + SCAC + "-" + TrailerNB
-						+ " CurrentTerminal " + CurrentTerminal + "expected: " + Expected + " but found: " + Actual);
 				R = 1 + R;
 				Row r = sheet.createRow(R);
 				r.createCell(0).setCellValue(j);
 				r.createCell(1).setCellValue(SCAC + "-" + TrailerNB);
-				r.createCell(2).setCellValue(trailer.get(5));
-				r.createCell(3).setCellValue(Expected);
-				r.createCell(4).setCellValue(Actual);
-
+				r.createCell(2).setCellValue(CurrentTerminal);
+				System.out.println("\n" + j + " Time is wrong for trailer " + SCAC + "-" + TrailerNB
+						+ " CurrentTerminal " + CurrentTerminal);
+				if (FlagLst == false) {
+					r.createCell(3).setCellValue(ExpectedLstReportT);
+					r.createCell(4).setCellValue(ActualLstReportT);
+					System.out.print(
+							"  " + "Lst Result expected: " + ExpectedLstReportT + " but found: " + ActualLstReportT);
+				}
+				if (FlagTTMS == false) {
+					r.createCell(5).setCellValue(ExpectedTTMS);
+					r.createCell(6).setCellValue(ActualTTMS);
+					System.out.print("  " + "TTMS expected: " + ExpectedTTMS + " but found: " + ActualTTMS);
+				}
 			}
 		}
 

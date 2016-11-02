@@ -78,7 +78,7 @@ public class CheckIntraRegionalReport2 {
 		(new WebDriverWait(driver, 50))
 				.until(ExpectedConditions.visibilityOf(page.IntraRegionalformATLddTrailerInforGrid));
 		LinkedHashSet<ArrayList<String>> TrailerGRID = page
-				.GetTrailerReportList(page.IntraRegionalformATLddTrailerInforGrid);
+				.GetTrailerReportTime(page.IntraRegionalformATLddTrailerInforGrid);
 		System.out.println("\n Intra-Regional ldd totally " + TrailerGRID.size());
 		fw.write(Nl + " Intra-Regional ldd totally " + TrailerGRID.size() + Nl);
 		int i = 0;
@@ -90,17 +90,31 @@ public class CheckIntraRegionalReport2 {
 		for (ArrayList<String> trailer : TrailerGRID) {
 			String SCAC = trailer.get(0);
 			String TrailerNB = trailer.get(1);
-			String Expected = ExpectedTrailerInforReport.get(j).get(4);
-			String Actual = trailer.get(10);
+			String ExpectedTTMS = ExpectedTrailerInforReport.get(j).get(5);
+			String ExpectedLstReportT = ExpectedTrailerInforReport.get(j).get(4);
+			String ActualTTMS = trailer.get(3);
+			String ActualLstReportT = trailer.get(4);
+			String CurrentTerminal = trailer.get(2);
 			j = j + 1;
-			if (!Expected.equals(Actual)) {
+			boolean FlagLst = ExpectedLstReportT.equals(ActualLstReportT);
+			boolean FlagTTMS = ExpectedTTMS.equals(ActualTTMS);
+			if (!(FlagLst && FlagTTMS)) {
 				i = i + 1;
-				System.out.println(
-						j + " Lst Rptd Time is wrong for trailer " + SCAC + "-" + TrailerNB + " CurrentTerminal "
-								+ trailer.get(5) + "  " + "expected: " + Expected + " but found: " + Actual);
+				System.out.println("\n" + j + " Time is wrong for trailer " + SCAC + "-" + TrailerNB
+						+ " CurrentTerminal " + CurrentTerminal);
 
-				fw.write(Nl + j + " Lst Rptd Time is wrong for trailer " + SCAC + "-" + TrailerNB + " CurrentTerminal "
-						+ trailer.get(5) + "  " + "expected: " + Expected + " but found: " + Actual);
+				fw.write(Nl + j + " Time is wrong for trailer " + SCAC + "-" + TrailerNB + " CurrentTerminal "
+						+ CurrentTerminal);
+				if (FlagLst == false) {
+					fw.write("  " + "Lst Result expected: " + ExpectedLstReportT + " but found: " + ActualLstReportT);
+					System.out.print(
+							"  " + "Lst Result expected: " + ExpectedLstReportT + " but found: " + ActualLstReportT);
+				}
+				if (FlagTTMS == false) {
+					fw.write("  " + "TTMS expected: " + ExpectedTTMS + " but found: " + ActualTTMS);
+					System.out.print("  " + "TTMS expected: " + ExpectedTTMS + " but found: " + ActualTTMS);
+				}
+
 			}
 		}
 
@@ -141,16 +155,31 @@ public class CheckIntraRegionalReport2 {
 		for (ArrayList<String> trailer : TrailerGRID) {
 			String SCAC = trailer.get(0);
 			String TrailerNB = trailer.get(1);
-			String Expected = ExpectedTrailerInforReport.get(j).get(4);
-			String Actual = trailer.get(10);
+			String ExpectedTTMS = ExpectedTrailerInforReport.get(j).get(5);
+			String ExpectedLstReportT = ExpectedTrailerInforReport.get(j).get(4);
+			String ActualTTMS = trailer.get(3);
+			String ActualLstReportT = trailer.get(4);
+			String CurrentTerminal = trailer.get(2);
 			j = j + 1;
-			if (!Expected.equals(Actual)) {
+			boolean FlagLst = ExpectedLstReportT.equals(ActualLstReportT);
+			boolean FlagTTMS = ExpectedTTMS.equals(ActualTTMS);
+			if (!(FlagLst && FlagTTMS)) {
 				i = i + 1;
-				System.out.println(
-						j + " Lst Rptd Time is wrong for trailer " + SCAC + "-" + TrailerNB + " CurrentTerminal "
-								+ trailer.get(5) + "  " + "expected: " + Expected + " but found: " + Actual);
-				fw.write(Nl + j + " Lst Rptd Time is wrong for trailer " + SCAC + "-" + TrailerNB + " CurrentTerminal "
-						+ trailer.get(5) + "  " + "expected: " + Expected + " but found: " + Actual);
+				System.out.println("\n" + j + " Time is wrong for trailer " + SCAC + "-" + TrailerNB
+						+ " CurrentTerminal " + CurrentTerminal);
+
+				fw.write(Nl + j + " Time is wrong for trailer " + SCAC + "-" + TrailerNB + " CurrentTerminal "
+						+ CurrentTerminal);
+				if (FlagLst == false) {
+					fw.write("  " + "Lst Result expected: " + ExpectedLstReportT + " but found: " + ActualLstReportT);
+					System.out.print(
+							"  " + "Lst Result expected: " + ExpectedLstReportT + " but found: " + ActualLstReportT);
+				}
+				if (FlagTTMS == false) {
+					fw.write("  " + "TTMS expected: " + ExpectedTTMS + " but found: " + ActualTTMS);
+					System.out.print("  " + "TTMS expected: " + ExpectedTTMS + " but found: " + ActualTTMS);
+				}
+
 			}
 		}
 
@@ -189,16 +218,31 @@ public class CheckIntraRegionalReport2 {
 		for (ArrayList<String> trailer : TrailerGRID) {
 			String SCAC = trailer.get(0);
 			String TrailerNB = trailer.get(1);
-			String Expected = ExpectedTrailerInforReport.get(j).get(4);
-			String Actual = trailer.get(10);
+			String ExpectedTTMS = ExpectedTrailerInforReport.get(j).get(5);
+			String ExpectedLstReportT = ExpectedTrailerInforReport.get(j).get(4);
+			String ActualTTMS = trailer.get(3);
+			String ActualLstReportT = trailer.get(4);
+			String CurrentTerminal = trailer.get(2);
 			j = j + 1;
-			if (!Expected.equals(Actual)) {
+			boolean FlagLst = ExpectedLstReportT.equals(ActualLstReportT);
+			boolean FlagTTMS = ExpectedTTMS.equals(ActualTTMS);
+			if (!(FlagLst && FlagTTMS)) {
 				i = i + 1;
-				System.out.println(
-						j + " Lst Rptd Time is wrong for trailer " + SCAC + "-" + TrailerNB + " CurrentTerminal "
-								+ trailer.get(5) + "  " + "expected: " + Expected + " but found: " + Actual);
-				fw.write(Nl + j + " Lst Rptd Time is wrong for trailer " + SCAC + "-" + TrailerNB + " CurrentTerminal "
-						+ trailer.get(5) + "  " + "expected: " + Expected + " but found: " + Actual);
+				System.out.println("\n" + j + " Time is wrong for trailer " + SCAC + "-" + TrailerNB
+						+ " CurrentTerminal " + CurrentTerminal);
+
+				fw.write(Nl + j + " Time is wrong for trailer " + SCAC + "-" + TrailerNB + " CurrentTerminal "
+						+ CurrentTerminal);
+				if (FlagLst == false) {
+					fw.write("  " + "Lst Result expected: " + ExpectedLstReportT + " but found: " + ActualLstReportT);
+					System.out.print(
+							"  " + "Lst Result expected: " + ExpectedLstReportT + " but found: " + ActualLstReportT);
+				}
+				if (FlagTTMS == false) {
+					fw.write("  " + "TTMS expected: " + ExpectedTTMS + " but found: " + ActualTTMS);
+					System.out.print("  " + "TTMS expected: " + ExpectedTTMS + " but found: " + ActualTTMS);
+				}
+
 			}
 		}
 
@@ -237,16 +281,31 @@ public class CheckIntraRegionalReport2 {
 		for (ArrayList<String> trailer : TrailerGRID) {
 			String SCAC = trailer.get(0);
 			String TrailerNB = trailer.get(1);
-			String Expected = ExpectedTrailerInforReport.get(j).get(4);
-			String Actual = trailer.get(10);
+			String ExpectedTTMS = ExpectedTrailerInforReport.get(j).get(5);
+			String ExpectedLstReportT = ExpectedTrailerInforReport.get(j).get(4);
+			String ActualTTMS = trailer.get(3);
+			String ActualLstReportT = trailer.get(4);
+			String CurrentTerminal = trailer.get(2);
 			j = j + 1;
-			if (!Expected.equals(Actual)) {
+			boolean FlagLst = ExpectedLstReportT.equals(ActualLstReportT);
+			boolean FlagTTMS = ExpectedTTMS.equals(ActualTTMS);
+			if (!(FlagLst && FlagTTMS)) {
 				i = i + 1;
-				System.out.println(
-						j + " Lst Rptd Time is wrong for trailer " + SCAC + "-" + TrailerNB + " CurrentTerminal "
-								+ trailer.get(5) + "  " + "expected: " + Expected + " but found: " + Actual);
-				fw.write(Nl + j + " Lst Rptd Time is wrong for trailer " + SCAC + "-" + TrailerNB + " CurrentTerminal "
-						+ trailer.get(5) + "  " + "expected: " + Expected + " but found: " + Actual);
+				System.out.println("\n" + j + " Time is wrong for trailer " + SCAC + "-" + TrailerNB
+						+ " CurrentTerminal " + CurrentTerminal);
+
+				fw.write(Nl + j + " Time is wrong for trailer " + SCAC + "-" + TrailerNB + " CurrentTerminal "
+						+ CurrentTerminal);
+				if (FlagLst == false) {
+					fw.write("  " + "Lst Result expected: " + ExpectedLstReportT + " but found: " + ActualLstReportT);
+					System.out.print(
+							"  " + "Lst Result expected: " + ExpectedLstReportT + " but found: " + ActualLstReportT);
+				}
+				if (FlagTTMS == false) {
+					fw.write("  " + "TTMS expected: " + ExpectedTTMS + " but found: " + ActualTTMS);
+					System.out.print("  " + "TTMS expected: " + ExpectedTTMS + " but found: " + ActualTTMS);
+				}
+
 			}
 		}
 
@@ -285,19 +344,33 @@ public class CheckIntraRegionalReport2 {
 		for (ArrayList<String> trailer : TrailerGRID) {
 			String SCAC = trailer.get(0);
 			String TrailerNB = trailer.get(1);
-			String Expected = ExpectedTrailerInforReport.get(j).get(4);
-			String Actual = trailer.get(10);
+			String ExpectedTTMS = ExpectedTrailerInforReport.get(j).get(5);
+			String ExpectedLstReportT = ExpectedTrailerInforReport.get(j).get(4);
+			String ActualTTMS = trailer.get(3);
+			String ActualLstReportT = trailer.get(4);
+			String CurrentTerminal = trailer.get(2);
 			j = j + 1;
-			if (!Expected.equals(Actual)) {
+			boolean FlagLst = ExpectedLstReportT.equals(ActualLstReportT);
+			boolean FlagTTMS = ExpectedTTMS.equals(ActualTTMS);
+			if (!(FlagLst && FlagTTMS)) {
 				i = i + 1;
-				System.out.println(
-						j + " Lst Rptd Time is wrong for trailer " + SCAC + "-" + TrailerNB + " CurrentTerminal "
-								+ trailer.get(5) + "  " + "expected: " + Expected + " but found: " + Actual);
-				fw.write(Nl + j + " Lst Rptd Time is wrong for trailer " + SCAC + "-" + TrailerNB + " CurrentTerminal "
-						+ trailer.get(5) + "  " + "expected: " + Expected + " but found: " + Actual);
+				System.out.println("\n" + j + " Time is wrong for trailer " + SCAC + "-" + TrailerNB
+						+ " CurrentTerminal " + CurrentTerminal);
+
+				fw.write(Nl + j + " Time is wrong for trailer " + SCAC + "-" + TrailerNB + " CurrentTerminal "
+						+ CurrentTerminal);
+				if (FlagLst == false) {
+					fw.write("  " + "Lst Result expected: " + ExpectedLstReportT + " but found: " + ActualLstReportT);
+					System.out.print(
+							"  " + "Lst Result expected: " + ExpectedLstReportT + " but found: " + ActualLstReportT);
+				}
+				if (FlagTTMS == false) {
+					fw.write("  " + "TTMS expected: " + ExpectedTTMS + " but found: " + ActualTTMS);
+					System.out.print("  " + "TTMS expected: " + ExpectedTTMS + " but found: " + ActualTTMS);
+				}
+
 			}
 		}
-
 		System.out.println("\n" + m.getName() + " form totally " + TrailerGRID.size() + "  mismatch " + i + "\n");
 		fw.write(Nl + m.getName() + " form totally " + TrailerGRID.size() + "  mismatch " + i + Nl);
 		// get back to
