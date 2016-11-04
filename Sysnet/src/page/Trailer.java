@@ -7,6 +7,17 @@ public class Trailer {
 	private String CurTerminal;
 	private String lastReportTime;
 	private String TTMS;
+	private String ETA;
+
+	public String getETA() {
+		return ETA;
+	}
+
+	public void setETA(String eTA) {
+		if (eTA == null)
+			eTA = "";
+		this.ETA = eTA;
+	}
 
 	public String getTrailerNb() {
 		return TrailerNb;

@@ -29,6 +29,7 @@ public class CheckScheduleOfRail extends SetupBase {
 	private SysnetPage Page;
 	private String Nl;
 	private FileWriter fw;
+	private String MainWindowHandler;
 
 	@BeforeClass
 	public void Setup() {
@@ -38,6 +39,9 @@ public class CheckScheduleOfRail extends SetupBase {
 		Page.SystemSummaryButton.click();
 		(new WebDriverWait(driver, 20)).until(ExpectedConditions.visibilityOf(Page.Railform));
 		(new WebDriverWait(driver, 50)).until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-bar")));
+
+		// get main page handler
+		MainWindowHandler = driver.getWindowHandle();
 
 		// create text file
 		String CDate = Function.GetTimeValue(TimeZone.getDefault().getID());
@@ -97,12 +101,12 @@ public class CheckScheduleOfRail extends SetupBase {
 
 	@Test(priority = 3)
 	public void RailEmptyForm(Method m) throws IOException, SQLException {
-		String CurrentWindowHandle = driver.getWindowHandle();
+
 		Page.TotalEmptyRail.click();
 		(new WebDriverWait(driver, 50)).until(ExpectedConditions.numberOfWindowsToBe(2));
 		Set<String> WindowHandles = driver.getWindowHandles();
 		for (String windowHandle : WindowHandles) {
-			if (!windowHandle.equalsIgnoreCase(CurrentWindowHandle)) {
+			if (!windowHandle.equalsIgnoreCase(MainWindowHandler)) {
 				driver.switchTo().window(windowHandle);
 			}
 		}
@@ -123,7 +127,9 @@ public class CheckScheduleOfRail extends SetupBase {
 			String Expected = ExpectedTrailerInforReport.get(j).get(4);
 			String CurrentTerminal = ExpectedTrailerInforReport.get(j).get(3);
 			String Actual = trailer.get(7);
+
 			j = j + 1;
+			boolean LstFLAG;
 			if (!Expected.equals(Actual)) {
 				i = i + 1;
 				System.out.println(
@@ -141,17 +147,17 @@ public class CheckScheduleOfRail extends SetupBase {
 		// get back to
 		driver.close();
 
-		driver.switchTo().window(CurrentWindowHandle);
+		driver.switchTo().window(MainWindowHandler);
 	}
 
 	@Test(priority = 4)
 	public void RailLoadedForm(Method m) throws IOException, SQLException {
-		String CurrentWindowHandle = driver.getWindowHandle();
+
 		Page.TotalLoadedRail.click();
 		(new WebDriverWait(driver, 50)).until(ExpectedConditions.numberOfWindowsToBe(2));
 		Set<String> WindowHandles = driver.getWindowHandles();
 		for (String windowHandle : WindowHandles) {
-			if (!windowHandle.equalsIgnoreCase(CurrentWindowHandle)) {
+			if (!windowHandle.equalsIgnoreCase(MainWindowHandler)) {
 				driver.switchTo().window(windowHandle);
 			}
 		}
@@ -190,7 +196,7 @@ public class CheckScheduleOfRail extends SetupBase {
 		// get back to
 		driver.close();
 
-		driver.switchTo().window(CurrentWindowHandle);
+		driver.switchTo().window(MainWindowHandler);
 	}
 
 	@AfterClass

@@ -17,57 +17,52 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Optional;
-import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import Data.DataDAO;
 import Utility.ConfigRd;
 import Utility.Function;
+import Utility.SetupBase;
 import page.SysnetPage;
 
-public class CheckInterRegionalReport2 {
-	private WebDriver driver;
+public class CheckInterRegionalReport2 extends SetupBase {
+
 	private SysnetPage page;
-	private Actions builder;
+	private TimeZone defaultTimeZone;
 	private XSSFWorkbook workbook;
 	private XSSFSheet sheet;
 	private int R;
 	private DataDAO DA;
+	private String MainWindowHandler;
 
 	@BeforeClass
-	@Parameters({ "browser" })
-	public void SetUp(@Optional("chrome") String browser)
-			throws AWTException, InterruptedException, IOException, SQLException {
+	public void SetUp() throws AWTException, InterruptedException, IOException, SQLException {
 		ConfigRd Conf = new ConfigRd();
 		DA = new DataDAO();
-		if (browser.equalsIgnoreCase("chrome")) {
-			System.setProperty("webdriver.chrome.driver", Conf.GetChromePath());
-			driver = new ChromeDriver();
-		} else if (browser.equalsIgnoreCase("ie")) {
-			System.setProperty("webdriver.ie.driver", Conf.GetIEPath());
-			driver = new InternetExplorerDriver();
-		}
 		page = new SysnetPage(driver);
 		driver.get(Conf.GetSysnetSitURL());
 		driver.manage().window().maximize();
-		builder = new Actions(driver);
 		(new WebDriverWait(driver, 50)).until(ExpectedConditions.visibilityOf(page.SystemSummaryButton));
 		page.SystemSummaryButton.click();
 		(new WebDriverWait(driver, 50)).until(ExpectedConditions.visibilityOf(page.InterRegionalform));
+
+		// get time zone
+		defaultTimeZone = TimeZone.getDefault();
+
+		// get summary handler
+		MainWindowHandler = driver.getWindowHandle();
+
 		// create excel sheet and title
 		workbook = new XSSFWorkbook();
 		sheet = workbook.createSheet(Function.GetDisplayTime().replace(":", "-"));
 		String[] TitleLine = { "Line", "Time is wrong for trailer", " CurrentTerminal", "LstReport time expected:",
-				"but found: ", "TTMS expected: ", " but found: " };
+				"but found: ", "TTMS expected: ", " but found: ", " Destination: ", " ETA expected: ", "but found: " };
 		Row r = sheet.createRow(R);
 		int ColumnOfFirstline = 0;
 		for (String value : TitleLine) {
@@ -79,12 +74,12 @@ public class CheckInterRegionalReport2 {
 
 	@Test(priority = 1)
 	public void InterRegionalAtLddTrailerReport(Method m) throws ClassNotFoundException, SQLException {
-		String CurrentWindowHandle = driver.getWindowHandle();
+
 		page.InterRegionalATLdd.click();
 		(new WebDriverWait(driver, 50)).until(ExpectedConditions.numberOfWindowsToBe(2));
 		Set<String> WindowHandles = driver.getWindowHandles();
 		for (String windowHandle : WindowHandles) {
-			if (!windowHandle.equalsIgnoreCase(CurrentWindowHandle)) {
+			if (!windowHandle.equalsIgnoreCase(MainWindowHandler)) {
 				driver.switchTo().window(windowHandle);
 			}
 		}
@@ -142,20 +137,20 @@ public class CheckInterRegionalReport2 {
 		summary.createCell(1).setCellValue(TrailerGRID.size());
 		summary.createCell(2).setCellValue("  mismatch :");
 		summary.createCell(3).setCellValue(i);
+		sheet.createRow(++R);
 		// get back to
 		driver.close();
-		driver.switchTo().window(CurrentWindowHandle);
+		driver.switchTo().window(MainWindowHandler);
 	}
 
 	@Test(priority = 2)
 	public void InterRegionalAtArrTrailerReport(Method m) throws ClassNotFoundException, SQLException {
 
-		String CurrentWindowHandle = driver.getWindowHandle();
 		page.InterRegionalATArr.click();
 		(new WebDriverWait(driver, 50)).until(ExpectedConditions.numberOfWindowsToBe(2));
 		Set<String> WindowHandles = driver.getWindowHandles();
 		for (String windowHandle : WindowHandles) {
-			if (!windowHandle.equalsIgnoreCase(CurrentWindowHandle)) {
+			if (!windowHandle.equalsIgnoreCase(MainWindowHandler)) {
 				driver.switchTo().window(windowHandle);
 			}
 		}
@@ -211,20 +206,20 @@ public class CheckInterRegionalReport2 {
 		summary.createCell(1).setCellValue(TrailerGRID.size());
 		summary.createCell(2).setCellValue("  mismatch :");
 		summary.createCell(3).setCellValue(i);
+		sheet.createRow(++R);
 		// get back to
 		driver.close();
-		driver.switchTo().window(CurrentWindowHandle);
+		driver.switchTo().window(MainWindowHandler);
 	}
 
 	@Test(priority = 3)
 	public void InterRegionalAtLddArrTrailerReport(Method m) throws ClassNotFoundException, SQLException {
 
-		String CurrentWindowHandle = driver.getWindowHandle();
 		page.InterRegionalATLddArr.click();
 		(new WebDriverWait(driver, 50)).until(ExpectedConditions.numberOfWindowsToBe(2));
 		Set<String> WindowHandles = driver.getWindowHandles();
 		for (String windowHandle : WindowHandles) {
-			if (!windowHandle.equalsIgnoreCase(CurrentWindowHandle)) {
+			if (!windowHandle.equalsIgnoreCase(MainWindowHandler)) {
 				driver.switchTo().window(windowHandle);
 			}
 		}
@@ -281,20 +276,20 @@ public class CheckInterRegionalReport2 {
 		summary.createCell(1).setCellValue(TrailerGRID.size());
 		summary.createCell(2).setCellValue("  mismatch :");
 		summary.createCell(3).setCellValue(i);
+		sheet.createRow(++R);
 		// get back to
 		driver.close();
-		driver.switchTo().window(CurrentWindowHandle);
+		driver.switchTo().window(MainWindowHandler);
 	}
 
 	@Test(priority = 4)
 	public void InterRegionalRoadEmptiesTrailerReport(Method m) throws ClassNotFoundException, SQLException {
 
-		String CurrentWindowHandle = driver.getWindowHandle();
 		page.InterRegionalRoadEmpties.click();
 		(new WebDriverWait(driver, 50)).until(ExpectedConditions.numberOfWindowsToBe(2));
 		Set<String> WindowHandles = driver.getWindowHandles();
 		for (String windowHandle : WindowHandles) {
-			if (!windowHandle.equalsIgnoreCase(CurrentWindowHandle)) {
+			if (!windowHandle.equalsIgnoreCase(MainWindowHandler)) {
 				driver.switchTo().window(windowHandle);
 			}
 		}
@@ -302,7 +297,7 @@ public class CheckInterRegionalReport2 {
 		(new WebDriverWait(driver, 50))
 				.until(ExpectedConditions.visibilityOf(page.InterRegionalRoadEmptiesTrailerInforGrid));
 		LinkedHashSet<ArrayList<String>> TrailerGRID = page
-				.GetTrailerReportTime(page.InterRegionalRoadEmptiesTrailerInforGrid);
+				.GetTrailerReportList(page.InterRegionalRoadEmptiesTrailerInforGrid);
 		System.out.println("\n Inter-Regional Road Empties totally " + TrailerGRID.size());
 		Row subtitle = sheet.createRow(++R);
 		subtitle.createCell(0).setCellValue("Inter-Regional Road Empties totally :");
@@ -315,33 +310,35 @@ public class CheckInterRegionalReport2 {
 		for (ArrayList<String> trailer : TrailerGRID) {
 			String SCAC = trailer.get(0);
 			String TrailerNB = trailer.get(1);
-			String ExpectedTTMS = ExpectedTrailerInforReport.get(j).get(5);
 			String ExpectedLstReportT = ExpectedTrailerInforReport.get(j).get(4);
-			String ActualTTMS = trailer.get(3);
-			String ActualLstReportT = trailer.get(4);
-			String CurrentTerminal = trailer.get(2);
+			String ExpectedETA = ExpectedTrailerInforReport.get(j).get(6);
+			String CurrentTerminal = ExpectedTrailerInforReport.get(j).get(3);
+			String Destination = ExpectedTrailerInforReport.get(j).get(2);
+			String ActualLstReportT = trailer.get(7);
+			String ActualETA = trailer.get(8);
 			j = j + 1;
 			boolean FlagLst = ExpectedLstReportT.equals(ActualLstReportT);
-			boolean FlagTTMS = ExpectedTTMS.equals(ActualTTMS);
-			if (!(FlagLst && FlagTTMS)) {
+			boolean FlagETA = ExpectedETA.equals(ActualETA);
+			if (!(FlagLst && FlagETA)) {
 				i = i + 1;
 				R = 1 + R;
 				Row r = sheet.createRow(R);
 				r.createCell(0).setCellValue(j);
 				r.createCell(1).setCellValue(SCAC + "-" + TrailerNB);
-				r.createCell(2).setCellValue(CurrentTerminal);
-				System.out.println("\n" + j + " Time is wrong for trailer " + SCAC + "-" + TrailerNB
-						+ " CurrentTerminal " + CurrentTerminal);
+				System.out.println("\n" + j + " Time is wrong for trailer " + SCAC + "-" + TrailerNB);
 				if (FlagLst == false) {
+					r.createCell(2).setCellValue(CurrentTerminal);
 					r.createCell(3).setCellValue(ExpectedLstReportT);
 					r.createCell(4).setCellValue(ActualLstReportT);
-					System.out.print(
-							"  " + "Lst Result expected: " + ExpectedLstReportT + " but found: " + ActualLstReportT);
+					System.out.print(" CurrentTerminal " + CurrentTerminal + "  " + "Lst Result expected: "
+							+ ExpectedLstReportT + " but found: " + ActualLstReportT);
 				}
-				if (FlagTTMS == false) {
-					r.createCell(5).setCellValue(ExpectedTTMS);
-					r.createCell(6).setCellValue(ActualTTMS);
-					System.out.print("  " + "TTMS expected: " + ExpectedTTMS + " but found: " + ActualTTMS);
+				if (FlagETA == false) {
+					r.createCell(7).setCellValue(Destination);
+					r.createCell(8).setCellValue(ExpectedETA);
+					r.createCell(9).setCellValue(ActualETA);
+					System.out.print(" Destination " + Destination + "  " + "ETA expected: " + ExpectedETA
+							+ " but found: " + ActualETA);
 				}
 			}
 		}
@@ -352,15 +349,24 @@ public class CheckInterRegionalReport2 {
 		summary.createCell(1).setCellValue(TrailerGRID.size());
 		summary.createCell(2).setCellValue("  mismatch :");
 		summary.createCell(3).setCellValue(i);
+		sheet.createRow(++R);
 		// get back to
 		driver.close();
-		driver.switchTo().window(CurrentWindowHandle);
+		driver.switchTo().window(MainWindowHandler);
+	}
+
+	@AfterMethod
+	public void CheckFailure(ITestResult result) {
+
+		if (result.getStatus() == ITestResult.FAILURE) {
+			driver.close();
+			driver.switchTo().window(MainWindowHandler);
+		}
 	}
 
 	@AfterClass
 	public void Close() {
-		driver.close();
-		String CDate = Function.GetTimeValue(TimeZone.getDefault().getID());
+		String CDate = Function.GetTimeValue(defaultTimeZone.getID());
 		File file2 = new File("./Report/" + CDate);
 		file2.mkdir();
 		File file = new File(file2, this.getClass().getName() + ".xlsx");

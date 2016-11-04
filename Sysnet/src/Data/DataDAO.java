@@ -32,17 +32,20 @@ public class DataDAO {
 		rs.next();
 		String DEST_TERMINAL = rs.getString("DEST_TERMINAL");
 		String LastReportTerminal = rs.getString("LAST_REPORTED_TRM");
+		String NEXT_TERMINAL_1 = rs.getString("NEXT_TERMINAL_1");
 		Date LAST_REPORTED_TIME_DT = rs.getTimestamp("LAST_REPORTED_TIME_DT");
 		Date NEXT_TTMS_1_DT = rs.getTimestamp("NEXT_TTMS_1_DT");
+		Date IN_OUT_TIME_DT = rs.getTimestamp("IN_OUT_TIME_DT");
 		String LstReportTime = Function.getLocalTimeReport(LastReportTerminal, LAST_REPORTED_TIME_DT, conn2);
 		String TTMS = Function.getLocalTimeReport(LastReportTerminal, NEXT_TTMS_1_DT, conn2);
+		String ETA = Function.getLocalTimeReport(NEXT_TERMINAL_1, IN_OUT_TIME_DT, conn2);
 		trailer.setSCAC(SCAC);
 		trailer.setTrailerNb(TrailerNB);
 		trailer.setDest(DEST_TERMINAL);
 		trailer.setCurTerminal(LastReportTerminal);
-		trailer.setDest(DEST_TERMINAL);
 		trailer.setLastReportTime(LstReportTime);
 		trailer.setTTMS(TTMS);
+		trailer.setETA(ETA);
 		conn2.close();
 		DataConnection.CloseDB(cn, stat, rs);
 		return trailer;
@@ -68,11 +71,15 @@ public class DataDAO {
 			rs.next();
 			String DEST_TERMINAL = rs.getString("DEST_TERMINAL");
 			String LastReportTerminal = rs.getString("LAST_REPORTED_TRM");
+			String NEXT_TERMINAL_1 = rs.getString("NEXT_TERMINAL_1");
 			Date LAST_REPORTED_TIME_DT = rs.getTimestamp("LAST_REPORTED_TIME_DT");
 			Date NEXT_TTMS_1_DT = rs.getTimestamp("NEXT_TTMS_1_DT");
+			Date IN_OUT_TIME_DT = rs.getTimestamp("IN_OUT_TIME_DT");
 			// System.out.println(LAST_REPORTED_TIME_DT + SCAC + TrailerNB);
+
 			String LstReportTime = Function.getLocalTimeReport(LastReportTerminal, LAST_REPORTED_TIME_DT, conn2);
 			String TTMS = Function.getLocalTimeReport(LastReportTerminal, NEXT_TTMS_1_DT, conn2);
+			String ETA = Function.getLocalTimeReport(NEXT_TERMINAL_1, IN_OUT_TIME_DT, conn2);
 			ArrayList<String> ExpectedTrailerLine = new ArrayList<String>();
 			ExpectedTrailerLine.add(SCAC);
 			ExpectedTrailerLine.add(TrailerNB);
@@ -80,6 +87,7 @@ public class DataDAO {
 			ExpectedTrailerLine.add(LastReportTerminal);
 			ExpectedTrailerLine.add(LstReportTime);
 			ExpectedTrailerLine.add(TTMS);
+			ExpectedTrailerLine.add(ETA);
 			Collections.replaceAll(ExpectedTrailerLine, null, "");
 			ExpectedTrailerReportList.add(ExpectedTrailerLine);
 		}

@@ -199,7 +199,7 @@ public class SysnetPage {
 					TrailerInforGrid.findElement(By.xpath("div[" + line + "]")));
 			lastLine = line;
 			line = TrailerInforGrid.findElements(By.xpath("div")).size();
-		} while (line >= lastLine);
+		} while (line >= lastLine && line > 48);
 
 		for (int j = 1; j <= line; j++) {
 			SCAC = TrailerInforGrid.findElement(By.xpath("div[" + j + "]/div/div[1]")).getText();
