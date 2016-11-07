@@ -3,9 +3,11 @@ package page;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
+import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -179,19 +181,64 @@ public class SysnetPage {
 		String CurrentTerminal;
 		String TTMS;
 		String LstRptdTime;
+		String ETA;
+		int IndexOfTTMS;
+		int IndexOfLstRptdTime;
+		int IndexOfETA;
+		// get index of each time column
+		List<WebElement> AllHeaders = TrailerInforGrid
+				.findElement(By
+						.xpath("parent::div/preceding-sibling::div//div[@role='row'][@class='ui-grid-header-cell-row']"))
+				.findElements(By.xpath("div"));
+		try {
+			IndexOfLstRptdTime = AllHeaders
+					.indexOf(driver.findElement(By.xpath(".//div[@title='Last Reported Time Date']/ancestor::div[2]")));
+		} catch (NoSuchElementException ns) {
+		}
+		IndexOfLstRptdTime = 0;
+		try {
+			IndexOfTTMS = AllHeaders
+					.indexOf(driver.findElement(By.xpath(".//div[@title='Time to Make Service']/ancestor::div[2]")));
+		} catch (NoSuchElementException ns) {
+			IndexOfTTMS = 0;
+		}
+
+		try {
+			IndexOfETA = AllHeaders
+					.indexOf(driver.findElement(By.xpath(".//div[@title='In Out Time Date']/ancestor::div[2]")));
+		} catch (NoSuchElementException ns) {
+			IndexOfETA = 0;
+		}
 		do {
 			for (int j = 1; j <= line; j++) {
 				SCAC = TrailerInforGrid.findElement(By.xpath("div[" + j + "]/div/div[1]")).getText();
 				Trailer = TrailerInforGrid.findElement(By.xpath("div[" + j + "]/div/div[2]")).getText();
 				CurrentTerminal = TrailerInforGrid.findElement(By.xpath("div[" + j + "]/div/div[6]")).getText();
-				TTMS = TrailerInforGrid.findElement(By.xpath("div[" + j + "]/div/div[10]")).getText();
-				LstRptdTime = TrailerInforGrid.findElement(By.xpath("div[" + j + "]/div/div[11]")).getText();
+				try {
+					TTMS = TrailerInforGrid.findElement(By.xpath("div[" + j + "]/div/div[" + IndexOfTTMS + "]"))
+							.getText();
+				} catch (NoSuchElementException ns) {
+					TTMS = null;
+				}
+				try {
+					LstRptdTime = TrailerInforGrid
+							.findElement(By.xpath("div[" + j + "]/div/div[" + IndexOfLstRptdTime + "]")).getText();
+				} catch (NoSuchElementException ns) {
+					LstRptdTime = null;
+				}
+				try {
+					ETA = TrailerInforGrid.findElement(By.xpath("div[" + j + "]/div/div[" + IndexOfETA + "]"))
+							.getText();
+				} catch (NoSuchElementException ns) {
+					ETA = null;
+				}
 				ArrayList<String> e1 = new ArrayList<String>();
 				e1.add(SCAC);
 				e1.add(Trailer);
 				e1.add(CurrentTerminal);
 				e1.add(TTMS);
 				e1.add(LstRptdTime);
+				e1.add(ETA);
 				ProInfo.add(e1);
 			}
 
@@ -205,14 +252,29 @@ public class SysnetPage {
 			SCAC = TrailerInforGrid.findElement(By.xpath("div[" + j + "]/div/div[1]")).getText();
 			Trailer = TrailerInforGrid.findElement(By.xpath("div[" + j + "]/div/div[2]")).getText();
 			CurrentTerminal = TrailerInforGrid.findElement(By.xpath("div[" + j + "]/div/div[6]")).getText();
-			TTMS = TrailerInforGrid.findElement(By.xpath("div[" + j + "]/div/div[10]")).getText();
-			LstRptdTime = TrailerInforGrid.findElement(By.xpath("div[" + j + "]/div/div[11]")).getText();
+			try {
+				TTMS = TrailerInforGrid.findElement(By.xpath("div[" + j + "]/div/div[" + IndexOfTTMS + "]")).getText();
+			} catch (NoSuchElementException ns) {
+				TTMS = null;
+			}
+			try {
+				LstRptdTime = TrailerInforGrid
+						.findElement(By.xpath("div[" + j + "]/div/div[" + IndexOfLstRptdTime + "]")).getText();
+			} catch (NoSuchElementException ns) {
+				LstRptdTime = null;
+			}
+			try {
+				ETA = TrailerInforGrid.findElement(By.xpath("div[" + j + "]/div/div[" + IndexOfETA + "]")).getText();
+			} catch (NoSuchElementException ns) {
+				ETA = null;
+			}
 			ArrayList<String> e1 = new ArrayList<String>();
 			e1.add(SCAC);
 			e1.add(Trailer);
 			e1.add(CurrentTerminal);
 			e1.add(TTMS);
 			e1.add(LstRptdTime);
+			e1.add(ETA);
 			ProInfo.add(e1);
 		}
 		return ProInfo;

@@ -124,20 +124,32 @@ public class CheckScheduleOfRail extends SetupBase {
 		for (ArrayList<String> trailer : TrailerGRID) {
 			String SCAC = trailer.get(0);
 			String TrailerNB = trailer.get(1);
-			String Expected = ExpectedTrailerInforReport.get(j).get(4);
+			String ExpectedLstReportT = ExpectedTrailerInforReport.get(j).get(4);
+			String ActualLstReportT = trailer.get(7);
+			String ExpectedETA = ExpectedTrailerInforReport.get(j).get(6);
+			String ActualETA = trailer.get(8);
 			String CurrentTerminal = ExpectedTrailerInforReport.get(j).get(3);
-			String Actual = trailer.get(7);
-
+			String Destination = ExpectedTrailerInforReport.get(j).get(2);
 			j = j + 1;
-			boolean LstFLAG;
-			if (!Expected.equals(Actual)) {
+			boolean FlagLst = ExpectedLstReportT.equals(ActualLstReportT);
+			boolean FlagETA = ExpectedETA.equals(ActualETA);
+			if (!(FlagLst && FlagETA)) {
 				i = i + 1;
-				System.out.println(
-						j + " Lst Rptd Time is wrong for trailer " + SCAC + "-" + TrailerNB + " CurrentTerminal "
-								+ CurrentTerminal + "  " + "expected: " + Expected + " but found: " + Actual);
+				System.out.println("\n" + j + " Time is wrong for trailer " + SCAC + "-" + TrailerNB
+						+ " CurrentTerminal " + CurrentTerminal + " Destination " + Destination);
 
-				fw.write(Nl + j + " Lst Rptd Time is wrong for trailer " + SCAC + "-" + TrailerNB + " CurrentTerminal "
-						+ CurrentTerminal + "  " + "expected: " + Expected + " but found: " + Actual);
+				fw.write(Nl + j + " Time is wrong for trailer " + SCAC + "-" + TrailerNB + " CurrentTerminal "
+						+ CurrentTerminal + " Destination " + Destination);
+				if (FlagLst == false) {
+					fw.write("  " + "Lst Result expected: " + ExpectedLstReportT + " but found: " + ActualLstReportT);
+					System.out.print(
+							"  " + "Lst Result expected: " + ExpectedLstReportT + " but found: " + ActualLstReportT);
+				}
+				if (FlagETA == false) {
+					fw.write("  " + "TTMS expected: " + ExpectedETA + " but found: " + ActualETA);
+					System.out.print("  " + "TTMS expected: " + ExpectedETA + " but found: " + ActualETA);
+				}
+
 			}
 		}
 
@@ -163,7 +175,7 @@ public class CheckScheduleOfRail extends SetupBase {
 		}
 		(new WebDriverWait(driver, 50)).until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-bar")));
 		(new WebDriverWait(driver, 20)).until(ExpectedConditions.visibilityOf(Page.TotalLoadedRailForm));
-		LinkedHashSet<ArrayList<String>> TrailerGRID = Page.GetTrailerReportList(Page.TotalLoadedRailForm);
+		LinkedHashSet<ArrayList<String>> TrailerGRID = Page.GetTrailerReportTime(Page.TotalLoadedRailForm);
 		System.out.println("\n Total Loaded Rail Form " + TrailerGRID.size());
 		fw.write(Nl + " Total Loaded Rail Form " + TrailerGRID.size() + Nl);
 		int i = 0;
@@ -175,18 +187,39 @@ public class CheckScheduleOfRail extends SetupBase {
 		for (ArrayList<String> trailer : TrailerGRID) {
 			String SCAC = trailer.get(0);
 			String TrailerNB = trailer.get(1);
-			String Expected = ExpectedTrailerInforReport.get(j).get(4);
+			String ExpectedLstReportT = ExpectedTrailerInforReport.get(j).get(4);
+			String ActualLstReportT = trailer.get(7);
+			String ExpectedETA = ExpectedTrailerInforReport.get(j).get(6);
+			String ActualETA = trailer.get(8);
 			String CurrentTerminal = ExpectedTrailerInforReport.get(j).get(3);
-			String Actual = trailer.get(10);
+			String Destination = ExpectedTrailerInforReport.get(j).get(2);
+			String ActualTTMS = trailer.get(3);
+			String ExpectedTTMS = ExpectedTrailerInforReport.get(j).get(5);
 			j = j + 1;
-			if (!Expected.equals(Actual)) {
-				i = i + 1;
-				System.out.println(
-						j + " Lst Rptd Time is wrong for trailer " + SCAC + "-" + TrailerNB + " CurrentTerminal "
-								+ CurrentTerminal + "  " + "expected: " + Expected + " but found: " + Actual);
+			boolean FlagLst = ExpectedLstReportT.equals(ActualLstReportT);
+			boolean FlagETA = ExpectedETA.equals(ActualETA);
+			boolean FlagTTMS = ExpectedTTMS.equals(ActualTTMS);
 
-				fw.write(Nl + j + " Lst Rptd Time is wrong for trailer " + SCAC + "-" + TrailerNB + " CurrentTerminal "
-						+ CurrentTerminal + "  " + "expected: " + Expected + " but found: " + Actual);
+			if (!(FlagLst && FlagETA && FlagTTMS)) {
+				i = i + 1;
+				System.out.println("\n" + j + " Time is wrong for trailer " + SCAC + "-" + TrailerNB
+						+ " CurrentTerminal " + CurrentTerminal + " Destination " + Destination);
+
+				fw.write(Nl + j + " Time is wrong for trailer " + SCAC + "-" + TrailerNB + " CurrentTerminal "
+						+ CurrentTerminal + " Destination " + Destination);
+				if (FlagLst == false) {
+					fw.write("  " + "Lst Result expected: " + ExpectedLstReportT + " but found: " + ActualLstReportT);
+					System.out.print(
+							"  " + "Lst Result expected: " + ExpectedLstReportT + " but found: " + ActualLstReportT);
+				}
+				if (FlagETA == false) {
+					fw.write("  " + "TTMS expected: " + ExpectedETA + " but found: " + ActualETA);
+					System.out.print("  " + "TTMS expected: " + ExpectedETA + " but found: " + ActualETA);
+				}
+				if (FlagTTMS == false) {
+					fw.write("  " + "TTMS expected: " + ExpectedTTMS + " but found: " + ActualTTMS);
+					System.out.print("  " + "TTMS expected: " + ExpectedTTMS + " but found: " + ActualTTMS);
+				}
 			}
 		}
 

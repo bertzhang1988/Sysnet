@@ -17,8 +17,7 @@
 		<dependency>
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
-			<version>6.9.12</version>
-			<scope>test</scope>
+			<version>6.9.13.6</version>
 		</dependency>
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
@@ -81,7 +80,7 @@
 				<inherited>true</inherited>
 				<configuration>
 					<suiteXmlFiles>
-						<suiteXmlFile>testng.xml</suiteXmlFile>
+						
 						<suiteXmlFile>testng2.xml</suiteXmlFile>
 					</suiteXmlFiles>
 					<properties>

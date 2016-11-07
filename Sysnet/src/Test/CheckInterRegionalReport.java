@@ -9,7 +9,6 @@ import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -62,18 +61,16 @@ public class CheckInterRegionalReport {
 		(new WebDriverWait(driver, 50)).until(ExpectedConditions.visibilityOf(page.SystemSummaryButton));
 		page.SystemSummaryButton.click();
 		(new WebDriverWait(driver, 50)).until(ExpectedConditions.visibilityOf(page.InterRegionalform));
-		// create excel sheet and title
-		workbook = new XSSFWorkbook();
-		sheet = workbook.createSheet(Function.GetDisplayTime().replace(":", "-"));
-		String[] TitleLine = { "Line", "Time is wrong for trailer", " CurrentTerminal", "LstReport time expected:",
-				"but found: ", "TTMS expected: ", " but found: " };
-		Row r = sheet.createRow(R);
-		int ColumnOfFirstline = 0;
-		for (String value : TitleLine) {
-			Cell CellOfFirstRow = r.createCell(ColumnOfFirstline);
-			CellOfFirstRow.setCellValue(value);
-			ColumnOfFirstline++;
-		}
+		/*
+		 * // create excel sheet and title workbook = new XSSFWorkbook(); sheet
+		 * = workbook.createSheet(Function.GetDisplayTime().replace(":", "-"));
+		 * String[] TitleLine = { "Line", "Time is wrong for trailer",
+		 * " CurrentTerminal", "LstReport time expected:", "but found: ",
+		 * "TTMS expected: ", " but found: " }; Row r = sheet.createRow(R); int
+		 * ColumnOfFirstline = 0; for (String value : TitleLine) { Cell
+		 * CellOfFirstRow = r.createCell(ColumnOfFirstline);
+		 * CellOfFirstRow.setCellValue(value); ColumnOfFirstline++; }
+		 */
 	}
 
 	@Test(priority = 1)

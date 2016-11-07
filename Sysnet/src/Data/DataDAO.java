@@ -81,13 +81,13 @@ public class DataDAO {
 			String TTMS = Function.getLocalTimeReport(LastReportTerminal, NEXT_TTMS_1_DT, conn2);
 			String ETA = Function.getLocalTimeReport(NEXT_TERMINAL_1, IN_OUT_TIME_DT, conn2);
 			ArrayList<String> ExpectedTrailerLine = new ArrayList<String>();
-			ExpectedTrailerLine.add(SCAC);
-			ExpectedTrailerLine.add(TrailerNB);
-			ExpectedTrailerLine.add(DEST_TERMINAL);
-			ExpectedTrailerLine.add(LastReportTerminal);
-			ExpectedTrailerLine.add(LstReportTime);
-			ExpectedTrailerLine.add(TTMS);
-			ExpectedTrailerLine.add(ETA);
+			ExpectedTrailerLine.add(SCAC); // 0
+			ExpectedTrailerLine.add(TrailerNB); // 1
+			ExpectedTrailerLine.add(DEST_TERMINAL);// 2
+			ExpectedTrailerLine.add(LastReportTerminal);// 3
+			ExpectedTrailerLine.add(LstReportTime);// 4
+			ExpectedTrailerLine.add(TTMS);// 5
+			ExpectedTrailerLine.add(ETA);// 6
 			Collections.replaceAll(ExpectedTrailerLine, null, "");
 			ExpectedTrailerReportList.add(ExpectedTrailerLine);
 		}
