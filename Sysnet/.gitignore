@@ -4,6 +4,6 @@ SysnetScreenshot
 bin
 test-output
 Report
-Test/trial
+Test/trial/*
 
 
