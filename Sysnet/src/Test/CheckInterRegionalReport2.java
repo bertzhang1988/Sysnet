@@ -24,7 +24,9 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
+import Data.CommonData;
 import Data.DataDAO;
 import Utility.ConfigRd;
 import Utility.Function;
@@ -353,6 +355,15 @@ public class CheckInterRegionalReport2 extends SetupBase {
 		// get back to
 		driver.close();
 		driver.switchTo().window(MainWindowHandler);
+	}
+
+	@Test(priority = 5)
+	public void VerifySchedulesForInterRegionalEmpty() throws SQLException, IOException {
+		SoftAssert sa = new SoftAssert();
+
+		String ScheduleE = page.InterRegionalRoadEmpties.findElement(By.xpath("following-sibling::td")).getText();
+		String ExpectedSheduleE = CommonData.GetScheduleForInterRegionalRoadEmpty();
+		sa.assertEquals(ScheduleE, ExpectedSheduleE, "the schedule of empty rail is wrong");
 	}
 
 	@AfterMethod

@@ -59,4 +59,13 @@ public class CommonData {
 		return GetSchedule(Query.query1);
 
 	}
+
+	public static String GetScheduleForInterRegionalRoadEmpty() throws SQLException {
+		return GetSchedule(Query.query3);
+	}
+
+	public static String GetScheduleForIntraRegionalRoadEmpty() throws SQLException {
+		return GetSchedule(Query.query4);
+	}
+
 }

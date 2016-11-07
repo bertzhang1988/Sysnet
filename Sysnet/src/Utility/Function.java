@@ -87,6 +87,7 @@ public class Function {
 			stat.close();
 		// if (conn2 != null)conn2.close();
 		ArrayList<Date> Range = GetDstRange(year);
+
 		if (Daylight_Savings_IN.equalsIgnoreCase("Y")) {
 			if (Utctime.after(Range.get(0)) && Utctime.before(Range.get(1))) {
 				cal.add(Calendar.HOUR, -Offset_NB + 2 + 1);

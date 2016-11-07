@@ -191,21 +191,22 @@ public class SysnetPage {
 						.xpath("parent::div/preceding-sibling::div//div[@role='row'][@class='ui-grid-header-cell-row']"))
 				.findElements(By.xpath("div"));
 		try {
-			IndexOfLstRptdTime = AllHeaders
-					.indexOf(driver.findElement(By.xpath(".//div[@title='Last Reported Time Date']/ancestor::div[2]")));
+			IndexOfLstRptdTime = AllHeaders.indexOf(
+					driver.findElement(By.xpath(".//div[@title='Last Reported Time Date']/ancestor::div[2]"))) + 1;
 		} catch (NoSuchElementException ns) {
+			IndexOfLstRptdTime = 0;
 		}
-		IndexOfLstRptdTime = 0;
+
 		try {
-			IndexOfTTMS = AllHeaders
-					.indexOf(driver.findElement(By.xpath(".//div[@title='Time to Make Service']/ancestor::div[2]")));
+			IndexOfTTMS = AllHeaders.indexOf(
+					driver.findElement(By.xpath(".//div[@title='Time to Make Service']/ancestor::div[2]"))) + 1;
 		} catch (NoSuchElementException ns) {
 			IndexOfTTMS = 0;
 		}
 
 		try {
 			IndexOfETA = AllHeaders
-					.indexOf(driver.findElement(By.xpath(".//div[@title='In Out Time Date']/ancestor::div[2]")));
+					.indexOf(driver.findElement(By.xpath(".//div[@title='In Out Time Date']/ancestor::div[2]"))) + 1;
 		} catch (NoSuchElementException ns) {
 			IndexOfETA = 0;
 		}
@@ -233,12 +234,12 @@ public class SysnetPage {
 					ETA = null;
 				}
 				ArrayList<String> e1 = new ArrayList<String>();
-				e1.add(SCAC);
-				e1.add(Trailer);
-				e1.add(CurrentTerminal);
-				e1.add(TTMS);
-				e1.add(LstRptdTime);
-				e1.add(ETA);
+				e1.add(SCAC);// 0
+				e1.add(Trailer);// 1
+				e1.add(CurrentTerminal);// 2
+				e1.add(TTMS);// 3
+				e1.add(LstRptdTime);// 4
+				e1.add(ETA);// 5
 				ProInfo.add(e1);
 			}
 
@@ -269,12 +270,12 @@ public class SysnetPage {
 				ETA = null;
 			}
 			ArrayList<String> e1 = new ArrayList<String>();
-			e1.add(SCAC);
-			e1.add(Trailer);
-			e1.add(CurrentTerminal);
-			e1.add(TTMS);
-			e1.add(LstRptdTime);
-			e1.add(ETA);
+			e1.add(SCAC);// 0
+			e1.add(Trailer);// 1
+			e1.add(CurrentTerminal);// 2
+			e1.add(TTMS);// 3
+			e1.add(LstRptdTime);// 4
+			e1.add(ETA);// 5
 			ProInfo.add(e1);
 		}
 		return ProInfo;

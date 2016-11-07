@@ -188,9 +188,9 @@ public class CheckScheduleOfRail extends SetupBase {
 			String SCAC = trailer.get(0);
 			String TrailerNB = trailer.get(1);
 			String ExpectedLstReportT = ExpectedTrailerInforReport.get(j).get(4);
-			String ActualLstReportT = trailer.get(7);
+			String ActualLstReportT = trailer.get(4);
 			String ExpectedETA = ExpectedTrailerInforReport.get(j).get(6);
-			String ActualETA = trailer.get(8);
+			String ActualETA = trailer.get(5);
 			String CurrentTerminal = ExpectedTrailerInforReport.get(j).get(3);
 			String Destination = ExpectedTrailerInforReport.get(j).get(2);
 			String ActualTTMS = trailer.get(3);
@@ -213,8 +213,8 @@ public class CheckScheduleOfRail extends SetupBase {
 							"  " + "Lst Result expected: " + ExpectedLstReportT + " but found: " + ActualLstReportT);
 				}
 				if (FlagETA == false) {
-					fw.write("  " + "TTMS expected: " + ExpectedETA + " but found: " + ActualETA);
-					System.out.print("  " + "TTMS expected: " + ExpectedETA + " but found: " + ActualETA);
+					fw.write("  " + "ETA expected: " + ExpectedETA + " but found: " + ActualETA);
+					System.out.print("  " + "ETA expected: " + ExpectedETA + " but found: " + ActualETA);
 				}
 				if (FlagTTMS == false) {
 					fw.write("  " + "TTMS expected: " + ExpectedTTMS + " but found: " + ActualTTMS);

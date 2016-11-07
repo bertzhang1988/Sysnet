@@ -20,6 +20,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import Data.CommonData;
 import Data.DataDAO;
 import Utility.ConfigRd;
 import Utility.Function;
@@ -429,6 +430,21 @@ public class CheckIntraRegionalReport2 extends SetupBase {
 		// get back to
 		driver.close();
 		driver.switchTo().window(MainWindowHandler);
+	}
+
+	@Test(priority = 7)
+	public void VerifySchedulesForIntraRegionalEmpty() throws SQLException, IOException {
+		(new WebDriverWait(driver, 20)).until(ExpectedConditions.visibilityOf(page.Railform));
+		(new WebDriverWait(driver, 50)).until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-bar")));
+		fw.write(Nl + "intra-regional road schedule: ");
+		// check load rail schedule
+		String ScheduleL = page.IntraRegionalRoadEmpties.findElement(By.xpath("following-sibling::td")).getText();
+		String ExpectedShedulel = CommonData.GetScheduleForIntraRegionalRoadEmpty();
+		if (ScheduleL.equals(ExpectedShedulel)) {
+			fw.write(Nl + "the result is correct");
+		} else {
+			fw.write(Nl + "expected Shedule of loaded Rail: " + ExpectedShedulel + " but found: " + ScheduleL);
+		}
 	}
 
 	@AfterMethod
