@@ -82,7 +82,7 @@ public class DataDAO {
 				LstReportTime = Function.getLocalTimeReport(LastReportTerminal, LAST_REPORTED_TIME_DT, conn2);
 			} catch (ArrayIndexOutOfBoundsException ae) {
 				System.out.println(SCAC + "-" + TrailerNB + " LAST_REPORTED_TIME_DT: " + LAST_REPORTED_TIME_DT
-						+ " is earlier than 2016, can not judge DST");
+						+ " is not in range of 2016-2026, can not judge DST");
 				LstReportTime = null;
 			}
 			String TTMS;
@@ -90,7 +90,7 @@ public class DataDAO {
 				TTMS = Function.getLocalTimeReport(LastReportTerminal, NEXT_TTMS_1_DT, conn2);
 			} catch (ArrayIndexOutOfBoundsException ae) {
 				System.out.println(SCAC + "-" + TrailerNB + " NEXT_TTMS_1_DT: " + NEXT_TTMS_1_DT
-						+ " is earlier than 2016, can not judge DST");
+						+ " is not in range of 2016-2026, can not judge DST");
 				TTMS = null;
 			}
 			String ETA;
@@ -98,7 +98,7 @@ public class DataDAO {
 				ETA = Function.getLocalTimeReport(NEXT_TERMINAL_1, IN_OUT_TIME_DT, conn2);
 			} catch (ArrayIndexOutOfBoundsException ae) {
 				System.out.println(SCAC + "-" + TrailerNB + " IN_OUT_TIME_DT: " + IN_OUT_TIME_DT
-						+ " is earlier than 2016, can not judge DST");
+						+ " is not in range of 2016-2026, can not judge DST");
 				ETA = null;
 			}
 			ArrayList<String> ExpectedTrailerLine = new ArrayList<String>();

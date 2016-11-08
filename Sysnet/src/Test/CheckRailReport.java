@@ -24,7 +24,7 @@ import Utility.Function;
 import Utility.SetupBase;
 import page.SysnetPage;
 
-public class CheckScheduleOfRail extends SetupBase {
+public class CheckRailReport extends SetupBase {
 
 	private SysnetPage Page;
 	private String Nl;
@@ -57,7 +57,7 @@ public class CheckScheduleOfRail extends SetupBase {
 
 	}
 
-	@Test(priority = 1)
+	@Test(priority = 1, enabled = false)
 	public void VerifySchedulesForRail() throws SQLException {
 		SoftAssert sa = new SoftAssert();
 
@@ -130,11 +130,11 @@ public class CheckScheduleOfRail extends SetupBase {
 			String ActualETA = trailer.get(8);
 			String CurrentTerminal = ExpectedTrailerInforReport.get(j).get(3);
 			String Destination = ExpectedTrailerInforReport.get(j).get(2);
-			j = j + 1;
+			++j;
 			boolean FlagLst = ExpectedLstReportT.equals(ActualLstReportT);
 			boolean FlagETA = ExpectedETA.equals(ActualETA);
 			if (!(FlagLst && FlagETA)) {
-				i = i + 1;
+				++i;
 				System.out.println("\n" + j + " Time is wrong for trailer " + SCAC + "-" + TrailerNB
 						+ " CurrentTerminal " + CurrentTerminal + " Destination " + Destination);
 
@@ -195,13 +195,13 @@ public class CheckScheduleOfRail extends SetupBase {
 			String Destination = ExpectedTrailerInforReport.get(j).get(2);
 			String ActualTTMS = trailer.get(3);
 			String ExpectedTTMS = ExpectedTrailerInforReport.get(j).get(5);
-			j = j + 1;
+			++j;
 			boolean FlagLst = ExpectedLstReportT.equals(ActualLstReportT);
 			boolean FlagETA = ExpectedETA.equals(ActualETA);
 			boolean FlagTTMS = ExpectedTTMS.equals(ActualTTMS);
 
 			if (!(FlagLst && FlagETA && FlagTTMS)) {
-				i = i + 1;
+				++i;
 				System.out.println("\n" + j + " Time is wrong for trailer " + SCAC + "-" + TrailerNB
 						+ " CurrentTerminal " + CurrentTerminal + " Destination " + Destination);
 
