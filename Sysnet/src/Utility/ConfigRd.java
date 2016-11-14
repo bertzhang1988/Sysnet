@@ -43,6 +43,11 @@ public class ConfigRd {
 		return path;
 	}
 
+	public String GetSysnetQaURL() {
+		String path = pro.getProperty("SysnetQaURL");
+		return path;
+	}
+
 	public String GetDatabase() {
 		String path = pro.getProperty("Sitdb");
 		return path;
@@ -68,6 +73,11 @@ public class ConfigRd {
 		return path;
 	}
 
+	public String GetQaDatabase() {
+		String path = pro.getProperty("Qadb");
+		return path;
+	}
+
 	public String GetDevDatabase() {
 		String path = pro.getProperty("Devdb");
 		return path;
@@ -80,6 +90,11 @@ public class ConfigRd {
 
 	public String GetDevUserSchema() {
 		String path = pro.getProperty("DevUser");
+		return path;
+	}
+
+	public String GetQaUserSchema() {
+		String path = pro.getProperty("QaUser");
 		return path;
 	}
 

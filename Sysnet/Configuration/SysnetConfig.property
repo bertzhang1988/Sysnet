@@ -6,9 +6,13 @@ SysnetSitURL=https://sysnetsit1.yrcw.com/webapps/sysnet/
 
 SysnetDevURL=https://sysnetdev.yrcw.com/webapps/sysnet/
 
+SysnetQaURL=https://sysnetstg.yrcw.com/webapps/sysnet/
+
 Sitdb=jdbc:oracle:thin:@yvmoradev08:1527:SYSST
 
 Devdb=jdbc:oracle:thin:@yvmoradev08:1527:SYSUT
+
+Qadb=jdbc:oracle:thin:@yvmoradev08:1527:SYSPS
 
 UserName=uyr27b0
 
@@ -17,3 +21,5 @@ Password=Fall2016!
 SitUser=SYSSTG1
 
 DevUser=YRCNET
+
+QaUser=SYSQA

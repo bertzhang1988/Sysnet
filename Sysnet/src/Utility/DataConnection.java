@@ -73,6 +73,27 @@ public final class DataConnection {
 		return cn;
 	}
 
+	public static Connection getQaConnection() {
+		ConfigRd conf = new ConfigRd();
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		Connection cn = null;
+		try {
+			cn = DriverManager.getConnection(conf.GetQaDatabase(), conf.GetDbUserName(), conf.GetDbPassword());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
+			cn.createStatement().execute("alter session set current_schema=" + conf.GetQaUserSchema() + " ");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return cn;
+	}
+
 	public static void CloseDB(Connection cn, Statement stat, ResultSet rs) {
 		try {
 			if (rs != null)
