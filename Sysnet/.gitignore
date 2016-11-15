@@ -1,10 +1,10 @@
 target
 
-SysnetScreenshot
+SysnetScreenshot/*
 bin
 test-output
-Report
-src/Test/trial
+Report/*
+src/Test/trial/*
 
 
 
