@@ -4,6 +4,7 @@ SysnetScreenshot/*
 bin
 test-output
 Report/*
-!Report/gitkeep.gitignore 
 src/Test/trial/*
+
+
 
