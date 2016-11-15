@@ -77,25 +77,25 @@ public class CheckRailReport extends SetupBase {
 	@Test(priority = 2)
 	public void VerifySchedulesForRail2() throws SQLException, IOException {
 
-		fw.write(Nl + "empty rail schedule: ");
+		fw.write(Nl + "empty rail schedule: "+Nl );
 		// check empty rail schedule
 		String ScheduleE = Page.TotalEmptyRail.findElement(By.xpath("following-sibling::td")).getText();
 		String ExpectedSheduleE = CommonData.GetScheduleForEmptyRail();
 
 		if (ScheduleE.equals(ExpectedSheduleE)) {
-			fw.write(Nl + "the result is correct");
+			fw.write(Nl + "the result is correct"+Nl );
 		} else {
-			fw.write(Nl + "expected Shedule of empty Rail: " + ExpectedSheduleE + "but found: " + ScheduleE);
+			fw.write(Nl + "expected Shedule of empty Rail: " + ExpectedSheduleE + "but found: " + ScheduleE+Nl );
 		}
 
-		fw.write(Nl + "loaded rail schedule: ");
+		fw.write(Nl + "loaded rail schedule: "+Nl );
 		// check load rail schedule
 		String ScheduleL = Page.TotalLoadedRail.findElement(By.xpath("following-sibling::td")).getText();
 		String ExpectedShedulel = CommonData.GetScheduleForLoadedRail();
 		if (ScheduleL.equals(ExpectedShedulel)) {
-			fw.write(Nl + "the result is correct");
+			fw.write(Nl + "the result is correct"+Nl );
 		} else {
-			fw.write(Nl + "expected Shedule of loaded Rail: " + ExpectedShedulel + " but found: " + ScheduleL);
+			fw.write(Nl + "expected Shedule of loaded Rail: " + ExpectedShedulel + " but found: " + ScheduleL+Nl );
 		}
 	}
 
