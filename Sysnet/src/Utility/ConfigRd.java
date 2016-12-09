@@ -33,6 +33,7 @@ public class ConfigRd {
 		return path;
 	}
 
+	/* set url */
 	public String GetSysnetSitURL() {
 		String path = pro.getProperty("SysnetSitURL");
 		return path;
@@ -48,8 +49,9 @@ public class ConfigRd {
 		return path;
 	}
 
+	/* set current connection */
 	public String GetDatabase() {
-		String path = pro.getProperty("Sitdb");
+		String path = pro.getProperty("Devdb");
 		return path;
 	}
 
@@ -64,10 +66,11 @@ public class ConfigRd {
 	}
 
 	public String GetUserSchema() {
-		String path = pro.getProperty("SitUser");
+		String path = pro.getProperty("DevUser");
 		return path;
 	}
 
+	/* set databse */
 	public String GetSitDatabase() {
 		String path = pro.getProperty("Sitdb");
 		return path;
@@ -83,6 +86,7 @@ public class ConfigRd {
 		return path;
 	}
 
+	/* set schema */
 	public String GetSitUserSchema() {
 		String path = pro.getProperty("SitUser");
 		return path;
@@ -97,5 +101,5 @@ public class ConfigRd {
 		String path = pro.getProperty("QaUser");
 		return path;
 	}
-
+	
 }

@@ -28,6 +28,12 @@ public class SysnetPage {
 	@FindBy(how = How.PARTIAL_LINK_TEXT, using = "System\nSummary")
 	public WebElement SystemSummaryButton;
 
+	@FindBy(how = How.PARTIAL_LINK_TEXT, using = "Route Plan")
+	public WebElement RoutePlanButton;
+	
+	@FindBy(how = How.PARTIAL_LINK_TEXT, using = " Linehaul\nResources")
+	public WebElement LinehaulResourcesButton;
+	
 	/* SystemSummary */
 
 	// inter-regional form
@@ -116,8 +122,33 @@ public class SysnetPage {
 	@FindBy(how = How.CSS, using = "div#yrcloadedRail>div:nth-of-type(2)>div>div:nth-of-type(3) div.ui-grid-canvas")
 	public WebElement TotalLoadedRailForm;
 
+	/* Route Plan*/
+	
+	@FindBy(how=How.XPATH,using=".//label[text()=' Inter']/input")
+	public WebElement InterRadioButton;
+	
+	@FindBy(how=How.XPATH,using=".//label[text()=' Intra']/input")
+	public WebElement IntraRadioButton;
+	
+	@FindBy(how=How.XPATH,using=".//label[text()=' Both']/input")
+	public WebElement BothRadioButton;
+	
+	@FindBy(how=How.XPATH, using=".//div[@config='configHolistic']//div[@class='ui-grid-contents-wrapper']/div[3]/div[@role='rowgroup' and @class='ui-grid-viewport']//div[@class='ui-grid-canvas']")
+	public WebElement RoutePlanForm;
+	
+	/*Linehaul Resources*/
+	
+	@FindBy(how=How.XPATH, using=".//div[@id='yrclinehaulResource']//div[@class='ui-grid-contents-wrapper']/div[2]/div[@role='rowgroup' and @class='ui-grid-viewport']//div[@class='ui-grid-canvas']")
+	public WebElement LinehaulForm;
+	
+	@FindBy(how=How.ID, using="alllocations_LH")
+	public WebElement LhAllLocTer;
+	
+	@FindBy(how=How.ID, using="usa_Country")
+	public WebElement LhUsaCy;
+	
 	/* UI method */
-	public LinkedHashSet<ArrayList<String>> GetTrailerReportList(WebElement TrailerInforGrid) {
+	public LinkedHashSet<ArrayList<String>> GetReportList(WebElement TrailerInforGrid) {
 		driver.manage().window().maximize();
 		int line = TrailerInforGrid.findElements(By.xpath("div")).size();
 		JavascriptExecutor jse = (JavascriptExecutor) driver;
@@ -170,6 +201,39 @@ public class SysnetPage {
 		return ProInfo;
 	}
 
+	public LinkedHashSet<ArrayList<String>> GetReport(WebElement TrailerInforGrid) {
+		driver.manage().window().maximize();
+		int line = TrailerInforGrid.findElements(By.xpath("div")).size();
+		JavascriptExecutor jse = (JavascriptExecutor) driver;
+		LinkedHashSet<ArrayList<String>> ProInfo = new LinkedHashSet<ArrayList<String>>();
+		int lastLine;
+		do {
+			for (int j = 1; j <= line; j++) {
+				
+				String[] Proline1 = TrailerInforGrid.findElement(By.xpath("div[" + j + "]")).getAttribute("innerText").split("\\n");
+				ArrayList<String> e1 = new ArrayList<String>(Arrays.asList(Proline1));
+				ProInfo.add(e1);
+			}
+
+			jse.executeScript("arguments[0].scrollIntoView(true);",
+					TrailerInforGrid.findElement(By.xpath("div[" + line + "]")));
+			// System.out.println((Long) jse.executeScript("return
+			// window.scrollY"));
+			lastLine = line;
+			line = TrailerInforGrid.findElements(By.xpath("div")).size();
+		} while (line >= lastLine && line > 48);
+
+		for (int j = 1; j <= line; j++) {
+			// String[]
+			// Proline1=ArrayUtils.remove(TrailerInforGrid.findElement(By.xpath("div["
+			// + j + "]")).getText().split("\\n"),0);
+			String[] Proline1 = TrailerInforGrid.findElement(By.xpath("div[" + j + "]")).getAttribute("innerText").split("\\n");
+			ArrayList<String> e1 = new ArrayList<String>(Arrays.asList(Proline1));
+			ProInfo.add(e1);
+		}
+		return ProInfo;
+	}
+	
 	public LinkedHashSet<ArrayList<String>> GetTrailerReportTime(WebElement TrailerInforGrid) {
 		driver.manage().window().maximize();
 		int line = TrailerInforGrid.findElements(By.xpath("div")).size();

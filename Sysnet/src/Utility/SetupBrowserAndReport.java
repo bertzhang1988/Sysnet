@@ -15,9 +15,11 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 
-public class SetupBase {
+public class SetupBrowserAndReport {
 
 	protected WebDriver driver;
+	protected FileWriter fw;
+	protected String Nl;
 	
 	@BeforeClass
 	@Parameters({ "browser" })
@@ -32,12 +34,30 @@ public class SetupBase {
 			System.setProperty("webdriver.ie.driver", Conf.GetIEPath());
 			driver = new InternetExplorerDriver();
 		}
-		driver.get(Conf.GetSysnetSitURL());
+		driver.get(Conf.GetSysnetDevURL());
 		driver.manage().window().maximize();
+
+		// create text file
+		String CDate = Function.GetTimeValue(TimeZone.getDefault().getID());
+		File file2 = new File("./Report/" + CDate);
+		file2.mkdir();
+		File file = new File(file2, this.getClass().getName() + ".txt");
+		try {
+			fw = new FileWriter(file, true);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		Nl = System.getProperty("line.separator");
 	}
 
 	@AfterClass
 	public void CloseBrowser() {
+		try {
+			fw.close();
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
 		driver.close();
 	}
 

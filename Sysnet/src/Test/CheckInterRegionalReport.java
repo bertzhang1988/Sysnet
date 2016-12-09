@@ -295,7 +295,7 @@ public class CheckInterRegionalReport extends SetupBase {
 		(new WebDriverWait(driver, 50))
 				.until(ExpectedConditions.visibilityOf(page.InterRegionalRoadEmptiesTrailerInforGrid));
 		LinkedHashSet<ArrayList<String>> TrailerGRID = page
-				.GetTrailerReportList(page.InterRegionalRoadEmptiesTrailerInforGrid);
+				.GetReportList(page.InterRegionalRoadEmptiesTrailerInforGrid);
 		System.out.println("\n Inter-Regional Road Empties totally " + TrailerGRID.size());
 		Row subtitle = sheet.createRow(++R);
 		subtitle.createCell(0).setCellValue("Inter-Regional Road Empties totally :");

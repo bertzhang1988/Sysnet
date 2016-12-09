@@ -112,7 +112,7 @@ public class CheckRailReport extends SetupBase {
 		}
 		(new WebDriverWait(driver, 50)).until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-bar")));
 		(new WebDriverWait(driver, 20)).until(ExpectedConditions.visibilityOf(Page.TotalEmptyRailForm));
-		LinkedHashSet<ArrayList<String>> TrailerGRID = Page.GetTrailerReportList(Page.TotalEmptyRailForm);
+		LinkedHashSet<ArrayList<String>> TrailerGRID = Page.GetReportList(Page.TotalEmptyRailForm);
 		System.out.println("\n Total Empty Rail Form " + TrailerGRID.size());
 		fw.write(Nl + " Total Empty Rail Form " + TrailerGRID.size() + Nl);
 		int i = 0;
