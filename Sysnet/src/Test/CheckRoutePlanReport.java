@@ -47,8 +47,9 @@ public class CheckRoutePlanReport extends SetupBrowserAndReport {
 			System.out.println("Inter Route Plan is wrong");
 			System.out.println("expected : " + ExpectedRoutePlanInfo);
 			System.out.println("actual :   " + ActualRoutePlanInfo);
-			fw.write("Inter Route Plan is wrong"+Nl+"expected : " + ExpectedRoutePlanInfo+Nl+"actual :   " + ActualRoutePlanInfo+Nl);
-			
+			fw.write("Inter Route Plan is wrong:"+Nl);
+			fw.write(Nl+"expected result but not show:"+Nl+Function.GetDiffBetwForm(ExpectedRoutePlanInfo, ActualRoutePlanInfo)+Nl);	
+			fw.write(Nl+"actual result show but not expected:"+Nl+Function.GetDiffBetwForm(ActualRoutePlanInfo,ExpectedRoutePlanInfo)+Nl);
 		} else {
 			System.out.println("Inter Route Plan is correct");
 			fw.write(Nl+"Inter Route Plan is correct");
@@ -68,8 +69,9 @@ public class CheckRoutePlanReport extends SetupBrowserAndReport {
 			System.out.println("Intra Route Plan is wrong");
 			System.out.println("expected : " + ExpectedRoutePlanInfo);
 			System.out.println("actual :   " + ActualRoutePlanInfo);
-			fw.write("Intra Route Plan is wrong"+Nl+"expected : " + ExpectedRoutePlanInfo+Nl+"actual :   " + ActualRoutePlanInfo+Nl);
-			
+			fw.write(Nl+"Intra Route Plan is wrong"+Nl);
+			fw.write(Nl+"expected result but not show:"+Nl+Function.GetDiffBetwForm(ExpectedRoutePlanInfo, ActualRoutePlanInfo)+Nl);	
+			fw.write(Nl+"actual result show but not expected:"+Nl+Function.GetDiffBetwForm(ActualRoutePlanInfo,ExpectedRoutePlanInfo)+Nl);	
 		} else {
 			System.out.println("intra Route Plan is correct");
 			fw.write(Nl+"Intra Route Plan is correct");

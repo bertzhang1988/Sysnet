@@ -20,15 +20,12 @@ import org.testng.asserts.SoftAssert;
 
 import Data.CommonData;
 import Data.DataDAO;
-import Utility.Function;
-import Utility.SetupBase;
 import page.SysnetPage;
+import Utility.SetupBrowserAndReport;
 
-public class CheckRailReport extends SetupBase {
+public class CheckRailReport extends SetupBrowserAndReport {
 
 	private SysnetPage Page;
-	private String Nl;
-	private FileWriter fw;
 	private String MainWindowHandler;
 
 	@BeforeClass
@@ -39,21 +36,8 @@ public class CheckRailReport extends SetupBase {
 		Page.SystemSummaryButton.click();
 		(new WebDriverWait(driver, 20)).until(ExpectedConditions.visibilityOf(Page.Railform));
 		(new WebDriverWait(driver, 50)).until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-bar")));
-
 		// get main page handler
 		MainWindowHandler = driver.getWindowHandle();
-
-		// create text file
-		String CDate = Function.GetTimeValue(TimeZone.getDefault().getID());
-		File file2 = new File("./Report/" + CDate);
-		file2.mkdir();
-		File file = new File(file2, this.getClass().getName() + ".txt");
-		try {
-			fw = new FileWriter(file, true);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		Nl = System.getProperty("line.separator");
 
 	}
 
@@ -77,25 +61,25 @@ public class CheckRailReport extends SetupBase {
 	@Test(priority = 2)
 	public void VerifySchedulesForRail2() throws SQLException, IOException {
 
-		fw.write(Nl + "empty rail schedule: "+Nl );
+		fw.write(Nl + "empty rail schedule: " + Nl);
 		// check empty rail schedule
 		String ScheduleE = Page.TotalEmptyRail.findElement(By.xpath("following-sibling::td")).getText();
 		String ExpectedSheduleE = CommonData.GetScheduleForEmptyRail();
 
 		if (ScheduleE.equals(ExpectedSheduleE)) {
-			fw.write(Nl + "the result is correct"+Nl );
+			fw.write(Nl + "the result is correct" + Nl);
 		} else {
-			fw.write(Nl + "expected Shedule of empty Rail: " + ExpectedSheduleE + "but found: " + ScheduleE+Nl );
+			fw.write(Nl + "expected Shedule of empty Rail: " + ExpectedSheduleE + "but found: " + ScheduleE + Nl);
 		}
 
-		fw.write(Nl + "loaded rail schedule: "+Nl );
+		fw.write(Nl + "loaded rail schedule: " + Nl);
 		// check load rail schedule
 		String ScheduleL = Page.TotalLoadedRail.findElement(By.xpath("following-sibling::td")).getText();
 		String ExpectedShedulel = CommonData.GetScheduleForLoadedRail();
 		if (ScheduleL.equals(ExpectedShedulel)) {
-			fw.write(Nl + "the result is correct"+Nl );
+			fw.write(Nl + "the result is correct" + Nl);
 		} else {
-			fw.write(Nl + "expected Shedule of loaded Rail: " + ExpectedShedulel + " but found: " + ScheduleL+Nl );
+			fw.write(Nl + "expected Shedule of loaded Rail: " + ExpectedShedulel + " but found: " + ScheduleL + Nl);
 		}
 	}
 
@@ -112,7 +96,7 @@ public class CheckRailReport extends SetupBase {
 		}
 		(new WebDriverWait(driver, 50)).until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-bar")));
 		(new WebDriverWait(driver, 20)).until(ExpectedConditions.visibilityOf(Page.TotalEmptyRailForm));
-		LinkedHashSet<ArrayList<String>> TrailerGRID = Page.GetReportList(Page.TotalEmptyRailForm);
+		LinkedHashSet<ArrayList<String>> TrailerGRID = Page.GetTrailerReportTime(Page.TotalEmptyRailForm);
 		System.out.println("\n Total Empty Rail Form " + TrailerGRID.size());
 		fw.write(Nl + " Total Empty Rail Form " + TrailerGRID.size() + Nl);
 		int i = 0;
@@ -125,21 +109,25 @@ public class CheckRailReport extends SetupBase {
 			String SCAC = trailer.get(0);
 			String TrailerNB = trailer.get(1);
 			String ExpectedLstReportT = ExpectedTrailerInforReport.get(j).get(4);
-			String ActualLstReportT = trailer.get(7);
+			String ActualLstReportT = trailer.get(4);
 			String ExpectedETA = ExpectedTrailerInforReport.get(j).get(6);
-			String ActualETA = trailer.get(8);
+			String ActualETA = trailer.get(5);
 			String CurrentTerminal = ExpectedTrailerInforReport.get(j).get(3);
-			String Destination = ExpectedTrailerInforReport.get(j).get(2);
+			//String Destination = ExpectedTrailerInforReport.get(j).get(2);
+			String ActualSDT = trailer.get(6);
+			String ExpectedSDT = ExpectedTrailerInforReport.get(j).get(7);
+			String NextTerminal_1 = ExpectedTrailerInforReport.get(j).get(8);
 			++j;
 			boolean FlagLst = ExpectedLstReportT.equals(ActualLstReportT);
 			boolean FlagETA = ExpectedETA.equals(ActualETA);
-			if (!(FlagLst && FlagETA)) {
+			boolean FlagSDT = ExpectedSDT.equals(ActualSDT);
+			if (!(FlagLst && FlagETA && FlagSDT)) {
 				++i;
 				System.out.println("\n" + j + " Time is wrong for trailer " + SCAC + "-" + TrailerNB
-						+ " CurrentTerminal " + CurrentTerminal + " Destination " + Destination);
+						+ " CurrentTerminal " + CurrentTerminal + " NextTerminal " + NextTerminal_1);
 
 				fw.write(Nl + j + " Time is wrong for trailer " + SCAC + "-" + TrailerNB + " CurrentTerminal "
-						+ CurrentTerminal + " Destination " + Destination);
+						+ CurrentTerminal + " NextTerminal " + NextTerminal_1);
 				if (FlagLst == false) {
 					fw.write("  " + "Lst Result expected: " + ExpectedLstReportT + " but found: " + ActualLstReportT);
 					System.out.print(
@@ -149,7 +137,10 @@ public class CheckRailReport extends SetupBase {
 					fw.write("  " + "TTMS expected: " + ExpectedETA + " but found: " + ActualETA);
 					System.out.print("  " + "TTMS expected: " + ExpectedETA + " but found: " + ActualETA);
 				}
-
+				if (FlagSDT == false) {
+					fw.write("  " + "SDT expected: " + ExpectedSDT + " but found: " + ActualSDT);
+					System.out.print("  " + "SDT expected: " + ExpectedSDT + " but found: " + ActualSDT);
+				}
 			}
 		}
 
@@ -192,21 +183,24 @@ public class CheckRailReport extends SetupBase {
 			String ExpectedETA = ExpectedTrailerInforReport.get(j).get(6);
 			String ActualETA = trailer.get(5);
 			String CurrentTerminal = ExpectedTrailerInforReport.get(j).get(3);
-			String Destination = ExpectedTrailerInforReport.get(j).get(2);
+			//String Destination = ExpectedTrailerInforReport.get(j).get(2);
 			String ActualTTMS = trailer.get(3);
 			String ExpectedTTMS = ExpectedTrailerInforReport.get(j).get(5);
+			String ActualSDT = trailer.get(6);
+			String ExpectedSDT = ExpectedTrailerInforReport.get(j).get(7);
+			String NextTerminal_1 = ExpectedTrailerInforReport.get(j).get(8);
 			++j;
 			boolean FlagLst = ExpectedLstReportT.equals(ActualLstReportT);
 			boolean FlagETA = ExpectedETA.equals(ActualETA);
 			boolean FlagTTMS = ExpectedTTMS.equals(ActualTTMS);
-
-			if (!(FlagLst && FlagETA && FlagTTMS)) {
+			boolean FlagSDT = ExpectedSDT.equals(ActualSDT);
+			if (!(FlagLst && FlagETA && FlagTTMS &&FlagSDT)) {
 				++i;
 				System.out.println("\n" + j + " Time is wrong for trailer " + SCAC + "-" + TrailerNB
-						+ " CurrentTerminal " + CurrentTerminal + " Destination " + Destination);
+						+ " CurrentTerminal " + CurrentTerminal + " NextTerminal " + NextTerminal_1);
 
 				fw.write(Nl + j + " Time is wrong for trailer " + SCAC + "-" + TrailerNB + " CurrentTerminal "
-						+ CurrentTerminal + " Destination " + Destination);
+						+ CurrentTerminal + " NextTerminal " + NextTerminal_1);
 				if (FlagLst == false) {
 					fw.write("  " + "Lst Result expected: " + ExpectedLstReportT + " but found: " + ActualLstReportT);
 					System.out.print(
@@ -220,6 +214,11 @@ public class CheckRailReport extends SetupBase {
 					fw.write("  " + "TTMS expected: " + ExpectedTTMS + " but found: " + ActualTTMS);
 					System.out.print("  " + "TTMS expected: " + ExpectedTTMS + " but found: " + ActualTTMS);
 				}
+				if (FlagSDT == false) {
+					fw.write("  " + "SDT expected: " + ExpectedSDT + " but found: " + ActualSDT);
+					System.out.print("  " + "SDT expected: " + ExpectedSDT + " but found: " + ActualSDT);
+				}
+			
 			}
 		}
 
@@ -232,12 +231,4 @@ public class CheckRailReport extends SetupBase {
 		driver.switchTo().window(MainWindowHandler);
 	}
 
-	@AfterClass
-	public void close() {
-		try {
-			fw.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
 }

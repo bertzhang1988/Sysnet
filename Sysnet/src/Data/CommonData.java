@@ -23,7 +23,7 @@ public class CommonData {
 	public static HashMap<String, Object> CheckEQPStatusUpdate(String SCAC, String TrailerNB) throws SQLException {
 
 		Connection conn3 = DataConnection.getConnection();
-		Connection conn2 = DataConnection.getDevConnection();
+		Connection conn2 = DataConnection.getConnection();
 		Statement stat = conn3.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
 		String query3 = "select * from  SLH_TRAILER  where TRAILER_NUMBER='" + TrailerNB + "' and TRAILER_PREFIX='"
 				+ SCAC + "'";
@@ -76,10 +76,9 @@ public class CommonData {
 
 	public static LinkedHashSet<ArrayList<String>> GetRoutePlanForm(String RegionalType) throws SQLException {
 		RegionalType = RegionalType.toUpperCase();
-		Connection cn = DataConnection.getDevConnection();
+		Connection cn = DataConnection.getConnection();
 		PreparedStatement st = cn.prepareStatement(Query.queryRoutePlan);
 		st.setString(1, RegionalType);
-		;
 		ResultSet rs = st.executeQuery();
 		String Terminal;
 		String YRC_OTR;

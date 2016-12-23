@@ -40,7 +40,9 @@ public class CheckLinehaulResourcesReport extends SetupBrowserAndReport {
 		System.out.println("Linehaul Resource is wrong");
 		System.out.println("expected : " + ExpectedLineHualResourceList);
 		System.out.println("actual :   " + ActualLineHualResourceList);
-		fw.write("Linehaul Resource is wrong"+Nl+"expected : " + ExpectedLineHualResourceList+Nl+"actual :   " + ActualLineHualResourceList+Nl);
+		fw.write(Nl+"Linehaul Resource is wrong"+Nl);
+		fw.write(Nl+"expected result but not show:"+Nl+Function.GetDiffBetwForm(ExpectedLineHualResourceList, ActualLineHualResourceList)+Nl);	
+		fw.write(Nl+"actual result show but not expected:"+Nl+Function.GetDiffBetwForm(ActualLineHualResourceList,ExpectedLineHualResourceList)+Nl);	
 		
 	} else {
 		System.out.println("Linehaul Resource is correct");

@@ -34,7 +34,7 @@ public class SetupBrowserAndReport {
 			System.setProperty("webdriver.ie.driver", Conf.GetIEPath());
 			driver = new InternetExplorerDriver();
 		}
-		driver.get(Conf.GetSysnetDevURL());
+		driver.get(Conf.GetSysnetURL());
 		driver.manage().window().maximize();
 
 		// create text file

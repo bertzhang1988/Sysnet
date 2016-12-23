@@ -24,36 +24,23 @@ import Data.CommonData;
 import Data.DataDAO;
 import Utility.ConfigRd;
 import Utility.Function;
-import Utility.SetupBase;
+import Utility.SetupBrowserAndReport;
 import page.SysnetPage;
 
-public class CheckIntraRegionalReport extends SetupBase {
+public class CheckIntraRegionalReport extends SetupBrowserAndReport {
 
 	private SysnetPage page;
-	private String Nl;
-	private FileWriter fw;
 	private String MainWindowHandler;
 
 	@BeforeClass
 	public void SetUp() throws AWTException, InterruptedException, IOException, SQLException {
-		ConfigRd Conf = new ConfigRd();
 		page = new SysnetPage(driver);
-		driver.get(Conf.GetSysnetSitURL());
-		driver.manage().window().maximize();
 		(new WebDriverWait(driver, 50)).until(ExpectedConditions.visibilityOf(page.SystemSummaryButton));
 		page.SystemSummaryButton.click();
 		(new WebDriverWait(driver, 50)).until(ExpectedConditions.visibilityOf(page.InterRegionalform));
 
 		// get summary handler
 		MainWindowHandler = driver.getWindowHandle();
-
-		// create text file
-		String CDate = Function.GetTimeValue(TimeZone.getDefault().getID());
-		File file2 = new File("./Report/" + CDate);
-		file2.mkdir();
-		File file = new File(file2, this.getClass().getName() + ".txt");
-		fw = new FileWriter(file, true);
-		Nl = System.getProperty("line.separator");
 
 	}
 
@@ -89,16 +76,20 @@ public class CheckIntraRegionalReport extends SetupBase {
 			String ActualTTMS = trailer.get(3);
 			String ActualLstReportT = trailer.get(4);
 			String CurrentTerminal = ExpectedTrailerInforReport.get(j).get(3);
+			String ActualSDT = trailer.get(6);
+			String ExpectedSDT = ExpectedTrailerInforReport.get(j).get(7);
+			String NextTerminal_1 = ExpectedTrailerInforReport.get(j).get(8);
 			++j;
 			boolean FlagLst = ExpectedLstReportT.equals(ActualLstReportT);
 			boolean FlagTTMS = ExpectedTTMS.equals(ActualTTMS);
-			if (!(FlagLst && FlagTTMS)) {
+			boolean FlagSDT = ExpectedSDT.equals(ActualSDT);
+			if (!(FlagLst && FlagTTMS && FlagSDT)) {
 				++i;
 				System.out.println("\n" + j + " Time is wrong for trailer " + SCAC + "-" + TrailerNB
-						+ " CurrentTerminal " + CurrentTerminal);
+						+ " CurrentTerminal " + CurrentTerminal+ " NextTerminal " + NextTerminal_1);
 
 				fw.write(Nl + j + " Time is wrong for trailer " + SCAC + "-" + TrailerNB + " CurrentTerminal "
-						+ CurrentTerminal);
+						+ CurrentTerminal+ " NextTerminal " + NextTerminal_1);
 				if (FlagLst == false) {
 					fw.write("  " + "Lst Result expected: " + ExpectedLstReportT + " but found: " + ActualLstReportT);
 					System.out.print(
@@ -108,7 +99,10 @@ public class CheckIntraRegionalReport extends SetupBase {
 					fw.write("  " + "TTMS expected: " + ExpectedTTMS + " but found: " + ActualTTMS);
 					System.out.print("  " + "TTMS expected: " + ExpectedTTMS + " but found: " + ActualTTMS);
 				}
-
+				if (FlagSDT == false) {
+					fw.write("  " + "SDT expected: " + ExpectedSDT + " but found: " + ActualSDT);
+					System.out.print("  " + "SDT expected: " + ExpectedSDT + " but found: " + ActualSDT);
+				}
 			}
 		}
 
@@ -153,16 +147,20 @@ public class CheckIntraRegionalReport extends SetupBase {
 			String ActualTTMS = trailer.get(3);
 			String ActualLstReportT = trailer.get(4);
 			String CurrentTerminal = ExpectedTrailerInforReport.get(j).get(3);
+			String ActualSDT = trailer.get(6);
+			String ExpectedSDT = ExpectedTrailerInforReport.get(j).get(7);
+			String NextTerminal_1 = ExpectedTrailerInforReport.get(j).get(8);
 			++j;
 			boolean FlagLst = ExpectedLstReportT.equals(ActualLstReportT);
 			boolean FlagTTMS = ExpectedTTMS.equals(ActualTTMS);
-			if (!(FlagLst && FlagTTMS)) {
+			boolean FlagSDT = ExpectedSDT.equals(ActualSDT);
+			if (!(FlagLst && FlagTTMS && FlagSDT)) {
 				++i;
 				System.out.println("\n" + j + " Time is wrong for trailer " + SCAC + "-" + TrailerNB
-						+ " CurrentTerminal " + CurrentTerminal);
+						+ " CurrentTerminal " + CurrentTerminal+ " NextTerminal " + NextTerminal_1);
 
 				fw.write(Nl + j + " Time is wrong for trailer " + SCAC + "-" + TrailerNB + " CurrentTerminal "
-						+ CurrentTerminal);
+						+ CurrentTerminal+ " NextTerminal " + NextTerminal_1);
 				if (FlagLst == false) {
 					fw.write("  " + "Lst Result expected: " + ExpectedLstReportT + " but found: " + ActualLstReportT);
 					System.out.print(
@@ -172,7 +170,10 @@ public class CheckIntraRegionalReport extends SetupBase {
 					fw.write("  " + "TTMS expected: " + ExpectedTTMS + " but found: " + ActualTTMS);
 					System.out.print("  " + "TTMS expected: " + ExpectedTTMS + " but found: " + ActualTTMS);
 				}
-
+				if (FlagSDT == false) {
+					fw.write("  " + "SDT expected: " + ExpectedSDT + " but found: " + ActualSDT);
+					System.out.print("  " + "SDT expected: " + ExpectedSDT + " but found: " + ActualSDT);
+				}
 			}
 		}
 
@@ -215,16 +216,20 @@ public class CheckIntraRegionalReport extends SetupBase {
 			String ActualTTMS = trailer.get(3);
 			String ActualLstReportT = trailer.get(4);
 			String CurrentTerminal = ExpectedTrailerInforReport.get(j).get(3);
+			String ActualSDT = trailer.get(6);
+			String ExpectedSDT = ExpectedTrailerInforReport.get(j).get(7);
+			String NextTerminal_1 = ExpectedTrailerInforReport.get(j).get(8);
 			++j;
 			boolean FlagLst = ExpectedLstReportT.equals(ActualLstReportT);
 			boolean FlagTTMS = ExpectedTTMS.equals(ActualTTMS);
-			if (!(FlagLst && FlagTTMS)) {
+			boolean FlagSDT = ExpectedSDT.equals(ActualSDT);
+			if (!(FlagLst && FlagTTMS && FlagSDT)) {
 				++i;
 				System.out.println("\n" + j + " Time is wrong for trailer " + SCAC + "-" + TrailerNB
-						+ " CurrentTerminal " + CurrentTerminal);
+						+ " CurrentTerminal " + CurrentTerminal+ " NextTerminal " + NextTerminal_1);
 
 				fw.write(Nl + j + " Time is wrong for trailer " + SCAC + "-" + TrailerNB + " CurrentTerminal "
-						+ CurrentTerminal);
+						+ CurrentTerminal+ " NextTerminal " + NextTerminal_1);
 				if (FlagLst == false) {
 					fw.write("  " + "Lst Result expected: " + ExpectedLstReportT + " but found: " + ActualLstReportT);
 					System.out.print(
@@ -234,7 +239,10 @@ public class CheckIntraRegionalReport extends SetupBase {
 					fw.write("  " + "TTMS expected: " + ExpectedTTMS + " but found: " + ActualTTMS);
 					System.out.print("  " + "TTMS expected: " + ExpectedTTMS + " but found: " + ActualTTMS);
 				}
-
+				if (FlagSDT == false) {
+					fw.write("  " + "SDT expected: " + ExpectedSDT + " but found: " + ActualSDT);
+					System.out.print("  " + "SDT expected: " + ExpectedSDT + " but found: " + ActualSDT);
+				}
 			}
 		}
 
@@ -246,9 +254,9 @@ public class CheckIntraRegionalReport extends SetupBase {
 	}
 
 	@Test(priority = 4, groups = "test time")
-	public void IntraRegionalAtLddArrDC_SATReport(Method m) throws ClassNotFoundException, SQLException, IOException {
+	public void IntraRegionalAtLddArrDC_EOLReport(Method m) throws ClassNotFoundException, SQLException, IOException {
 
-		page.IntraRegionalATLddArrDC_SAT.click();
+		page.IntraRegionalATLddArrDC_EOL.click();
 		(new WebDriverWait(driver, 50)).until(ExpectedConditions.numberOfWindowsToBe(2));
 		Set<String> WindowHandles = driver.getWindowHandles();
 		for (String windowHandle : WindowHandles) {
@@ -258,11 +266,11 @@ public class CheckIntraRegionalReport extends SetupBase {
 		}
 		(new WebDriverWait(driver, 100)).until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-bar")));
 		(new WebDriverWait(driver, 50))
-				.until(ExpectedConditions.visibilityOf(page.IntraRegionalformATLddArrDC_SATInforGrid));
+				.until(ExpectedConditions.visibilityOf(page.IntraRegionalformATLddArrDC_EOLInforGrid));
 		LinkedHashSet<ArrayList<String>> TrailerGRID = page
-				.GetTrailerReportTime(page.IntraRegionalformATLddArrDC_SATInforGrid);
-		System.out.println("\n Intra-Regional DC_SAT totally " + TrailerGRID.size());
-		fw.write(Nl + " Intra-Regional DC_SAT totally " + TrailerGRID.size() + Nl);
+				.GetTrailerReportTime(page.IntraRegionalformATLddArrDC_EOLInforGrid);
+		System.out.println("\n Intra-Regional DC_EOL totally " + TrailerGRID.size());
+		fw.write(Nl + " Intra-Regional DC_EOL totally " + TrailerGRID.size() + Nl);
 		int i = 0;
 		int j = 0;
 		DataDAO DA = new DataDAO();
@@ -277,16 +285,20 @@ public class CheckIntraRegionalReport extends SetupBase {
 			String ActualTTMS = trailer.get(3);
 			String ActualLstReportT = trailer.get(4);
 			String CurrentTerminal = ExpectedTrailerInforReport.get(j).get(3);
+			String ActualSDT = trailer.get(6);
+			String ExpectedSDT = ExpectedTrailerInforReport.get(j).get(7);
+			String NextTerminal_1 = ExpectedTrailerInforReport.get(j).get(8);
 			++j;
 			boolean FlagLst = ExpectedLstReportT.equals(ActualLstReportT);
 			boolean FlagTTMS = ExpectedTTMS.equals(ActualTTMS);
-			if (!(FlagLst && FlagTTMS)) {
+			boolean FlagSDT = ExpectedSDT.equals(ActualSDT);
+			if (!(FlagLst && FlagTTMS && FlagSDT)) {
 				++i;
 				System.out.println("\n" + j + " Time is wrong for trailer " + SCAC + "-" + TrailerNB
-						+ " CurrentTerminal " + CurrentTerminal);
+						+ " CurrentTerminal " + CurrentTerminal+ " NextTerminal " + NextTerminal_1);
 
 				fw.write(Nl + j + " Time is wrong for trailer " + SCAC + "-" + TrailerNB + " CurrentTerminal "
-						+ CurrentTerminal);
+						+ CurrentTerminal+ " NextTerminal " + NextTerminal_1);
 				if (FlagLst == false) {
 					fw.write("  " + "Lst Result expected: " + ExpectedLstReportT + " but found: " + ActualLstReportT);
 					System.out.print(
@@ -296,7 +308,10 @@ public class CheckIntraRegionalReport extends SetupBase {
 					fw.write("  " + "TTMS expected: " + ExpectedTTMS + " but found: " + ActualTTMS);
 					System.out.print("  " + "TTMS expected: " + ExpectedTTMS + " but found: " + ActualTTMS);
 				}
-
+				if (FlagSDT == false) {
+					fw.write("  " + "SDT expected: " + ExpectedSDT + " but found: " + ActualSDT);
+					System.out.print("  " + "SDT expected: " + ExpectedSDT + " but found: " + ActualSDT);
+				}
 			}
 		}
 
@@ -308,9 +323,9 @@ public class CheckIntraRegionalReport extends SetupBase {
 	}
 
 	@Test(priority = 5, groups = "test time")
-	public void IntraRegionalAtLddArrSAT_DCReport(Method m) throws ClassNotFoundException, SQLException, IOException {
+	public void IntraRegionalAtLddArrEOL_DCReport(Method m) throws ClassNotFoundException, SQLException, IOException {
 
-		page.IntraRegionalATLddArrSAT_DC.click();
+		page.IntraRegionalATLddArrEOL_DC.click();
 		(new WebDriverWait(driver, 50)).until(ExpectedConditions.numberOfWindowsToBe(2));
 		Set<String> WindowHandles = driver.getWindowHandles();
 		for (String windowHandle : WindowHandles) {
@@ -320,11 +335,11 @@ public class CheckIntraRegionalReport extends SetupBase {
 		}
 		(new WebDriverWait(driver, 50)).until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-bar")));
 		(new WebDriverWait(driver, 50))
-				.until(ExpectedConditions.visibilityOf(page.IntraRegionalformATLddArrSAT_DCInforGrid));
+				.until(ExpectedConditions.visibilityOf(page.IntraRegionalformATLddArrEOL_DCInforGrid));
 		LinkedHashSet<ArrayList<String>> TrailerGRID = page
-				.GetTrailerReportTime(page.IntraRegionalformATLddArrSAT_DCInforGrid);
-		System.out.println("\n Intra-Regional SAT_DC totally " + TrailerGRID.size());
-		fw.write(Nl + " Intra-Regional SAT_DC totally " + TrailerGRID.size() + Nl);
+				.GetTrailerReportTime(page.IntraRegionalformATLddArrEOL_DCInforGrid);
+		System.out.println("\n Intra-Regional EOL_DC totally " + TrailerGRID.size());
+		fw.write(Nl + " Intra-Regional EOL_DC totally " + TrailerGRID.size() + Nl);
 		int i = 0;
 		int j = 0;
 		DataDAO DA = new DataDAO();
@@ -339,16 +354,20 @@ public class CheckIntraRegionalReport extends SetupBase {
 			String ActualTTMS = trailer.get(3);
 			String ActualLstReportT = trailer.get(4);
 			String CurrentTerminal = ExpectedTrailerInforReport.get(j).get(3);
+			String ActualSDT = trailer.get(6);
+			String ExpectedSDT = ExpectedTrailerInforReport.get(j).get(7);
+			String NextTerminal_1 = ExpectedTrailerInforReport.get(j).get(8);
 			++j;
 			boolean FlagLst = ExpectedLstReportT.equals(ActualLstReportT);
 			boolean FlagTTMS = ExpectedTTMS.equals(ActualTTMS);
-			if (!(FlagLst && FlagTTMS)) {
+			boolean FlagSDT = ExpectedSDT.equals(ActualSDT);
+			if (!(FlagLst && FlagTTMS && FlagSDT)) {
 				++i;
 				System.out.println("\n" + j + " Time is wrong for trailer " + SCAC + "-" + TrailerNB
-						+ " CurrentTerminal " + CurrentTerminal);
+						+ " CurrentTerminal " + CurrentTerminal+ " NextTerminal " + NextTerminal_1);
 
 				fw.write(Nl + j + " Time is wrong for trailer " + SCAC + "-" + TrailerNB + " CurrentTerminal "
-						+ CurrentTerminal);
+						+ CurrentTerminal+ " NextTerminal " + NextTerminal_1);
 				if (FlagLst == false) {
 					fw.write("  " + "Lst Result expected: " + ExpectedLstReportT + " but found: " + ActualLstReportT);
 					System.out.print(
@@ -358,7 +377,10 @@ public class CheckIntraRegionalReport extends SetupBase {
 					fw.write("  " + "TTMS expected: " + ExpectedTTMS + " but found: " + ActualTTMS);
 					System.out.print("  " + "TTMS expected: " + ExpectedTTMS + " but found: " + ActualTTMS);
 				}
-
+				if (FlagSDT == false) {
+					fw.write("  " + "SDT expected: " + ExpectedSDT + " but found: " + ActualSDT);
+					System.out.print("  " + "SDT expected: " + ExpectedSDT + " but found: " + ActualSDT);
+				}
 			}
 		}
 		System.out.println("\n" + m.getName() + " form totally " + TrailerGRID.size() + "  mismatch " + i + "\n");
@@ -384,7 +406,7 @@ public class CheckIntraRegionalReport extends SetupBase {
 		(new WebDriverWait(driver, 50))
 				.until(ExpectedConditions.visibilityOf(page.IntraRegionalRoadEmptiesTrailerInforGrid));
 		LinkedHashSet<ArrayList<String>> TrailerGRID = page
-				.GetReportList(page.IntraRegionalRoadEmptiesTrailerInforGrid);
+				.GetTrailerReportTime(page.IntraRegionalRoadEmptiesTrailerInforGrid);
 		System.out.println("\n Intra-Regional Road Empties totally " + TrailerGRID.size());
 		fw.write(Nl + " Intra-Regional Road Empties totally " + TrailerGRID.size() + Nl);
 		int i = 0;
@@ -399,19 +421,23 @@ public class CheckIntraRegionalReport extends SetupBase {
 			String ExpectedLstReportT = ExpectedTrailerInforReport.get(j).get(4);
 			String ExpectedETA = ExpectedTrailerInforReport.get(j).get(6);
 			String CurrentTerminal = ExpectedTrailerInforReport.get(j).get(3);
-			String Destination = ExpectedTrailerInforReport.get(j).get(2);
-			String ActualLstReportT = trailer.get(7);
-			String ActualETA = trailer.get(8);
+			//String Destination = ExpectedTrailerInforReport.get(j).get(2);
+			String ActualLstReportT = trailer.get(4);
+			String ActualETA = trailer.get(5);
+			String ActualSDT = trailer.get(6);
+			String ExpectedSDT = ExpectedTrailerInforReport.get(j).get(7);
+			String NextTerminal_1 = ExpectedTrailerInforReport.get(j).get(8);
 			++j;
 			boolean FlagLst = ExpectedLstReportT.equals(ActualLstReportT);
 			boolean FlagETA = ExpectedETA.equals(ActualETA);
-			if (!(FlagLst && FlagETA)) {
+			boolean FlagSDT = ExpectedSDT.equals(ActualSDT);
+			if (!(FlagLst && FlagETA && FlagSDT)) {
 				++i;
 				System.out.println("\n" + j + " Time is wrong for trailer " + SCAC + "-" + TrailerNB
-						+ " CurrentTerminal " + CurrentTerminal + " Destination " + Destination);
+						+ " CurrentTerminal " + CurrentTerminal + " NextTerminal " + NextTerminal_1);
 
 				fw.write(Nl + j + " Time is wrong for trailer " + SCAC + "-" + TrailerNB + " CurrentTerminal "
-						+ CurrentTerminal + " Destination " + Destination);
+						+ CurrentTerminal + " NextTerminal " + NextTerminal_1);
 				if (FlagLst == false) {
 					fw.write("  " + "Lst Result expected: " + ExpectedLstReportT + " but found: " + ActualLstReportT);
 					System.out.print(
@@ -421,7 +447,10 @@ public class CheckIntraRegionalReport extends SetupBase {
 					fw.write("  " + "TTMS expected: " + ExpectedETA + " but found: " + ActualETA);
 					System.out.print("  " + "TTMS expected: " + ExpectedETA + " but found: " + ActualETA);
 				}
-
+				if (FlagSDT == false) {
+					fw.write("  " + "SDT expected: " + ExpectedSDT + " but found: " + ActualSDT);
+					System.out.print("  " + "SDT expected: " + ExpectedSDT + " but found: " + ActualSDT);
+				}
 			}
 		}
 
@@ -451,6 +480,7 @@ public class CheckIntraRegionalReport extends SetupBase {
 	public void CheckFailure(ITestResult result) {
 
 		if (result.getStatus() == ITestResult.FAILURE) {
+			if(!driver.getWindowHandle().equals(MainWindowHandler))
 			driver.close();
 			driver.switchTo().window(MainWindowHandler);
 		}
@@ -459,11 +489,5 @@ public class CheckIntraRegionalReport extends SetupBase {
 	@AfterClass
 	public void Close() {
 
-		try {
-			fw.close();
-		} catch (IOException e) {
-
-			e.printStackTrace();
-		}
 	}
 }

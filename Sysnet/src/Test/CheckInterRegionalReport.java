@@ -47,7 +47,7 @@ public class CheckInterRegionalReport extends SetupBase {
 		ConfigRd Conf = new ConfigRd();
 		DA = new DataDAO();
 		page = new SysnetPage(driver);
-		driver.get(Conf.GetSysnetSitURL());
+		driver.get(Conf.GetSysnetURL());
 		driver.manage().window().maximize();
 		(new WebDriverWait(driver, 50)).until(ExpectedConditions.visibilityOf(page.SystemSummaryButton));
 		page.SystemSummaryButton.click();
@@ -63,7 +63,8 @@ public class CheckInterRegionalReport extends SetupBase {
 		workbook = new XSSFWorkbook();
 		sheet = workbook.createSheet(Function.GetDisplayTime().replace(":", "-"));
 		String[] TitleLine = { "Line", "Time is wrong for trailer", " CurrentTerminal", "LstReport time expected:",
-				"but found: ", "TTMS expected: ", " but found: ", " Destination: ", " ETA expected: ", "but found: " };
+				"but found: ", "TTMS expected: ", " but found: ", " NextTerminal: ", " ETA expected: ", "but found: ",
+				" SDT expected: ", "but found: " };
 		Row r = sheet.createRow(R);
 		int ColumnOfFirstline = 0;
 		for (String value : TitleLine) {
@@ -106,17 +107,22 @@ public class CheckInterRegionalReport extends SetupBase {
 			String ActualTTMS = trailer.get(3);
 			String ActualLstReportT = trailer.get(4);
 			String CurrentTerminal = ExpectedTrailerInforReport.get(j).get(3);
+			String ActualSDT = trailer.get(6);
+			String ExpectedSDT = ExpectedTrailerInforReport.get(j).get(7);
+			String NextTerminal_1 = ExpectedTrailerInforReport.get(j).get(8);
 			++j;
 			boolean FlagLst = ExpectedLstReportT.equals(ActualLstReportT);
 			boolean FlagTTMS = ExpectedTTMS.equals(ActualTTMS);
-			if (!(FlagLst && FlagTTMS)) {
+			boolean FlagSDT = ExpectedSDT.equals(ActualSDT);
+			if (!(FlagLst && FlagTTMS && FlagSDT)) {
 				++i;
 				Row r = sheet.createRow(++R);
 				r.createCell(0).setCellValue(j);
 				r.createCell(1).setCellValue(SCAC + "-" + TrailerNB);
 				r.createCell(2).setCellValue(CurrentTerminal);
+				r.createCell(7).setCellValue(NextTerminal_1);
 				System.out.println("\n" + j + " Time is wrong for trailer " + SCAC + "-" + TrailerNB
-						+ " CurrentTerminal " + CurrentTerminal);
+						+ " CurrentTerminal " + CurrentTerminal + " NextTerminal " + NextTerminal_1);
 				if (FlagLst == false) {
 					r.createCell(3).setCellValue(ExpectedLstReportT);
 					r.createCell(4).setCellValue(ActualLstReportT);
@@ -128,6 +134,12 @@ public class CheckInterRegionalReport extends SetupBase {
 					r.createCell(6).setCellValue(ActualTTMS);
 					System.out.printf("  " + "TTMS expected: " + ExpectedTTMS + " but found: " + ActualTTMS);
 				}
+				if (FlagSDT == false) {
+					r.createCell(10).setCellValue(ExpectedSDT);
+					r.createCell(11).setCellValue(ActualSDT);
+					System.out.printf("  " + "SDT expected: " + ExpectedSDT + " but found: " + ActualSDT);
+				}
+
 			}
 		}
 
@@ -174,17 +186,22 @@ public class CheckInterRegionalReport extends SetupBase {
 			String ActualTTMS = trailer.get(3);
 			String ActualLstReportT = trailer.get(4);
 			String CurrentTerminal = ExpectedTrailerInforReport.get(j).get(3);
+			String ActualSDT = trailer.get(6);
+			String ExpectedSDT = ExpectedTrailerInforReport.get(j).get(7);
+			String NextTerminal_1 = ExpectedTrailerInforReport.get(j).get(8);
 			++j;
 			boolean FlagLst = ExpectedLstReportT.equals(ActualLstReportT);
 			boolean FlagTTMS = ExpectedTTMS.equals(ActualTTMS);
-			if (!(FlagLst && FlagTTMS)) {
+			boolean FlagSDT = ExpectedSDT.equals(ActualSDT);
+			if (!(FlagLst && FlagTTMS && FlagSDT)) {
 				++i;
 				Row r = sheet.createRow(++R);
 				r.createCell(0).setCellValue(j);
 				r.createCell(1).setCellValue(SCAC + "-" + TrailerNB);
 				r.createCell(2).setCellValue(CurrentTerminal);
+				r.createCell(7).setCellValue(NextTerminal_1);
 				System.out.println("\n" + j + " Time is wrong for trailer " + SCAC + "-" + TrailerNB
-						+ " CurrentTerminal " + CurrentTerminal);
+						+ " CurrentTerminal " + CurrentTerminal + " NextTerminal " + NextTerminal_1);
 				if (FlagLst == false) {
 					r.createCell(3).setCellValue(ExpectedLstReportT);
 					r.createCell(4).setCellValue(ActualLstReportT);
@@ -195,6 +212,12 @@ public class CheckInterRegionalReport extends SetupBase {
 					r.createCell(5).setCellValue(ExpectedTTMS);
 					r.createCell(6).setCellValue(ActualTTMS);
 					System.out.printf("  " + "TTMS expected: " + ExpectedTTMS + " but found: " + ActualTTMS);
+				}
+
+				if (FlagSDT == false) {
+					r.createCell(10).setCellValue(ExpectedSDT);
+					r.createCell(11).setCellValue(ActualSDT);
+					System.out.printf("  " + "SDT expected: " + ExpectedSDT + " but found: " + ActualSDT);
 				}
 			}
 		}
@@ -244,17 +267,22 @@ public class CheckInterRegionalReport extends SetupBase {
 			String ActualTTMS = trailer.get(3);
 			String ActualLstReportT = trailer.get(4);
 			String CurrentTerminal = ExpectedTrailerInforReport.get(j).get(3);
+			String ActualSDT = trailer.get(6);
+			String ExpectedSDT = ExpectedTrailerInforReport.get(j).get(7);
+			String NextTerminal_1 = ExpectedTrailerInforReport.get(j).get(8);
 			++j;
 			boolean FlagLst = ExpectedLstReportT.equals(ActualLstReportT);
 			boolean FlagTTMS = ExpectedTTMS.equals(ActualTTMS);
-			if (!(FlagLst && FlagTTMS)) {
+			boolean FlagSDT = ExpectedSDT.equals(ActualSDT);
+			if (!(FlagLst && FlagTTMS && FlagSDT)) {
 				++i;
 				Row r = sheet.createRow(++R);
 				r.createCell(0).setCellValue(j);
 				r.createCell(1).setCellValue(SCAC + "-" + TrailerNB);
 				r.createCell(2).setCellValue(CurrentTerminal);
+				r.createCell(7).setCellValue(NextTerminal_1);
 				System.out.println("\n" + j + " Time is wrong for trailer " + SCAC + "-" + TrailerNB
-						+ " CurrentTerminal " + CurrentTerminal);
+						+ " CurrentTerminal " + CurrentTerminal + " NextTerminal " + NextTerminal_1);
 				if (FlagLst == false) {
 					r.createCell(3).setCellValue(ExpectedLstReportT);
 					r.createCell(4).setCellValue(ActualLstReportT);
@@ -266,6 +294,12 @@ public class CheckInterRegionalReport extends SetupBase {
 					r.createCell(6).setCellValue(ActualTTMS);
 					System.out.printf("  " + "TTMS expected: " + ExpectedTTMS + " but found: " + ActualTTMS);
 				}
+				if (FlagSDT == false) {
+					r.createCell(10).setCellValue(ExpectedSDT);
+					r.createCell(11).setCellValue(ActualSDT);
+					System.out.printf("  " + "SDT expected: " + ExpectedSDT + " but found: " + ActualSDT);
+				}
+
 			}
 		}
 		System.out.println("\n" + m.getName() + " form totally " + TrailerGRID.size() + "  mismatch " + i + "\n");
@@ -295,7 +329,7 @@ public class CheckInterRegionalReport extends SetupBase {
 		(new WebDriverWait(driver, 50))
 				.until(ExpectedConditions.visibilityOf(page.InterRegionalRoadEmptiesTrailerInforGrid));
 		LinkedHashSet<ArrayList<String>> TrailerGRID = page
-				.GetReportList(page.InterRegionalRoadEmptiesTrailerInforGrid);
+				.GetTrailerReportTime(page.InterRegionalRoadEmptiesTrailerInforGrid);
 		System.out.println("\n Inter-Regional Road Empties totally " + TrailerGRID.size());
 		Row subtitle = sheet.createRow(++R);
 		subtitle.createCell(0).setCellValue("Inter-Regional Road Empties totally :");
@@ -311,18 +345,25 @@ public class CheckInterRegionalReport extends SetupBase {
 			String ExpectedLstReportT = ExpectedTrailerInforReport.get(j).get(4);
 			String ExpectedETA = ExpectedTrailerInforReport.get(j).get(6);
 			String CurrentTerminal = ExpectedTrailerInforReport.get(j).get(3);
-			String Destination = ExpectedTrailerInforReport.get(j).get(2);
-			String ActualLstReportT = trailer.get(7);
-			String ActualETA = trailer.get(8);
+			//String Destination = ExpectedTrailerInforReport.get(j).get(2);
+			String ActualLstReportT = trailer.get(4);
+			String ActualETA = trailer.get(5);
+			String ActualSDT = trailer.get(6);
+			String ExpectedSDT = ExpectedTrailerInforReport.get(j).get(7);
+			String NextTerminal_1 = ExpectedTrailerInforReport.get(j).get(8);
 			++j;
 			boolean FlagLst = ExpectedLstReportT.equals(ActualLstReportT);
 			boolean FlagETA = ExpectedETA.equals(ActualETA);
-			if (!(FlagLst && FlagETA)) {
+			boolean FlagSDT = ExpectedSDT.equals(ActualSDT);
+			if (!(FlagLst && FlagETA && FlagSDT)) {
 				++i;
 				Row r = sheet.createRow(++R);
 				r.createCell(0).setCellValue(j);
 				r.createCell(1).setCellValue(SCAC + "-" + TrailerNB);
-				System.out.println("\n" + j + " Time is wrong for trailer " + SCAC + "-" + TrailerNB);
+				r.createCell(2).setCellValue(CurrentTerminal);
+				r.createCell(7).setCellValue(NextTerminal_1);
+				System.out.println("\n" + j + " Time is wrong for trailer " + SCAC + "-" + TrailerNB
+						+ " CurrentTerminal " + CurrentTerminal + " NextTerminal " + NextTerminal_1);
 				if (FlagLst == false) {
 					r.createCell(2).setCellValue(CurrentTerminal);
 					r.createCell(3).setCellValue(ExpectedLstReportT);
@@ -331,12 +372,17 @@ public class CheckInterRegionalReport extends SetupBase {
 							+ ExpectedLstReportT + " but found: " + ActualLstReportT);
 				}
 				if (FlagETA == false) {
-					r.createCell(7).setCellValue(Destination);
 					r.createCell(8).setCellValue(ExpectedETA);
 					r.createCell(9).setCellValue(ActualETA);
-					System.out.print(" Destination " + Destination + "  " + "ETA expected: " + ExpectedETA
+					System.out.print(" NextTerminal " + NextTerminal_1 + "  " + "ETA expected: " + ExpectedETA
 							+ " but found: " + ActualETA);
 				}
+				if (FlagSDT == false) {
+					r.createCell(10).setCellValue(ExpectedSDT);
+					r.createCell(11).setCellValue(ActualSDT);
+					System.out.printf(" NextTerminal " + NextTerminal_1 +"  " + "SDT expected: " + ExpectedSDT + " but found: " + ActualSDT);
+				}
+
 			}
 		}
 

@@ -10,8 +10,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
+import java.util.LinkedHashSet;
 import java.util.TimeZone;
+import java.util.Collections;
 
 public class Function {
 
@@ -200,4 +203,15 @@ public class Function {
 		return DISPLAY_TIME;
 	}
 
+	public static Collection GetDiffBetwForm(Collection set, Collection subset) {
+		if (set.containsAll(subset)) {
+			Collection set2 = new LinkedHashSet<ArrayList<String>>();
+			set2.addAll(set);
+			set2.removeAll(subset);
+			return set2;
+		} else {
+			return null;
+		}
+
+	}
 }

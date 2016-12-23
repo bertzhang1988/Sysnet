@@ -32,7 +32,7 @@ public class SetupBase {
 			System.setProperty("webdriver.ie.driver", Conf.GetIEPath());
 			driver = new InternetExplorerDriver();
 		}
-		driver.get(Conf.GetSysnetSitURL());
+		driver.get(Conf.GetSysnetURL());
 		driver.manage().window().maximize();
 	}
 

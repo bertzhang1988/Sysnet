@@ -75,6 +75,7 @@ public class DataDAO {
 			Date LAST_REPORTED_TIME_DT = rs.getTimestamp("LAST_REPORTED_TIME_DT");
 			Date NEXT_TTMS_1_DT = rs.getTimestamp("NEXT_TTMS_1_DT");
 			Date IN_OUT_TIME_DT = rs.getTimestamp("IN_OUT_TIME_DT");
+			String SCHED_DPRTR_FLAG = rs.getString("SCHED_DPRTR_FLAG");
 			// System.out.println(LAST_REPORTED_TIME_DT + SCAC + TrailerNB);
 
 			String LstReportTime;
@@ -101,6 +102,12 @@ public class DataDAO {
 						+ " is not in range of 2016-2026, can not judge DST");
 				ETA = null;
 			}
+			String SDT = null;
+			if (SCHED_DPRTR_FLAG.equalsIgnoreCase("Y")) {
+				SDT = ETA;
+				ETA = null;
+			}
+
 			ArrayList<String> ExpectedTrailerLine = new ArrayList<String>();
 			ExpectedTrailerLine.add(SCAC); // 0
 			ExpectedTrailerLine.add(TrailerNB); // 1
@@ -109,6 +116,8 @@ public class DataDAO {
 			ExpectedTrailerLine.add(LstReportTime);// 4
 			ExpectedTrailerLine.add(TTMS);// 5
 			ExpectedTrailerLine.add(ETA);// 6
+			ExpectedTrailerLine.add(SDT);// 7
+			ExpectedTrailerLine.add(NEXT_TERMINAL_1);//8
 			Collections.replaceAll(ExpectedTrailerLine, null, "");
 			ExpectedTrailerReportList.add(ExpectedTrailerLine);
 		}

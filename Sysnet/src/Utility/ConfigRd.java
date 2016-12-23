@@ -51,7 +51,7 @@ public class ConfigRd {
 
 	/* set current connection */
 	public String GetDatabase() {
-		String path = pro.getProperty("Devdb");
+		String path = pro.getProperty("Sitdb");
 		return path;
 	}
 
@@ -66,10 +66,15 @@ public class ConfigRd {
 	}
 
 	public String GetUserSchema() {
-		String path = pro.getProperty("DevUser");
+		String path = pro.getProperty("SitUser");
 		return path;
 	}
 
+	public String GetSysnetURL() {
+		String path = pro.getProperty("SysnetSitURL");
+		return path;
+	}
+	
 	/* set databse */
 	public String GetSitDatabase() {
 		String path = pro.getProperty("Sitdb");
