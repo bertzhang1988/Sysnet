@@ -49,6 +49,7 @@ public class CheckInterRegionalReport extends SetupBase {
 		page = new SysnetPage(driver);
 		driver.get(Conf.GetSysnetURL());
 		driver.manage().window().maximize();
+		page.Square.click();
 		(new WebDriverWait(driver, 50)).until(ExpectedConditions.visibilityOf(page.SystemSummaryButton));
 		page.SystemSummaryButton.click();
 		(new WebDriverWait(driver, 50)).until(ExpectedConditions.visibilityOf(page.InterRegionalform));

@@ -25,6 +25,9 @@ public class SysnetPage {
 
 	/* Common */
 
+	@FindBy(how = How.XPATH, using = ".//div[@id='mapMenuBar']/span/i")
+	public WebElement Square;
+	
 	@FindBy(how = How.PARTIAL_LINK_TEXT, using = "System\nSummary")
 	public WebElement SystemSummaryButton;
 

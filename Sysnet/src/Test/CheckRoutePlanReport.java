@@ -87,6 +87,7 @@ public class CheckRoutePlanReport extends SetupBrowserAndReport {
 	public void SetUp() throws IOException, SQLException {
 		page = new SysnetPage(driver);
 		js = (JavascriptExecutor) driver;
+		page.Square.click();
 		new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(page.RoutePlanButton));
 		page.RoutePlanButton.click();
 		// (new WebDriverWait(driver,

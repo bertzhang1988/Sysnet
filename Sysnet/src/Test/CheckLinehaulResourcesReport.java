@@ -23,6 +23,7 @@ public class CheckLinehaulResourcesReport extends SetupBrowserAndReport {
 	@BeforeClass
 	public void Setup() throws IOException, SQLException {
 		page = new SysnetPage(driver);
+		page.Square.click();
 		(new WebDriverWait(driver, 50)).until(ExpectedConditions.visibilityOf(page.LinehaulResourcesButton));
 		page.LinehaulResourcesButton.click();
 		(new WebDriverWait(driver, 50)).until(ExpectedConditions.visibilityOf(page.LinehaulForm));

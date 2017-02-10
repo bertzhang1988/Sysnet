@@ -32,6 +32,7 @@ public class CheckRailReport extends SetupBrowserAndReport {
 	public void Setup() {
 
 		Page = new SysnetPage(driver);
+		Page.Square.click();
 		(new WebDriverWait(driver, 20)).until(ExpectedConditions.visibilityOf(Page.SystemSummaryButton));
 		Page.SystemSummaryButton.click();
 		(new WebDriverWait(driver, 20)).until(ExpectedConditions.visibilityOf(Page.Railform));

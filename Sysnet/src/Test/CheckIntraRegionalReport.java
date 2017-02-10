@@ -35,6 +35,7 @@ public class CheckIntraRegionalReport extends SetupBrowserAndReport {
 	@BeforeClass
 	public void SetUp() throws AWTException, InterruptedException, IOException, SQLException {
 		page = new SysnetPage(driver);
+		page.Square.click();
 		(new WebDriverWait(driver, 50)).until(ExpectedConditions.visibilityOf(page.SystemSummaryButton));
 		page.SystemSummaryButton.click();
 		(new WebDriverWait(driver, 50)).until(ExpectedConditions.visibilityOf(page.InterRegionalform));
