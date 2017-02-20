@@ -33,7 +33,8 @@ public class CheckRoutePlanReport extends SetupBrowserAndReport {
 
 	private SysnetPage page;
 	private JavascriptExecutor js;
-	
+	private WebDriverWait w1;
+	private WebDriverWait w2;
 	
 	@Test(priority = 1)
 	public void CheckInterRoutePlan() throws SQLException, IOException {
@@ -87,12 +88,14 @@ public class CheckRoutePlanReport extends SetupBrowserAndReport {
 	public void SetUp() throws IOException, SQLException {
 		page = new SysnetPage(driver);
 		js = (JavascriptExecutor) driver;
+		w1=new WebDriverWait(driver, 20);
+		w2=new WebDriverWait(driver, 50);
 		page.Square.click();
-		new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(page.RoutePlanButton));
+		w1.until(ExpectedConditions.elementToBeClickable(page.RoutePlanButton));
 		page.RoutePlanButton.click();
 		// (new WebDriverWait(driver,
 		// 20)).until(ExpectedConditions.visibilityOf(page.RoutePlanForm));
-		(new WebDriverWait(driver, 50)).until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-bar")));
+		w2.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-bar")));
 	    fw.write(Function.GetDisplayTime().replace(":", "-")+Nl);
 	}
 

@@ -52,6 +52,7 @@ public class CheckInterRegionalReport extends SetupBase {
 		page.Square.click();
 		(new WebDriverWait(driver, 50)).until(ExpectedConditions.visibilityOf(page.SystemSummaryButton));
 		page.SystemSummaryButton.click();
+		(new WebDriverWait(driver, 50)).until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-bar")));
 		(new WebDriverWait(driver, 50)).until(ExpectedConditions.visibilityOf(page.InterRegionalform));
 
 		// get time zone
@@ -77,7 +78,6 @@ public class CheckInterRegionalReport extends SetupBase {
 
 	@Test(priority = 1, groups = "check time")
 	public void InterRegionalAtLddTrailerReport(Method m) throws ClassNotFoundException, SQLException {
-
 		page.InterRegionalATLdd.click();
 		(new WebDriverWait(driver, 50)).until(ExpectedConditions.numberOfWindowsToBe(2));
 		Set<String> WindowHandles = driver.getWindowHandles();

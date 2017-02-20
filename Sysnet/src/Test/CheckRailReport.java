@@ -35,8 +35,9 @@ public class CheckRailReport extends SetupBrowserAndReport {
 		Page.Square.click();
 		(new WebDriverWait(driver, 20)).until(ExpectedConditions.visibilityOf(Page.SystemSummaryButton));
 		Page.SystemSummaryButton.click();
-		(new WebDriverWait(driver, 20)).until(ExpectedConditions.visibilityOf(Page.Railform));
 		(new WebDriverWait(driver, 50)).until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-bar")));
+		(new WebDriverWait(driver, 20)).until(ExpectedConditions.visibilityOf(Page.Railform));
+		
 		// get main page handler
 		MainWindowHandler = driver.getWindowHandle();
 

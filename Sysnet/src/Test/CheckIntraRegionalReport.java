@@ -1,16 +1,12 @@
 package Test;
 
 import java.awt.AWTException;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.Set;
-import java.util.TimeZone;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -22,8 +18,6 @@ import org.testng.annotations.Test;
 
 import Data.CommonData;
 import Data.DataDAO;
-import Utility.ConfigRd;
-import Utility.Function;
 import Utility.SetupBrowserAndReport;
 import page.SysnetPage;
 
@@ -38,6 +32,7 @@ public class CheckIntraRegionalReport extends SetupBrowserAndReport {
 		page.Square.click();
 		(new WebDriverWait(driver, 50)).until(ExpectedConditions.visibilityOf(page.SystemSummaryButton));
 		page.SystemSummaryButton.click();
+		(new WebDriverWait(driver, 50)).until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-bar")));
 		(new WebDriverWait(driver, 50)).until(ExpectedConditions.visibilityOf(page.InterRegionalform));
 
 		// get summary handler
