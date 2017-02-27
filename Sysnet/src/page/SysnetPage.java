@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -27,7 +28,7 @@ public class SysnetPage {
 
 	@FindBy(how = How.XPATH, using = ".//div[@id='mapMenuBar']/span/i")
 	public WebElement Square;
-	
+
 	@FindBy(how = How.PARTIAL_LINK_TEXT, using = "System\nSummary")
 	public WebElement SystemSummaryButton;
 
@@ -127,6 +128,9 @@ public class SysnetPage {
 
 	/* Route Plan */
 
+	@FindBy(how = How.CSS, using = "div.filterView")
+	public WebElement FilterView;
+
 	@FindBy(how = How.XPATH, using = ".//input[@value='inter']")
 	public WebElement InterRadioButton;
 
@@ -153,10 +157,17 @@ public class SysnetPage {
 	/* UI method */
 	public LinkedHashSet<ArrayList<String>> GetReportList(WebElement TrailerInforGrid) {
 		driver.manage().window().maximize();
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		int line = TrailerInforGrid.findElements(By.xpath("div")).size();
+		int firstTimeLine=line;
+		//System.out.println(firstTimeLine);
 		JavascriptExecutor jse = (JavascriptExecutor) driver;
 		LinkedHashSet<ArrayList<String>> ProInfo = new LinkedHashSet<ArrayList<String>>();
-		int lastLine;
+		int lastTimeLine;
 		do {
 			for (int j = 1; j <= line; j++) {
 				// String[]
@@ -180,9 +191,10 @@ public class SysnetPage {
 					TrailerInforGrid.findElement(By.xpath("div[" + line + "]")));
 			// System.out.println((Long) jse.executeScript("return
 			// window.scrollY"));
-			lastLine = line;
+			lastTimeLine = line;
 			line = TrailerInforGrid.findElements(By.xpath("div")).size();
-		} while (line >= lastLine && line > 48);
+			//System.out.println(line);
+		} while (line >= lastTimeLine && line-firstTimeLine > 10);
 
 		for (int j = 1; j <= line; j++) {
 			// String[]
@@ -206,10 +218,17 @@ public class SysnetPage {
 
 	public LinkedHashSet<ArrayList<String>> GetReport(WebElement TrailerInforGrid) {
 		driver.manage().window().maximize();
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		int line = TrailerInforGrid.findElements(By.xpath("div")).size();
+		int firstTimeLine=line;
+		//System.out.println(firstTimeLine);
 		JavascriptExecutor jse = (JavascriptExecutor) driver;
 		LinkedHashSet<ArrayList<String>> ProInfo = new LinkedHashSet<ArrayList<String>>();
-		int lastLine;
+		int lastTimeLine;
 		do {
 			for (int j = 1; j <= line; j++) {
 
@@ -223,9 +242,10 @@ public class SysnetPage {
 					TrailerInforGrid.findElement(By.xpath("div[" + line + "]")));
 			// System.out.println((Long) jse.executeScript("return
 			// window.scrollY"));
-			lastLine = line;
+			lastTimeLine = line;
 			line = TrailerInforGrid.findElements(By.xpath("div")).size();
-		} while (line >= lastLine && line > 48);
+			//System.out.println(line);
+		} while (line >= lastTimeLine && line-firstTimeLine > 10);
 
 		for (int j = 1; j <= line; j++) {
 			// String[]
@@ -241,10 +261,17 @@ public class SysnetPage {
 
 	public LinkedHashSet<ArrayList<String>> GetTrailerReportTime(WebElement TrailerInforGrid) {
 		driver.manage().window().maximize();
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		int line = TrailerInforGrid.findElements(By.xpath("div")).size();
+		int firstTimeLine=line;
+		//System.out.println(firstTimeLine);
 		JavascriptExecutor jse = (JavascriptExecutor) driver;
 		LinkedHashSet<ArrayList<String>> ProInfo = new LinkedHashSet<ArrayList<String>>();
-		int lastLine;
+		int lastTimeLine;
 		String SCAC;
 		String Trailer;
 		String CurrentTerminal;
@@ -331,9 +358,10 @@ public class SysnetPage {
 
 			jse.executeScript("arguments[0].scrollIntoView(true);",
 					TrailerInforGrid.findElement(By.xpath("div[" + line + "]")));
-			lastLine = line;
+			lastTimeLine = line;
 			line = TrailerInforGrid.findElements(By.xpath("div")).size();
-		} while (line >= lastLine && line > 48);
+			//System.out.println(line);
+		} while (line >= lastTimeLine && line-firstTimeLine > 10);
 
 		for (int j = 1; j <= line; j++) {
 			SCAC = TrailerInforGrid.findElement(By.xpath("div[" + j + "]/div/div[1]")).getText();
@@ -371,6 +399,16 @@ public class SysnetPage {
 			ProInfo.add(e1);
 		}
 		return ProInfo;
+	}
+
+	public boolean isVisable(WebElement element) {
+		boolean flag = false;
+		try {
+			flag = element.isDisplayed();
+		} catch (NoSuchElementException e) {
+			flag = false;
+		}
+		return flag;
 	}
 
 }

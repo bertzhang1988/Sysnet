@@ -39,6 +39,8 @@ public class CheckRoutePlanReport extends SetupBrowserAndReport {
 	@Test(priority = 1)
 	public void CheckInterRoutePlan() throws SQLException, IOException {
 		js.executeScript("arguments[0].scrollIntoView(false);", page.InterRadioButton);
+		if(page.FilterView.isDisplayed()) 
+			page.FilterView.findElement(By.cssSelector("i.fa.fa-chevron-down.pull-right.toggle-filter-view")).click();
 		if (!page.InterRadioButton.isSelected())
 			page.InterRadioButton.click();
 		driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
@@ -61,6 +63,8 @@ public class CheckRoutePlanReport extends SetupBrowserAndReport {
 	@Test(priority = 2)
 	public void CheckIntraRoutePlan() throws SQLException, IOException {
 		js.executeScript("arguments[0].scrollIntoView(false);", page.IntraRadioButton);
+		if(page.FilterView.isDisplayed()) 
+			page.FilterView.findElement(By.cssSelector("i.fa.fa-chevron-down.pull-right.toggle-filter-view")).click();
 		if (!page.IntraRadioButton.isSelected())
 			page.IntraRadioButton.click();
 		driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
@@ -88,8 +92,9 @@ public class CheckRoutePlanReport extends SetupBrowserAndReport {
 	public void SetUp() throws IOException, SQLException {
 		page = new SysnetPage(driver);
 		js = (JavascriptExecutor) driver;
-		w1=new WebDriverWait(driver, 20);
+		w1=new WebDriverWait(driver, 120);
 		w2=new WebDriverWait(driver, 50);
+		if(!page.isVisable(page.RoutePlanButton))
 		page.Square.click();
 		w1.until(ExpectedConditions.elementToBeClickable(page.RoutePlanButton));
 		page.RoutePlanButton.click();
@@ -97,6 +102,8 @@ public class CheckRoutePlanReport extends SetupBrowserAndReport {
 		// 20)).until(ExpectedConditions.visibilityOf(page.RoutePlanForm));
 		w2.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-bar")));
 	    fw.write(Function.GetDisplayTime().replace(":", "-")+Nl);
+	    if(page.isVisable(page.RoutePlanButton))
+			page.Square.click();
 	}
 
 	@AfterClass

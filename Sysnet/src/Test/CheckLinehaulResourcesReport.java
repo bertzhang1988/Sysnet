@@ -19,22 +19,26 @@ import page.SysnetPage;
 public class CheckLinehaulResourcesReport extends SetupBrowserAndReport {
 
 	private SysnetPage page;
-
+	private WebDriverWait wait1;
 	@BeforeClass
 	public void Setup() throws IOException, SQLException {
 		page = new SysnetPage(driver);
-		page.Square.click();
-		(new WebDriverWait(driver, 50)).until(ExpectedConditions.visibilityOf(page.LinehaulResourcesButton));
+		if(!page.isVisable(page.LinehaulResourcesButton))
+			page.Square.click();
+		wait1=new WebDriverWait(driver,50);
+		wait1.until(ExpectedConditions.visibilityOf(page.LinehaulResourcesButton));
 		page.LinehaulResourcesButton.click();
-		(new WebDriverWait(driver, 50)).until(ExpectedConditions.visibilityOf(page.LinehaulForm));
-		(new WebDriverWait(driver, 50)).until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-bar")));
+		wait1.until(ExpectedConditions.visibilityOf(page.LinehaulForm));
+		wait1.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-bar")));
+		if(page.isVisable(page.LinehaulResourcesButton))
+			page.Square.click();
 		 fw.write(Function.GetDisplayTime().replace(":", "-")+Nl);
 	}
 
 	@Test
 	public void CheckLineHaulResourceAllLocation() throws SQLException, IOException {
 	page.LhAllLocTer.click();
-	(new WebDriverWait(driver, 50)).until(ExpectedConditions.visibilityOf(page.LhUsaCy));
+	wait1.until(ExpectedConditions.visibilityOf(page.LhUsaCy));
 	LinkedHashSet<ArrayList<String>>  ExpectedLineHualResourceList=CommonData.GetLinehaulForm();
 	LinkedHashSet<ArrayList<String>>  ActualLineHualResourceList=page.GetReport(page.LinehaulForm);
 	if (!ActualLineHualResourceList.equals(ExpectedLineHualResourceList)) {

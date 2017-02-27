@@ -41,6 +41,7 @@ public class CheckInterRegionalReport extends SetupBase {
 	private int R;
 	private DataDAO DA;
 	private String MainWindowHandler;
+	private WebDriverWait wait1;
 
 	@BeforeClass
 	public void SetUp() throws AWTException, InterruptedException, IOException, SQLException {
@@ -48,13 +49,16 @@ public class CheckInterRegionalReport extends SetupBase {
 		DA = new DataDAO();
 		page = new SysnetPage(driver);
 		driver.get(Conf.GetSysnetURL());
+		wait1=new WebDriverWait(driver,150);
 		driver.manage().window().maximize();
-		page.Square.click();
-		(new WebDriverWait(driver, 50)).until(ExpectedConditions.visibilityOf(page.SystemSummaryButton));
+		if(!page.isVisable(page.SystemSummaryButton))
+			page.Square.click();
+		wait1.until(ExpectedConditions.visibilityOf(page.SystemSummaryButton));
 		page.SystemSummaryButton.click();
-		(new WebDriverWait(driver, 50)).until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-bar")));
-		(new WebDriverWait(driver, 50)).until(ExpectedConditions.visibilityOf(page.InterRegionalform));
-
+		wait1.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-bar")));
+		wait1.until(ExpectedConditions.visibilityOf(page.InterRegionalform));
+		if(page.isVisable(page.SystemSummaryButton))
+			page.Square.click();
 		// get time zone
 		defaultTimeZone = TimeZone.getDefault();
 
@@ -79,15 +83,15 @@ public class CheckInterRegionalReport extends SetupBase {
 	@Test(priority = 1, groups = "check time")
 	public void InterRegionalAtLddTrailerReport(Method m) throws ClassNotFoundException, SQLException {
 		page.InterRegionalATLdd.click();
-		(new WebDriverWait(driver, 50)).until(ExpectedConditions.numberOfWindowsToBe(2));
+		wait1.until(ExpectedConditions.numberOfWindowsToBe(2));
 		Set<String> WindowHandles = driver.getWindowHandles();
 		for (String windowHandle : WindowHandles) {
 			if (!windowHandle.equalsIgnoreCase(MainWindowHandler)) {
 				driver.switchTo().window(windowHandle);
 			}
 		}
-		(new WebDriverWait(driver, 50)).until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-bar")));
-		(new WebDriverWait(driver, 50)).until(ExpectedConditions.visibilityOf(page.InterRegionalATLddTrailerInforGrid));
+		wait1.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-bar")));
+		wait1.until(ExpectedConditions.visibilityOf(page.InterRegionalATLddTrailerInforGrid));
 		LinkedHashSet<ArrayList<String>> TrailerGRID = page
 				.GetTrailerReportTime(page.InterRegionalATLddTrailerInforGrid);
 		System.out.println("\n Inter-Regional ldd totally " + TrailerGRID.size());
@@ -160,15 +164,15 @@ public class CheckInterRegionalReport extends SetupBase {
 	public void InterRegionalAtArrTrailerReport(Method m) throws ClassNotFoundException, SQLException {
 
 		page.InterRegionalATArr.click();
-		(new WebDriverWait(driver, 50)).until(ExpectedConditions.numberOfWindowsToBe(2));
+		wait1.until(ExpectedConditions.numberOfWindowsToBe(2));
 		Set<String> WindowHandles = driver.getWindowHandles();
 		for (String windowHandle : WindowHandles) {
 			if (!windowHandle.equalsIgnoreCase(MainWindowHandler)) {
 				driver.switchTo().window(windowHandle);
 			}
 		}
-		(new WebDriverWait(driver, 50)).until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-bar")));
-		(new WebDriverWait(driver, 50)).until(ExpectedConditions.visibilityOf(page.InterRegionalATArrTrailerInforGrid));
+		wait1.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-bar")));
+		wait1.until(ExpectedConditions.visibilityOf(page.InterRegionalATArrTrailerInforGrid));
 		LinkedHashSet<ArrayList<String>> TrailerGRID = page
 				.GetTrailerReportTime(page.InterRegionalATArrTrailerInforGrid);
 		System.out.println("\n Inter-Regional ARR totally " + TrailerGRID.size());
@@ -239,15 +243,15 @@ public class CheckInterRegionalReport extends SetupBase {
 	public void InterRegionalAtLddArrTrailerReport(Method m) throws ClassNotFoundException, SQLException {
 
 		page.InterRegionalATLddArr.click();
-		(new WebDriverWait(driver, 50)).until(ExpectedConditions.numberOfWindowsToBe(2));
+		wait1.until(ExpectedConditions.numberOfWindowsToBe(2));
 		Set<String> WindowHandles = driver.getWindowHandles();
 		for (String windowHandle : WindowHandles) {
 			if (!windowHandle.equalsIgnoreCase(MainWindowHandler)) {
 				driver.switchTo().window(windowHandle);
 			}
 		}
-		(new WebDriverWait(driver, 50)).until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-bar")));
-		(new WebDriverWait(driver, 50))
+		wait1.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-bar")));
+		wait1
 				.until(ExpectedConditions.visibilityOf(page.InterRegionalATLddArrTrailerInforGrid));
 		LinkedHashSet<ArrayList<String>> TrailerGRID = page
 				.GetTrailerReportTime(page.InterRegionalATLddArrTrailerInforGrid);
@@ -319,15 +323,15 @@ public class CheckInterRegionalReport extends SetupBase {
 	public void InterRegionalRoadEmptiesTrailerReport(Method m) throws ClassNotFoundException, SQLException {
 
 		page.InterRegionalRoadEmpties.click();
-		(new WebDriverWait(driver, 50)).until(ExpectedConditions.numberOfWindowsToBe(2));
+		wait1.until(ExpectedConditions.numberOfWindowsToBe(2));
 		Set<String> WindowHandles = driver.getWindowHandles();
 		for (String windowHandle : WindowHandles) {
 			if (!windowHandle.equalsIgnoreCase(MainWindowHandler)) {
 				driver.switchTo().window(windowHandle);
 			}
 		}
-		(new WebDriverWait(driver, 50)).until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-bar")));
-		(new WebDriverWait(driver, 50))
+		wait1.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-bar")));
+		wait1
 				.until(ExpectedConditions.visibilityOf(page.InterRegionalRoadEmptiesTrailerInforGrid));
 		LinkedHashSet<ArrayList<String>> TrailerGRID = page
 				.GetTrailerReportTime(page.InterRegionalRoadEmptiesTrailerInforGrid);
@@ -346,7 +350,7 @@ public class CheckInterRegionalReport extends SetupBase {
 			String ExpectedLstReportT = ExpectedTrailerInforReport.get(j).get(4);
 			String ExpectedETA = ExpectedTrailerInforReport.get(j).get(6);
 			String CurrentTerminal = ExpectedTrailerInforReport.get(j).get(3);
-			//String Destination = ExpectedTrailerInforReport.get(j).get(2);
+			// String Destination = ExpectedTrailerInforReport.get(j).get(2);
 			String ActualLstReportT = trailer.get(4);
 			String ActualETA = trailer.get(5);
 			String ActualSDT = trailer.get(6);
@@ -381,7 +385,8 @@ public class CheckInterRegionalReport extends SetupBase {
 				if (FlagSDT == false) {
 					r.createCell(10).setCellValue(ExpectedSDT);
 					r.createCell(11).setCellValue(ActualSDT);
-					System.out.printf(" NextTerminal " + NextTerminal_1 +"  " + "SDT expected: " + ExpectedSDT + " but found: " + ActualSDT);
+					System.out.printf(" NextTerminal " + NextTerminal_1 + "  " + "SDT expected: " + ExpectedSDT
+							+ " but found: " + ActualSDT);
 				}
 
 			}
@@ -401,8 +406,8 @@ public class CheckInterRegionalReport extends SetupBase {
 
 	@Test(priority = 5)
 	public void VerifySchedulesForInterRegionalRoadEmpty() throws SQLException, IOException {
-		(new WebDriverWait(driver, 20)).until(ExpectedConditions.visibilityOf(page.InterRegionalRoadEmpties));
-		(new WebDriverWait(driver, 50)).until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-bar")));
+		wait1.until(ExpectedConditions.visibilityOf(page.InterRegionalRoadEmpties));
+		wait1.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-bar")));
 		String ScheduleE = page.InterRegionalRoadEmpties.findElement(By.xpath("following-sibling::td")).getText();
 		String ExpectedSheduleE = CommonData.GetScheduleForInterRegionalRoadEmpty();
 		Row summary = sheet.createRow(++R);

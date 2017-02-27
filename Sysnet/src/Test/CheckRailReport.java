@@ -1,19 +1,14 @@
 package Test;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.Set;
-import java.util.TimeZone;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -27,17 +22,21 @@ public class CheckRailReport extends SetupBrowserAndReport {
 
 	private SysnetPage Page;
 	private String MainWindowHandler;
+	private WebDriverWait wait1;
 
 	@BeforeClass
 	public void Setup() {
 
 		Page = new SysnetPage(driver);
-		Page.Square.click();
-		(new WebDriverWait(driver, 20)).until(ExpectedConditions.visibilityOf(Page.SystemSummaryButton));
+		if (!Page.isVisable(Page.SystemSummaryButton))
+			Page.Square.click();
+		wait1 = new WebDriverWait(driver, 50);
+		wait1.until(ExpectedConditions.visibilityOf(Page.SystemSummaryButton));
 		Page.SystemSummaryButton.click();
-		(new WebDriverWait(driver, 50)).until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-bar")));
-		(new WebDriverWait(driver, 20)).until(ExpectedConditions.visibilityOf(Page.Railform));
-		
+		wait1.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-bar")));
+		wait1.until(ExpectedConditions.visibilityOf(Page.Railform));
+		if (Page.isVisable(Page.SystemSummaryButton))
+			Page.Square.click();
 		// get main page handler
 		MainWindowHandler = driver.getWindowHandle();
 
@@ -89,15 +88,15 @@ public class CheckRailReport extends SetupBrowserAndReport {
 	public void RailEmptyForm(Method m) throws IOException, SQLException {
 
 		Page.TotalEmptyRail.click();
-		(new WebDriverWait(driver, 50)).until(ExpectedConditions.numberOfWindowsToBe(2));
+		wait1.until(ExpectedConditions.numberOfWindowsToBe(2));
 		Set<String> WindowHandles = driver.getWindowHandles();
 		for (String windowHandle : WindowHandles) {
 			if (!windowHandle.equalsIgnoreCase(MainWindowHandler)) {
 				driver.switchTo().window(windowHandle);
 			}
 		}
-		(new WebDriverWait(driver, 50)).until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-bar")));
-		(new WebDriverWait(driver, 20)).until(ExpectedConditions.visibilityOf(Page.TotalEmptyRailForm));
+		wait1.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-bar")));
+		wait1.until(ExpectedConditions.visibilityOf(Page.TotalEmptyRailForm));
 		LinkedHashSet<ArrayList<String>> TrailerGRID = Page.GetTrailerReportTime(Page.TotalEmptyRailForm);
 		System.out.println("\n Total Empty Rail Form " + TrailerGRID.size());
 		fw.write(Nl + " Total Empty Rail Form " + TrailerGRID.size() + Nl);
@@ -115,7 +114,7 @@ public class CheckRailReport extends SetupBrowserAndReport {
 			String ExpectedETA = ExpectedTrailerInforReport.get(j).get(6);
 			String ActualETA = trailer.get(5);
 			String CurrentTerminal = ExpectedTrailerInforReport.get(j).get(3);
-			//String Destination = ExpectedTrailerInforReport.get(j).get(2);
+			// String Destination = ExpectedTrailerInforReport.get(j).get(2);
 			String ActualSDT = trailer.get(6);
 			String ExpectedSDT = ExpectedTrailerInforReport.get(j).get(7);
 			String NextTerminal_1 = ExpectedTrailerInforReport.get(j).get(8);
@@ -159,15 +158,15 @@ public class CheckRailReport extends SetupBrowserAndReport {
 	public void RailLoadedForm(Method m) throws IOException, SQLException {
 
 		Page.TotalLoadedRail.click();
-		(new WebDriverWait(driver, 50)).until(ExpectedConditions.numberOfWindowsToBe(2));
+		wait1.until(ExpectedConditions.numberOfWindowsToBe(2));
 		Set<String> WindowHandles = driver.getWindowHandles();
 		for (String windowHandle : WindowHandles) {
 			if (!windowHandle.equalsIgnoreCase(MainWindowHandler)) {
 				driver.switchTo().window(windowHandle);
 			}
 		}
-		(new WebDriverWait(driver, 50)).until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-bar")));
-		(new WebDriverWait(driver, 20)).until(ExpectedConditions.visibilityOf(Page.TotalLoadedRailForm));
+		wait1.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-bar")));
+		wait1.until(ExpectedConditions.visibilityOf(Page.TotalLoadedRailForm));
 		LinkedHashSet<ArrayList<String>> TrailerGRID = Page.GetTrailerReportTime(Page.TotalLoadedRailForm);
 		System.out.println("\n Total Loaded Rail Form " + TrailerGRID.size());
 		fw.write(Nl + " Total Loaded Rail Form " + TrailerGRID.size() + Nl);
@@ -185,7 +184,7 @@ public class CheckRailReport extends SetupBrowserAndReport {
 			String ExpectedETA = ExpectedTrailerInforReport.get(j).get(6);
 			String ActualETA = trailer.get(5);
 			String CurrentTerminal = ExpectedTrailerInforReport.get(j).get(3);
-			//String Destination = ExpectedTrailerInforReport.get(j).get(2);
+			// String Destination = ExpectedTrailerInforReport.get(j).get(2);
 			String ActualTTMS = trailer.get(3);
 			String ExpectedTTMS = ExpectedTrailerInforReport.get(j).get(5);
 			String ActualSDT = trailer.get(6);
@@ -196,7 +195,7 @@ public class CheckRailReport extends SetupBrowserAndReport {
 			boolean FlagETA = ExpectedETA.equals(ActualETA);
 			boolean FlagTTMS = ExpectedTTMS.equals(ActualTTMS);
 			boolean FlagSDT = ExpectedSDT.equals(ActualSDT);
-			if (!(FlagLst && FlagETA && FlagTTMS &&FlagSDT)) {
+			if (!(FlagLst && FlagETA && FlagTTMS && FlagSDT)) {
 				++i;
 				System.out.println("\n" + j + " Time is wrong for trailer " + SCAC + "-" + TrailerNB
 						+ " CurrentTerminal " + CurrentTerminal + " NextTerminal " + NextTerminal_1);
@@ -220,7 +219,7 @@ public class CheckRailReport extends SetupBrowserAndReport {
 					fw.write("  " + "SDT expected: " + ExpectedSDT + " but found: " + ActualSDT);
 					System.out.print("  " + "SDT expected: " + ExpectedSDT + " but found: " + ActualSDT);
 				}
-			
+
 			}
 		}
 
