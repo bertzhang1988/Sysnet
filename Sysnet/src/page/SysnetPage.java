@@ -232,7 +232,7 @@ public class SysnetPage {
 		do {
 			for (int j = 1; j <= line; j++) {
 
-				String[] Proline1 = TrailerInforGrid.findElement(By.xpath("div[" + j + "]")).getAttribute("innerText")
+				String[] Proline1 = TrailerInforGrid.findElement(By.xpath("div[" + j + "]")).getText()
 						.split("\\n");
 				ArrayList<String> e1 = new ArrayList<String>(Arrays.asList(Proline1));
 				ProInfo.add(e1);
@@ -251,7 +251,7 @@ public class SysnetPage {
 			// String[]
 			// Proline1=ArrayUtils.remove(TrailerInforGrid.findElement(By.xpath("div["
 			// + j + "]")).getText().split("\\n"),0);
-			String[] Proline1 = TrailerInforGrid.findElement(By.xpath("div[" + j + "]")).getAttribute("innerText")
+			String[] Proline1 = TrailerInforGrid.findElement(By.xpath("div[" + j + "]")).getText()
 					.split("\\n");
 			ArrayList<String> e1 = new ArrayList<String>(Arrays.asList(Proline1));
 			ProInfo.add(e1);

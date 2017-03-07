@@ -30,7 +30,7 @@ public class CheckLinehaulResourcesReport extends SetupBrowserAndReport {
 		page.LinehaulResourcesButton.click();
 		wait1.until(ExpectedConditions.visibilityOf(page.LinehaulForm));
 		wait1.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-bar")));
-		if(page.isVisable(page.LinehaulResourcesButton))
+		if(page.isVisable(page.LinehaulResourcesButton)&& page.isVisable(page.Square))
 			page.Square.click();
 		 fw.write(Function.GetDisplayTime().replace(":", "-")+Nl);
 	}

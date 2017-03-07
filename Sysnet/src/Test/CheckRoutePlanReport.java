@@ -19,6 +19,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
@@ -45,7 +47,12 @@ public class CheckRoutePlanReport extends SetupBrowserAndReport {
 			page.InterRadioButton.click();
 		driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
 		LinkedHashSet<ArrayList<String>> ActualRoutePlanInfo = page.GetReport(page.RoutePlanForm);
+		long d=Calendar.getInstance().getTime().getTime();
+		
 		LinkedHashSet<ArrayList<String>> ExpectedRoutePlanInfo = CommonData.GetRoutePlanForm("inter");
+		
+		long e=Calendar.getInstance().getTime().getTime();
+		System.out.println((e-d)/1000);
 		if (!ActualRoutePlanInfo.equals(ExpectedRoutePlanInfo)) {
 			System.out.println("Inter Route Plan is wrong");
 			System.out.println("expected : " + ExpectedRoutePlanInfo);
@@ -102,7 +109,7 @@ public class CheckRoutePlanReport extends SetupBrowserAndReport {
 		// 20)).until(ExpectedConditions.visibilityOf(page.RoutePlanForm));
 		w2.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-bar")));
 	    fw.write(Function.GetDisplayTime().replace(":", "-")+Nl);
-	    if(page.isVisable(page.RoutePlanButton))
+	    if(page.isVisable(page.RoutePlanButton)&& page.isVisable(page.Square))
 			page.Square.click();
 	}
 

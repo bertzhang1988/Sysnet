@@ -1,6 +1,5 @@
 package Data;
 
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,7 +12,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.TimeZone;
-
 
 import Utility.DataConnection;
 import Utility.Function;
@@ -77,43 +75,90 @@ public class CommonData {
 	public static LinkedHashSet<ArrayList<String>> GetRoutePlanForm(String RegionalType) throws SQLException {
 		RegionalType = RegionalType.toUpperCase();
 		Connection cn = DataConnection.getConnection();
+		Connection cn2 = DataConnection.getDevConnection();
 		PreparedStatement st = cn.prepareStatement(Query.queryRoutePlan);
 		st.setString(1, RegionalType);
 		ResultSet rs = st.executeQuery();
+		String ter;
+		String alp;
 		String Terminal;
 		String YRC_OTR;
+		String YRC_OTRSCHED;
 		String RAIL_LOADS;
+		String RAIL_LOADSCHED;
 		String PT_LOADS;
+		String PT_LOADSCHED;
 		String ETME_COUNT;
 		String LATE_COUNT;
 		LinkedHashSet<ArrayList<String>> ExpectedRoutePlanList = new LinkedHashSet<ArrayList<String>>();
+		PreparedStatement st2 = cn2.prepareStatement(Query.queryDriverColumnForRP, ResultSet.TYPE_SCROLL_SENSITIVE,
+				ResultSet.CONCUR_READ_ONLY);
+		PreparedStatement st3 = cn2.prepareStatement(Query.queryPowerColumnForRP, ResultSet.TYPE_SCROLL_SENSITIVE,
+				ResultSet.CONCUR_READ_ONLY);
+		ResultSet rs2 = null;
+		ResultSet rs3 = null;
 		while (rs.next()) {
-			Terminal = rs.getString("TERMINAL") + "/" + rs.getString("TERMINAL_ALPHA");
+			ter = rs.getString("TERMINAL");
+			alp = rs.getString("TERMINAL_ALPHA");
+			Terminal = ter + "/" + alp;
 			YRC_OTR = rs.getString("YRC_OTR");
+			YRC_OTRSCHED = rs.getString("yrc_otrSched");
 			RAIL_LOADS = rs.getString("RAIL_LOADS");
+			RAIL_LOADSCHED = rs.getString("railLoadsSched");
 			PT_LOADS = rs.getString("PT_LOADS");
+			PT_LOADSCHED = rs.getString("ptLoadsSched");
 			ETME_COUNT = rs.getString("ETME_COUNT");
 			LATE_COUNT = rs.getString("LATE_COUNT");
+			st3.setString(1, ter);
+			st3.setString(2, alp);
+			rs3 = st3.executeQuery();
+			ArrayList<String> PowerInfo = new ArrayList<String>();
+			if (rs3.next()) {
+				rs3.absolute(1);
+				PowerInfo.add(rs3.getString("power"));
+				PowerInfo.add(rs3.getString("powerSched"));
+			}
+			st2.setString(1, RegionalType);
+			st2.setString(2, ter);
+			st2.setString(3, alp);
+			rs2 = st2.executeQuery();
+			ArrayList<String> DriverInfo = new ArrayList<String>();
+			if (rs2.next()) {
+				rs2.absolute(1);
+				DriverInfo.add(rs2.getString("bidDrivers"));
+				DriverInfo.add(rs2.getString("bidDriversSched"));
+				DriverInfo.add(rs2.getString("xbDrivers"));
+				DriverInfo.add(rs2.getString("xbDriversSched"));
+			}
 			ArrayList<String> line = new ArrayList<String>();
+		
 			line.add(Terminal);
 			line.add(YRC_OTR);
+			line.add(YRC_OTRSCHED);
 			line.add(RAIL_LOADS);
+			line.add(RAIL_LOADSCHED);
 			line.add(PT_LOADS);
+			line.add(PT_LOADSCHED);
+			line.addAll(DriverInfo);
+			line.addAll(PowerInfo);
 			line.add(ETME_COUNT);
 			line.add(LATE_COUNT);
 			line.removeAll(Collections.singleton("0"));
 			ExpectedRoutePlanList.add(line);
 		}
+
 		DataConnection.CloseDB(cn, st, rs);
+		DataConnection.CloseDB(cn2, st2, rs2);
+		DataConnection.CloseDB(cn2, st3, rs3);
 		return ExpectedRoutePlanList;
 
 	}
 
 	public static LinkedHashSet<ArrayList<String>> GetLinehaulForm() throws SQLException {
-		//TerminalType = TerminalType.toUpperCase();
+		// TerminalType = TerminalType.toUpperCase();
 		Connection cn = DataConnection.getConnection();
 		PreparedStatement st = cn.prepareStatement(Query.queryLinehualResouce);
-		//st.setString(1, TerminalType);
+		// st.setString(1, TerminalType);
 		ResultSet rs = st.executeQuery();
 		String INDEX;
 		String Terminal;
@@ -141,11 +186,11 @@ public class CommonData {
 		String STME;
 
 		LinkedHashSet<ArrayList<String>> ExpectedLinehaulList = new LinkedHashSet<ArrayList<String>>();
-		
+
 		while (rs.next()) {
-			INDEX=rs.getString("noid");
-			Terminal = rs.getString("TERMINAL") ; 
-			Alpha=rs.getString("ALPHA");
+			INDEX = rs.getString("noid");
+			Terminal = rs.getString("TERMINAL");
+			Alpha = rs.getString("ALPHA");
 			Intra = rs.getString("intraRegLoads");
 			Inter = rs.getString("interRegLoads");
 			InterPT = rs.getString("ptLoadsOnHand");
@@ -154,7 +199,7 @@ public class CommonData {
 			FromRail = rs.getString("fromRail");
 			InterRoadTime = rs.getString("timeInArvLtg");
 			Avl = rs.getString("powerTractors");
-			PowerPlusMinus=rs.getString("powerpm");
+			PowerPlusMinus = rs.getString("powerpm");
 			Idle = rs.getString("idleTractors");
 			DomicileIdle = rs.getString("idleDrivers");
 			DomicileAvlRst = rs.getString("domicileDrivers");
@@ -167,7 +212,7 @@ public class CommonData {
 			ETME = rs.getString("etmeCount");
 			ACEL = rs.getString("acelCount");
 			STME = rs.getString("stmeCount");
-			
+
 			ArrayList<String> line = new ArrayList<String>();
 			line.add(INDEX);
 			line.add(Terminal);

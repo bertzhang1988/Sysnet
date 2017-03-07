@@ -57,7 +57,7 @@ public class CheckInterRegionalReport extends SetupBase {
 		page.SystemSummaryButton.click();
 		wait1.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-bar")));
 		wait1.until(ExpectedConditions.visibilityOf(page.InterRegionalform));
-		if(page.isVisable(page.SystemSummaryButton))
+		if(page.isVisable(page.SystemSummaryButton)&& page.isVisable(page.Square))
 			page.Square.click();
 		// get time zone
 		defaultTimeZone = TimeZone.getDefault();
