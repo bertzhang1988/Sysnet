@@ -81,13 +81,18 @@ public class CommonData {
 		ResultSet rs = st.executeQuery();
 		String ter;
 		String alp;
+		String driverVariance;
 		String Terminal;
-		String YRC_OTR;
+		String YRC_OTR="0";
 		String YRC_OTRSCHED;
 		String RAIL_LOADS;
 		String RAIL_LOADSCHED;
 		String PT_LOADS;
 		String PT_LOADSCHED;
+		String BIDDRIVER = "0";
+		String BIDDRIVERSCHED;
+		String XTRADRIVER="0";
+		String XTRADRIVERSCHED;
 		String ETME_COUNT;
 		String LATE_COUNT;
 		LinkedHashSet<ArrayList<String>> ExpectedRoutePlanList = new LinkedHashSet<ArrayList<String>>();
@@ -109,6 +114,7 @@ public class CommonData {
 			PT_LOADSCHED = rs.getString("ptLoadsSched");
 			ETME_COUNT = rs.getString("ETME_COUNT");
 			LATE_COUNT = rs.getString("LATE_COUNT");
+
 			st3.setString(1, ter);
 			st3.setString(2, alp);
 			rs3 = st3.executeQuery();
@@ -125,14 +131,20 @@ public class CommonData {
 			ArrayList<String> DriverInfo = new ArrayList<String>();
 			if (rs2.next()) {
 				rs2.absolute(1);
-				DriverInfo.add(rs2.getString("bidDrivers"));
-				DriverInfo.add(rs2.getString("bidDriversSched"));
-				DriverInfo.add(rs2.getString("xbDrivers"));
-				DriverInfo.add(rs2.getString("xbDriversSched"));
+				BIDDRIVER = rs2.getString("bidDrivers");
+				BIDDRIVERSCHED = rs2.getString("bidDriversSched");
+				XTRADRIVER = rs2.getString("xbDrivers");
+				XTRADRIVERSCHED = rs2.getString("xbDriversSched");
+				DriverInfo.add(BIDDRIVER);
+				DriverInfo.add(BIDDRIVERSCHED);
+				DriverInfo.add(XTRADRIVER);
+				DriverInfo.add(XTRADRIVERSCHED);
 			}
+			driverVariance=Function.RemoveTrailingZero(Double.parseDouble(YRC_OTR)-Double.parseDouble(BIDDRIVER)-Double.parseDouble(XTRADRIVER));
 			ArrayList<String> line = new ArrayList<String>();
-		
+
 			line.add(Terminal);
+			line.add(driverVariance);
 			line.add(YRC_OTR);
 			line.add(YRC_OTRSCHED);
 			line.add(RAIL_LOADS);

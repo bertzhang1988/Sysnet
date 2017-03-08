@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -213,4 +214,10 @@ public class Function {
 		}
 
 	}
+
+	public static String RemoveTrailingZero(double decimal) {
+		DecimalFormat de = new DecimalFormat("0.#");
+		return de.format(decimal);
+	}
+
 }
