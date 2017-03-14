@@ -1,4 +1,4 @@
-package Utility;
+package Utility.SetUpBase;
 
 import java.awt.AWTException;
 import java.io.File;
@@ -15,16 +15,18 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 
+import Utility.ConfigRd;
+import Utility.Function;
+
 public class SetupBrowserAndReport {
 
 	protected WebDriver driver;
 	protected FileWriter fw;
 	protected String Nl;
-	
+
 	@BeforeClass
 	@Parameters({ "browser" })
-	public void SetUp(@Optional("chrome") String browser)
-			throws AWTException, InterruptedException, IOException, SQLException {
+	public void SetUp(@Optional("chrome") String browser) throws AWTException, InterruptedException, SQLException {
 		ConfigRd Conf = new ConfigRd();
 
 		if (browser.equalsIgnoreCase("chrome")) {
@@ -52,12 +54,13 @@ public class SetupBrowserAndReport {
 
 	@AfterClass
 	public void CloseBrowser() {
-		try {
-			fw.close();
-		} catch (IOException e) {
+		if (fw != null)
+			try {
+				fw.close();
+			} catch (IOException e) {
 
-			e.printStackTrace();
-		}
+				throw new RuntimeException("Fail to close file writter");
+			}
 		driver.close();
 	}
 

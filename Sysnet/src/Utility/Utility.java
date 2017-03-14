@@ -10,7 +10,7 @@ import org.openqa.selenium.WebDriver;
 
 public class Utility {
 
-	public static void takescreenshot(WebDriver driver, String shotname) {
+	public static String takescreenshot(WebDriver driver, String shotname) {
 
 		try {
 			TakesScreenshot scrShot = (TakesScreenshot) driver;
@@ -23,14 +23,20 @@ public class Utility {
 
 			String CDate = Function.GetTimeValue(TimeZone.getDefault().getID());
 
-			File DestFile = new File("./SysnetScreenshot/" + shotname + "/ " + CDate + ".png");
+			File Defolder = new File("./SysnetScreenshot/" + CDate);
+			Defolder.mkdir();
+			String DestiFilePath = "./SysnetScreenshot/" + CDate + "/ " + shotname + ".png";
+			File DestFile = new File(DestiFilePath);
 
 			// Copy file at destination
 
 			FileUtils.copyFile(SrcFile, DestFile);
-
+			return DestiFilePath;
 		} catch (Exception e) {
 			e.printStackTrace();
+			return e.getMessage();
 		}
+
 	}
+
 }

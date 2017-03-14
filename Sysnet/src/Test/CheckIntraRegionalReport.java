@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 
 import Data.CommonData;
 import Data.DataDAO;
-import Utility.SetupBrowserAndReport;
+import Utility.SetUpBase.SetupBrowserAndReport;
 import page.SysnetPage;
 
 public class CheckIntraRegionalReport extends SetupBrowserAndReport {

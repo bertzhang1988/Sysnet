@@ -15,8 +15,8 @@ import org.testng.asserts.SoftAssert;
 
 import Data.CommonData;
 import Data.DataDAO;
+import Utility.SetUpBase.SetupBrowserAndReport;
 import page.SysnetPage;
-import Utility.SetupBrowserAndReport;
 
 public class CheckRailReport extends SetupBrowserAndReport {
 

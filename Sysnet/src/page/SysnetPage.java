@@ -29,13 +29,13 @@ public class SysnetPage {
 	@FindBy(how = How.XPATH, using = ".//div[@id='mapMenuBar']/span/i")
 	public WebElement Square;
 
-	@FindBy(how = How.PARTIAL_LINK_TEXT, using = "System\nSummary")
+	@FindBy(how = How.PARTIAL_LINK_TEXT, using = "System Summary")
 	public WebElement SystemSummaryButton;
 
 	@FindBy(how = How.PARTIAL_LINK_TEXT, using = "Route Plan")
 	public WebElement RoutePlanButton;
 
-	@FindBy(how = How.PARTIAL_LINK_TEXT, using = " Linehaul\nResources")
+	@FindBy(how = How.PARTIAL_LINK_TEXT, using = "Linehaul Resources")
 	public WebElement LinehaulResourcesButton;
 
 	/* SystemSummary */

@@ -29,7 +29,7 @@ import Data.CommonData;
 import Data.DataDAO;
 import Utility.ConfigRd;
 import Utility.Function;
-import Utility.SetupBase;
+import Utility.SetUpBase.SetupBase;
 import page.SysnetPage;
 
 public class CheckInterRegionalReport extends SetupBase {

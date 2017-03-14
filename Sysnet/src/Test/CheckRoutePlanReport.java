@@ -7,8 +7,8 @@ import com.gargoylesoftware.htmlunit.Page;
 
 import Data.CommonData;
 import Utility.Function;
-import Utility.SetupBase;
-import Utility.SetupBrowserAndReport;
+import Utility.SetUpBase.SetupBase;
+import Utility.SetUpBase.SetupBrowserAndReport;
 import page.SysnetPage;
 
 import org.testng.annotations.AfterMethod;

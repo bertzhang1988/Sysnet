@@ -13,7 +13,7 @@ import org.testng.annotations.Test;
 
 import Data.CommonData;
 import Utility.Function;
-import Utility.SetupBrowserAndReport;
+import Utility.SetUpBase.SetupBrowserAndReport;
 import page.SysnetPage;
 
 public class CheckLinehaulResourcesReport extends SetupBrowserAndReport {
