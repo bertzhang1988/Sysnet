@@ -21,7 +21,7 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.AfterSuite;
-
+/*setup with extent report*/
 public class SetupBrowserAndExtentReport {
 
 	protected WebDriver driver;

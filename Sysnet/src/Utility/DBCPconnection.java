@@ -7,6 +7,7 @@ import java.sql.Statement;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 
+/* create connection by using connection pool*/
 public class DBCPconnection {
 	static BasicDataSource ds = null;
 	static {

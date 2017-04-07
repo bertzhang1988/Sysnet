@@ -4,7 +4,9 @@
 	<groupId>sqa.SeleniumTest</groupId>
 	<artifactId>Sysnet</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-
+	<properties>
+		<suiteXmlPath>xmlFolder/testng.xml</suiteXmlPath>
+	</properties>
 	<repositories>
 		<repository>
 			<id>jcenter</id>
@@ -14,6 +16,12 @@
 	</repositories>
 
 	<dependencies>
+		<!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
+		<!-- <dependency> -->
+		<!-- <groupId>com.google.guava</groupId> -->
+		<!-- <artifactId>guava</artifactId> -->
+		<!-- <version>21.0</version> -->
+		<!-- </dependency> -->
 		<dependency>
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
@@ -112,8 +120,7 @@
 				<inherited>true</inherited>
 				<configuration>
 					<suiteXmlFiles>
-
-						<suiteXmlFile>testng2.xml</suiteXmlFile>
+						<suiteXmlFile>${suiteXmlPath}</suiteXmlFile>
 					</suiteXmlFiles>
 					<properties>
 						<property>

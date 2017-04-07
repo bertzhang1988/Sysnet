@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="sysnet" verbose="2" thread-count="1"    parallel="none" >
+<parameter name="browser" value="chrome"/>
+  <test name="Test2">
+    <classes>
+      <class name="Test.CheckInterRegionalReport"/>
+      <class name="Test.CheckIntraRegionalReport"/>
+      <class name="Test.CheckLinehaulResourcesReport"/>
+      <class name="Test.CheckRailReport"/>
+      <class name="Test.CheckRoutePlanReport"/>
+    </classes>
+  </test> <!-- Test -->
+</suite> <!-- Suite -->

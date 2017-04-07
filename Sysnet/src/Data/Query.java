@@ -73,7 +73,7 @@ public class Query {
 
 			+ "   , tstat.TIME_IN_ARV_LTG as timeInArvLtg , tstat.POWER_TRACTORS as powerTractors, (tstat.POWER_TRACTORS - ( tstat.INTER_REG_LOADS +  tstat.INTRA_REG_LOADS)) as powerpm"
 
-			+ "  , (select count(*) from SLH_TRACTOR trac   where trac.ASSIGNMENT_FLAG=0  and trac.TRACTOR_PREFIX<>'REIM' "
+			+ "  , (select count(*) from SLH_TRACTOR trac   where trac.ASSIGNMENT_FLAG=0  and trac.TRACTOR_PREFIX<>'REIM' and trac.OUT_OF_SERVICE='N' "
 			+ "   and (trac.ACTIVITY_TIME_DT<=(select c1.CURRENT_TIME_DT-(7*60/(24*60)) from SLH_CONTROL c1 where c1.TABLE_SET=tstat.TABLE_SET) "
 			+ "   and trm.TERMINAL_TYPE=0 "
 			+ "   or trac.ACTIVITY_TIME_DT<=(select c2.CURRENT_TIME_DT-(17*60/(24*60)) from SLH_CONTROL c2 where c2.TABLE_SET=tstat.TABLE_SET) "

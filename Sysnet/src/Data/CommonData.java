@@ -75,7 +75,7 @@ public class CommonData {
 	public static LinkedHashSet<ArrayList<String>> GetRoutePlanForm(String RegionalType) throws SQLException {
 		RegionalType = RegionalType.toUpperCase();
 		Connection cn = DataConnection.getConnection();
-		Connection cn2 = DataConnection.getDevConnection();
+		Connection cn2 = DataConnection.getConnection();
 		PreparedStatement st = cn.prepareStatement(Query.queryRoutePlan);
 		st.setString(1, RegionalType);
 		ResultSet rs = st.executeQuery();

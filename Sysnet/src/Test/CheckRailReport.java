@@ -9,24 +9,29 @@ import java.util.Set;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.ITestResult;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import Data.CommonData;
 import Data.DataDAO;
-import Utility.SetUpBase.SetupBrowserAndReport;
+import Utility.SetUpBase.SetupBrowserAndTextReport;
 import page.SysnetPage;
 
-public class CheckRailReport extends SetupBrowserAndReport {
+/*validate time of Rail page and schedule */
+public class CheckRailReport extends SetupBrowserAndTextReport {
 
 	private SysnetPage Page;
 	private String MainWindowHandler;
 	private WebDriverWait wait1;
+	private DataDAO DA;
 
 	@BeforeClass
 	public void Setup() {
-
+		DA = new DataDAO();
+		// navigate to system summary page
 		Page = new SysnetPage(driver);
 		if (!Page.isVisable(Page.SystemSummaryButton))
 			Page.Square.click();
@@ -35,9 +40,9 @@ public class CheckRailReport extends SetupBrowserAndReport {
 		Page.SystemSummaryButton.click();
 		wait1.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-bar")));
 		wait1.until(ExpectedConditions.visibilityOf(Page.Railform));
-		if (Page.isVisable(Page.SystemSummaryButton)&& Page.isVisable(Page.Square))
+		if (Page.isVisable(Page.SystemSummaryButton) && Page.isVisable(Page.Square))
 			Page.Square.click();
-		// get main page handler
+		// get system summary page handler
 		MainWindowHandler = driver.getWindowHandle();
 
 	}
@@ -59,7 +64,7 @@ public class CheckRailReport extends SetupBrowserAndReport {
 		sa.assertAll();
 	}
 
-	@Test(priority = 2)
+	@Test(priority = 2, description = "check schedule")
 	public void VerifySchedulesForRail2() throws SQLException, IOException {
 
 		fw.write(Nl + "empty rail schedule: " + Nl);
@@ -84,10 +89,10 @@ public class CheckRailReport extends SetupBrowserAndReport {
 		}
 	}
 
-	@Test(priority = 3)
+	@Test(priority = 3, description = "validate time field of total empty rail")
 	public void RailEmptyForm(Method m) throws IOException, SQLException {
-
-		Page.TotalEmptyRail.click();
+		// navigate to total empty rail page
+		Page.TotalEmptyRail.findElement(By.xpath("following-sibling::td")).click();
 		wait1.until(ExpectedConditions.numberOfWindowsToBe(2));
 		Set<String> WindowHandles = driver.getWindowHandles();
 		for (String windowHandle : WindowHandles) {
@@ -97,15 +102,17 @@ public class CheckRailReport extends SetupBrowserAndReport {
 		}
 		wait1.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-bar")));
 		wait1.until(ExpectedConditions.visibilityOf(Page.TotalEmptyRailForm));
+		// get time value from screen
 		LinkedHashSet<ArrayList<String>> TrailerGRID = Page.GetTrailerReportTime(Page.TotalEmptyRailForm);
+		// validate time value and write result
 		System.out.println("\n Total Empty Rail Form " + TrailerGRID.size());
 		fw.write(Nl + " Total Empty Rail Form " + TrailerGRID.size() + Nl);
 		int i = 0;
 		int j = 0;
-		DataDAO DA = new DataDAO();
+		// get expected time value
 		ArrayList<ArrayList<String>> ExpectedTrailerInforReport = new ArrayList<ArrayList<String>>(
 				DA.GetTrailerInforReport(TrailerGRID));
-
+		// do comparison and write report
 		for (ArrayList<String> trailer : TrailerGRID) {
 			String SCAC = trailer.get(0);
 			String TrailerNB = trailer.get(1);
@@ -144,20 +151,19 @@ public class CheckRailReport extends SetupBrowserAndReport {
 				}
 			}
 		}
-
+		// write summary of report
 		System.out.println("\n" + m.getName() + " form totally " + TrailerGRID.size() + "  mismatch " + i + "\n");
 		fw.write(Nl + m.getName() + " form totally " + TrailerGRID.size() + "  mismatch " + i + Nl);
 
-		// get back to
+		// get back to system summary page
 		driver.close();
-
 		driver.switchTo().window(MainWindowHandler);
 	}
 
-	@Test(priority = 4)
+	@Test(priority = 4, description = "validate time field of total loaded rail")
 	public void RailLoadedForm(Method m) throws IOException, SQLException {
-
-		Page.TotalLoadedRail.click();
+		// navigate to total loaded rail page
+		Page.TotalLoadedRail.findElement(By.xpath("following-sibling::td")).click();
 		wait1.until(ExpectedConditions.numberOfWindowsToBe(2));
 		Set<String> WindowHandles = driver.getWindowHandles();
 		for (String windowHandle : WindowHandles) {
@@ -167,15 +173,17 @@ public class CheckRailReport extends SetupBrowserAndReport {
 		}
 		wait1.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-bar")));
 		wait1.until(ExpectedConditions.visibilityOf(Page.TotalLoadedRailForm));
+		// get time value from screen
 		LinkedHashSet<ArrayList<String>> TrailerGRID = Page.GetTrailerReportTime(Page.TotalLoadedRailForm);
+		// write header of report
 		System.out.println("\n Total Loaded Rail Form " + TrailerGRID.size());
 		fw.write(Nl + " Total Loaded Rail Form " + TrailerGRID.size() + Nl);
 		int i = 0;
 		int j = 0;
-		DataDAO DA = new DataDAO();
+		// get expected result of time stamp
 		ArrayList<ArrayList<String>> ExpectedTrailerInforReport = new ArrayList<ArrayList<String>>(
 				DA.GetTrailerInforReport(TrailerGRID));
-
+		// verify result
 		for (ArrayList<String> trailer : TrailerGRID) {
 			String SCAC = trailer.get(0);
 			String TrailerNB = trailer.get(1);
@@ -195,6 +203,7 @@ public class CheckRailReport extends SetupBrowserAndReport {
 			boolean FlagETA = ExpectedETA.equals(ActualETA);
 			boolean FlagTTMS = ExpectedTTMS.equals(ActualTTMS);
 			boolean FlagSDT = ExpectedSDT.equals(ActualSDT);
+			// write report
 			if (!(FlagLst && FlagETA && FlagTTMS && FlagSDT)) {
 				++i;
 				System.out.println("\n" + j + " Time is wrong for trailer " + SCAC + "-" + TrailerNB
@@ -222,14 +231,26 @@ public class CheckRailReport extends SetupBrowserAndReport {
 
 			}
 		}
-
+		// write summary of report
 		System.out.println("\n" + m.getName() + " form totally " + TrailerGRID.size() + "  mismatch " + i + "\n");
 		fw.write(Nl + m.getName() + " form totally " + TrailerGRID.size() + "  mismatch " + i + Nl);
 
-		// get back to
+		// get back to system summary screen
 		driver.close();
-
 		driver.switchTo().window(MainWindowHandler);
+	}
+
+	@AfterMethod(groups = { "check time" })
+	public void CheckFailure(ITestResult result) {
+		/*
+		 * if the test failure during time checking, navigate back to system
+		 * summary page
+		 */
+		if (result.getStatus() == ITestResult.FAILURE) {
+			if (!driver.getWindowHandle().equals(MainWindowHandler))
+				driver.close();
+			driver.switchTo().window(MainWindowHandler);
+		}
 	}
 
 }

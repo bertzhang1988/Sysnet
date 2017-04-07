@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Cookie;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestResult;
@@ -21,7 +22,7 @@ import Utility.Function;
 import Utility.Utility;
 import Utility.SetUpBase.SetupBrowserAndExtentReport;
 import page.SysnetPage;
-
+import java.util.Set;
 public class CheckLinehaulResourcesReport2 extends SetupBrowserAndExtentReport {
 
 	private SysnetPage page;
@@ -40,6 +41,11 @@ public class CheckLinehaulResourcesReport2 extends SetupBrowserAndExtentReport {
 		if (page.isVisable(page.LinehaulResourcesButton) && page.isVisable(page.Square))
 			page.Square.click();
 		testlog.log(LogStatus.INFO, "open linehual resourse page");
+		  Set<Cookie> totalCookies = driver.manage().getCookies();
+		  System.out.println("Total Number Of cookies : " +totalCookies.size());
+		  for (Cookie currentCookie : totalCookies) {
+		      System.out.println(String.format("%s -> %s -> %s -> %s", "Domain Name : "+currentCookie.getDomain(), "Cookie Name : "+currentCookie.getName(), "Cookie Value : "+currentCookie.getValue(), "Cookie Expiry : "+currentCookie.getExpiry()));
+		  }  
 	}
 
 	@Test

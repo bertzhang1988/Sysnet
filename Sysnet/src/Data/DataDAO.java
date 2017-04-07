@@ -13,8 +13,7 @@ import java.util.TimeZone;
 
 import Utility.DataConnection;
 import Utility.Function;
-import page.Trailer;
-
+/*get data through object method*/
 public class DataDAO {
 
 	public Trailer GetTrailer(String SCAC, String TrailerNB) throws SQLException {
@@ -34,10 +33,10 @@ public class DataDAO {
 		String LastReportTerminal = rs.getString("LAST_REPORTED_TRM");
 		String NEXT_TERMINAL_1 = rs.getString("NEXT_TERMINAL_1");
 		Date LAST_REPORTED_TIME_DT = rs.getTimestamp("LAST_REPORTED_TIME_DT");
-		Date NEXT_TTMS_1_DT = rs.getTimestamp("NEXT_TTMS_1_DT");
+		Date CURRENT_TTMS_DT = rs.getTimestamp("CURRENT_TTMS_DT");
 		Date IN_OUT_TIME_DT = rs.getTimestamp("IN_OUT_TIME_DT");
 		String LstReportTime = Function.getLocalTimeReport(LastReportTerminal, LAST_REPORTED_TIME_DT, conn2);
-		String TTMS = Function.getLocalTimeReport(LastReportTerminal, NEXT_TTMS_1_DT, conn2);
+		String TTMS = Function.getLocalTimeReport(LastReportTerminal, CURRENT_TTMS_DT, conn2);
 		String ETA = Function.getLocalTimeReport(NEXT_TERMINAL_1, IN_OUT_TIME_DT, conn2);
 		trailer.setSCAC(SCAC);
 		trailer.setTrailerNb(TrailerNB);
@@ -53,6 +52,7 @@ public class DataDAO {
 
 	public LinkedHashSet<ArrayList<String>> GetTrailerInforReport(LinkedHashSet<ArrayList<String>> TrailerReportList)
 			throws SQLException {
+		
 		Connection cn = DataConnection.getConnection();
 		Connection conn2 = DataConnection.getConnection();
 		String query3 = "select * from  SLH_TRAILER  where TRAILER_NUMBER=? and TRAILER_PREFIX=?";
@@ -73,7 +73,7 @@ public class DataDAO {
 			String LastReportTerminal = rs.getString("LAST_REPORTED_TRM");
 			String NEXT_TERMINAL_1 = rs.getString("NEXT_TERMINAL_1");
 			Date LAST_REPORTED_TIME_DT = rs.getTimestamp("LAST_REPORTED_TIME_DT");
-			Date NEXT_TTMS_1_DT = rs.getTimestamp("NEXT_TTMS_1_DT");
+			Date CURRENT_TTMS_DT = rs.getTimestamp("CURRENT_TTMS_DT");
 			Date IN_OUT_TIME_DT = rs.getTimestamp("IN_OUT_TIME_DT");
 			String SCHED_DPRTR_FLAG = rs.getString("SCHED_DPRTR_FLAG");
 			// System.out.println(LAST_REPORTED_TIME_DT + SCAC + TrailerNB);
@@ -88,9 +88,9 @@ public class DataDAO {
 			}
 			String TTMS;
 			try {
-				TTMS = Function.getLocalTimeReport(LastReportTerminal, NEXT_TTMS_1_DT, conn2);
+				TTMS = Function.getLocalTimeReport(LastReportTerminal, CURRENT_TTMS_DT, conn2);
 			} catch (ArrayIndexOutOfBoundsException ae) {
-				System.out.println(SCAC + "-" + TrailerNB + " NEXT_TTMS_1_DT: " + NEXT_TTMS_1_DT
+				System.out.println(SCAC + "-" + TrailerNB + " CURRENT_TTMS_DT: " + CURRENT_TTMS_DT
 						+ " is not in range of 2016-2026, can not judge DST");
 				TTMS = null;
 			}

@@ -38,6 +38,7 @@ public class ApiTrial {
 		// aut).when().get(s4);
 		// Response res4 = given().auth(). preemptive().basic("X-Authorization", aut).when().get(s4);
 		Response res5 =given().auth().form("X-Authorization", aut).when().get(s4);
+	//	given().auth().basic(username, password).when().get("/secured").then().statusCode(200);
 		 //System.out.println(res.asString());
 	}
 

@@ -203,18 +203,16 @@ public class Function {
 		return DISPLAY_TIME;
 	}
 
-	public static Collection GetDiffBetwForm(Collection set, Collection subset) {
-		if (set.containsAll(subset)) {
-			Collection set2 = new LinkedHashSet<ArrayList<String>>();
+	
+	public static LinkedHashSet<ArrayList<String>> GetDiffBetwForm(LinkedHashSet<ArrayList<String>> set,
+			LinkedHashSet<ArrayList<String>> subset) {
+			LinkedHashSet<ArrayList<String>> set2 = new LinkedHashSet<ArrayList<String>>();
 			set2.addAll(set);
 			set2.removeAll(subset);
-			return set2;
-		} else {
-			return null;
-		}
-
+			return set2;	
 	}
 
+	
 	public static String RemoveTrailingZero(double decimal) {
 		DecimalFormat de = new DecimalFormat("0.#");
 		return de.format(decimal);
