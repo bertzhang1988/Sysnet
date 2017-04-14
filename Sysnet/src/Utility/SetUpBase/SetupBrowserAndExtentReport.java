@@ -8,7 +8,10 @@ import Utility.Function;
 
 import org.testng.annotations.BeforeClass;
 
+import java.awt.AWTException;
 import java.io.File;
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.TimeZone;
 
 import org.openqa.selenium.WebDriver;
@@ -29,9 +32,10 @@ public class SetupBrowserAndExtentReport {
 	protected ExtentTest testlog;
 
 	@BeforeClass
-	@Parameters({ "browser" })
-	public void SetupBrowser(@Optional("chrome") String browser) {
-		ConfigRd Conf = new ConfigRd();
+	@Parameters({ "browser", "env" })
+	public void SetUp(@Optional("chrome") String browser, @Optional("sit") String environment)
+			throws AWTException, InterruptedException, IOException, SQLException {
+		ConfigRd Conf = new ConfigRd(environment);
 
 		if (browser.equalsIgnoreCase("chrome")) {
 			System.setProperty("webdriver.chrome.driver", Conf.GetChromePath());

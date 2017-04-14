@@ -9,7 +9,7 @@ import java.sql.Statement;
 public final class DataConnection {
 
 	public static Connection getConnection() {
-		ConfigRd conf = new ConfigRd();
+		ConfigRd conf = new ConfigRd("sit");
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 		} catch (ClassNotFoundException e) {

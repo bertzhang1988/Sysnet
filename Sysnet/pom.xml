@@ -119,6 +119,7 @@
 				<version>2.19.1</version>
 				<inherited>true</inherited>
 				<configuration>
+
 					<suiteXmlFiles>
 						<suiteXmlFile>${suiteXmlPath}</suiteXmlFile>
 					</suiteXmlFiles>

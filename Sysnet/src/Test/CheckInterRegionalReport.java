@@ -49,10 +49,8 @@ public class CheckInterRegionalReport extends SetupBase {
 	@BeforeClass
 	public void SetUp() throws AWTException, InterruptedException, IOException, SQLException {
 		// read the property file
-		ConfigRd Conf = new ConfigRd();
 		DA = new DataDAO();
 		page = new SysnetPage(driver);
-		driver.get(Conf.GetSysnetURL());
 		wait1 = new WebDriverWait(driver, 150);
 		driver.manage().window().maximize();
 		// check all ready to click the System summary button

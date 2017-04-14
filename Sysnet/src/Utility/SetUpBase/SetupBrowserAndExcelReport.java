@@ -22,10 +22,10 @@ public class SetupBrowserAndExcelReport {
 	protected WebDriver driver;
 	
 	@BeforeClass
-	@Parameters({ "browser" })
-	public void SetUp(@Optional("chrome") String browser)
+	@Parameters({ "browser", "env" })
+	public void SetUp(@Optional("chrome") String browser, @Optional("sit") String environment)
 			throws AWTException, InterruptedException, IOException, SQLException {
-		ConfigRd Conf = new ConfigRd();
+		ConfigRd Conf = new ConfigRd(environment);
 
 		if (browser.equalsIgnoreCase("chrome")) {
 			System.setProperty("webdriver.chrome.driver", Conf.GetChromePath());

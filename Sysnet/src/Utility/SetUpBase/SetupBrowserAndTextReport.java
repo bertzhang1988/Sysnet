@@ -17,6 +17,7 @@ import org.testng.annotations.Parameters;
 
 import Utility.ConfigRd;
 import Utility.Function;
+
 /*set Browser and text report*/
 public class SetupBrowserAndTextReport {
 
@@ -25,9 +26,10 @@ public class SetupBrowserAndTextReport {
 	protected String Nl;
 
 	@BeforeClass
-	@Parameters({ "browser" })
-	public void SetUp(@Optional("chrome") String browser) throws AWTException, InterruptedException, SQLException {
-		ConfigRd Conf = new ConfigRd();
+	@Parameters({ "browser", "env" })
+	public void SetUp(@Optional("chrome") String browser, @Optional("sit") String environment)
+			throws AWTException, InterruptedException, IOException, SQLException {
+		ConfigRd Conf = new ConfigRd(environment);
 
 		if (browser.equalsIgnoreCase("chrome")) {
 			System.setProperty("webdriver.chrome.driver", Conf.GetChromePath());

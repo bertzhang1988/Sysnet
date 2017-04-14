@@ -22,8 +22,8 @@ public class DBCPconnection {
 
 	public static Connection GetDevConnection() {
 
-		ConfigRd conf = new ConfigRd();
-		ds.setUrl(conf.GetDevDatabase());
+		ConfigRd conf = new ConfigRd("sit");
+		ds.setUrl(conf.GetDatabase());
 		ds.setUsername(conf.GetDbUserName());
 		ds.setPassword(conf.GetDbPassword());
 		ds.setInitialSize(1);
