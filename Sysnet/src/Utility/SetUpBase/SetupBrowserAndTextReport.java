@@ -1,46 +1,22 @@
 package Utility.SetUpBase;
 
-import java.awt.AWTException;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.TimeZone;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Optional;
-import org.testng.annotations.Parameters;
-
-import Utility.ConfigRd;
 import Utility.Function;
 
 /*set Browser and text report*/
-public class SetupBrowserAndTextReport {
+public class SetupBrowserAndTextReport extends SetupBase {
 
-	protected WebDriver driver;
 	protected FileWriter fw;
 	protected String Nl;
 
 	@BeforeClass
-	@Parameters({ "browser", "env" })
-	public void SetUp(@Optional("chrome") String browser, @Optional("sit") String environment)
-			throws AWTException, InterruptedException, IOException, SQLException {
-		ConfigRd Conf = new ConfigRd(environment);
-
-		if (browser.equalsIgnoreCase("chrome")) {
-			System.setProperty("webdriver.chrome.driver", Conf.GetChromePath());
-			driver = new ChromeDriver();
-		} else if (browser.equalsIgnoreCase("ie")) {
-			System.setProperty("webdriver.ie.driver", Conf.GetIEPath());
-			driver = new InternetExplorerDriver();
-		}
-		driver.get(Conf.GetSysnetURL());
-		driver.manage().window().maximize();
-
+	public void SetUpTextReport() {
 		// create text file
 		String CDate = Function.GetTimeValue(TimeZone.getDefault().getID());
 		File file2 = new File("./Report/" + CDate);
@@ -55,7 +31,7 @@ public class SetupBrowserAndTextReport {
 	}
 
 	@AfterClass
-	public void CloseBrowser() {
+	public void CloseTextReport() {
 		if (fw != null)
 			try {
 				fw.close();
@@ -63,7 +39,6 @@ public class SetupBrowserAndTextReport {
 
 				throw new RuntimeException("Fail to close file writter");
 			}
-		driver.close();
 	}
 
 }

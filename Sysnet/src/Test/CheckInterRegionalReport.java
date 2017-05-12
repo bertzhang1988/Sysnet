@@ -29,13 +29,13 @@ import Data.CommonData;
 import Data.DataDAO;
 import Utility.ConfigRd;
 import Utility.Function;
-import Utility.SetUpBase.SetupBase;
+import Utility.SetUpBase.SetupBrowserAndExcelReport;
 import page.SysnetPage;
 
 /*
 check system summary inter-regional screen, only verify the time field
  */
-public class CheckInterRegionalReport extends SetupBase {
+public class CheckInterRegionalReport extends SetupBrowserAndExcelReport {
 
 	private SysnetPage page;
 	private TimeZone defaultTimeZone;

@@ -20,9 +20,9 @@ public class DBCPconnection {
 
 	}
 
-	public static Connection GetDevConnection() {
+	public static Connection GetConnection(String environment) {
 
-		ConfigRd conf = new ConfigRd("sit");
+		ConfigRd conf = new ConfigRd(environment);
 		ds.setUrl(conf.GetDatabase());
 		ds.setUsername(conf.GetDbUserName());
 		ds.setPassword(conf.GetDbPassword());
@@ -37,7 +37,7 @@ public class DBCPconnection {
 			e.printStackTrace();
 		}
 		try {
-			Con.createStatement().execute("alter session set current_schema=" + conf.GetDevUserSchema() + " ");
+			Con.createStatement().execute("alter session set current_schema=" + conf.GetUserSchema() + " ");
 		} catch (SQLException e) {
 
 			e.printStackTrace();

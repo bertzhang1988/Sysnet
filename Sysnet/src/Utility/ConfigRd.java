@@ -44,24 +44,24 @@ public class ConfigRd {
 
 			URL = pro.getProperty("SysnetSitURL");
 			DBurl = pro.getProperty("Sitdb");
-			DBuser = pro.getProperty("Situser");
-			DBpassword = pro.getProperty("Sitpassword");
+			DBuser = pro.getProperty("UserName");
+			DBpassword = pro.getProperty("Password");
 			DBschema = pro.getProperty("SitUser");
 
 		} else if (environment.equalsIgnoreCase("dev")) {
 
 			URL = pro.getProperty("SysnetDevURL");
 			DBurl = pro.getProperty("Devdb");
-			DBuser = pro.getProperty("Devuser");
-			DBpassword = pro.getProperty("Devpassword");
+			DBuser = pro.getProperty("UserName");
+			DBpassword = pro.getProperty("Password");
 			DBschema = pro.getProperty("DevUser");
 
 		} else if (environment.equalsIgnoreCase("qa")) {
 
 			URL = pro.getProperty("SysnetQaURL");
 			DBurl = pro.getProperty("Qadb");
-			DBuser = pro.getProperty("Qauser");
-			DBpassword = pro.getProperty("Qapassword");
+			DBuser = pro.getProperty("UserName");
+			DBpassword = pro.getProperty("Password");
 			DBschema = pro.getProperty("QaUser");
 		}
 	}
@@ -73,22 +73,6 @@ public class ConfigRd {
 
 	public String GetIEPath() {
 		String path = pro.getProperty("IEdriverPath");
-		return path;
-	}
-
-	/* set url */
-	public String GetSysnetSitURL() {
-		String path = pro.getProperty("SysnetSitURL");
-		return path;
-	}
-
-	public String GetSysnetDevURL() {
-		String path = pro.getProperty("SysnetDevURL");
-		return path;
-	}
-
-	public String GetSysnetQaURL() {
-		String path = pro.getProperty("SysnetQaURL");
 		return path;
 	}
 
@@ -116,38 +100,6 @@ public class ConfigRd {
 
 	public String GetSysnetURL() {
 		String path = URL;
-		return path;
-	}
-
-	/* set databse */
-	public String GetSitDatabase() {
-		String path = pro.getProperty("Sitdb");
-		return path;
-	}
-
-	public String GetQaDatabase() {
-		String path = pro.getProperty("Qadb");
-		return path;
-	}
-
-	public String GetDevDatabase() {
-		String path = pro.getProperty("Devdb");
-		return path;
-	}
-
-	/* set schema */
-	public String GetSitUserSchema() {
-		String path = pro.getProperty("SitUser");
-		return path;
-	}
-
-	public String GetDevUserSchema() {
-		String path = pro.getProperty("DevUser");
-		return path;
-	}
-
-	public String GetQaUserSchema() {
-		String path = pro.getProperty("QaUser");
 		return path;
 	}
 

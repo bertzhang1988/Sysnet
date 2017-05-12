@@ -16,7 +16,7 @@ Qadb=jdbc:oracle:thin:@yvmoradev08:1527:SYSPS
 
 UserName=uyr27b0
 
-Password=welcome_321
+Password=Spring17
 
 SitUser=SYSSTG1
 
