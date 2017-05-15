@@ -38,8 +38,7 @@ check system summary inter-regional screen, only verify the time field
 public class CheckInterRegionalReport extends SetupBrowserAndExcelReport {
 
 	private SysnetPage page;
-	private TimeZone defaultTimeZone;
-	private XSSFWorkbook workbook;
+	// private TimeZone defaultTimeZone;
 	private XSSFSheet sheet;
 	private int R;
 	private DataDAO DA;
@@ -70,7 +69,6 @@ public class CheckInterRegionalReport extends SetupBrowserAndExcelReport {
 		MainWindowHandler = driver.getWindowHandle();
 
 		// create excel sheet and title
-		workbook = new XSSFWorkbook();
 		sheet = workbook.createSheet(Function.GetDisplayTime().replace(":", "-"));
 		String[] TitleLine = { "Line", "Time is wrong for trailer", " CurrentTerminal", "LstReport time expected:",
 				"but found: ", "TTMS expected: ", " but found: ", " NextTerminal: ", " ETA expected: ", "but found: ",
@@ -453,29 +451,4 @@ public class CheckInterRegionalReport extends SetupBrowserAndExcelReport {
 		}
 	}
 
-	@AfterClass
-	public void Close() {
-		/*
-		 * greate report folder by using the current time as folder name, and
-		 * deliver report into it
-		 */
-		String CDate = Function.GetTimeValue(defaultTimeZone.getID());
-		File file2 = new File("./Report/" + CDate);
-		file2.mkdir();
-		File file = new File(file2, this.getClass().getName() + ".xlsx");
-		FileOutputStream outputStream = null;
-		try {
-			outputStream = new FileOutputStream(file);
-
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		try {
-			workbook.write(outputStream);
-			workbook.close();
-			outputStream.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
 }
