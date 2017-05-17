@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestResult;
@@ -27,9 +28,11 @@ public class CheckRailReport extends SetupBrowserAndTextReport {
 	private String MainWindowHandler;
 	private WebDriverWait wait1;
 	private DataDAO DA;
+	private JavascriptExecutor js;
 
 	@BeforeClass
 	public void Setup() {
+		js = (JavascriptExecutor) driver;
 		DA = new DataDAO();
 		// navigate to system summary page
 		Page = new SysnetPage(driver);
@@ -92,6 +95,8 @@ public class CheckRailReport extends SetupBrowserAndTextReport {
 	@Test(priority = 3, description = "validate time field of total empty rail")
 	public void RailEmptyForm(Method m) throws IOException, SQLException {
 		// navigate to total empty rail page
+		js.executeScript("arguments[0].scrollIntoView(true);",
+				Page.TotalEmptyRail.findElement(By.xpath("following-sibling::td")));
 		Page.TotalEmptyRail.findElement(By.xpath("following-sibling::td")).click();
 		wait1.until(ExpectedConditions.numberOfWindowsToBe(2));
 		Set<String> WindowHandles = driver.getWindowHandles();
@@ -163,6 +168,8 @@ public class CheckRailReport extends SetupBrowserAndTextReport {
 	@Test(priority = 4, description = "validate time field of total loaded rail")
 	public void RailLoadedForm(Method m) throws IOException, SQLException {
 		// navigate to total loaded rail page
+		js.executeScript("arguments[0].scrollIntoView(true);",
+				Page.TotalLoadedRail.findElement(By.xpath("following-sibling::td")));
 		Page.TotalLoadedRail.findElement(By.xpath("following-sibling::td")).click();
 		wait1.until(ExpectedConditions.numberOfWindowsToBe(2));
 		Set<String> WindowHandles = driver.getWindowHandles();
