@@ -83,6 +83,8 @@ public class CheckRailReport extends SetupBrowserAndTextReport {
 
 		fw.write(Nl + "loaded rail schedule: " + Nl);
 		// check load rail schedule
+		js.executeScript("arguments[0].scrollIntoView(true);",
+				Page.TotalLoadedRail.findElement(By.xpath("following-sibling::td")));
 		String ScheduleL = Page.TotalLoadedRail.findElement(By.xpath("following-sibling::td")).getText();
 		String ExpectedShedulel = CommonData.GetScheduleForLoadedRail();
 		if (ScheduleL.equals(ExpectedShedulel)) {

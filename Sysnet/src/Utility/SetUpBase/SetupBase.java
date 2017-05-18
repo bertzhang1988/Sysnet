@@ -20,7 +20,7 @@ public class SetupBase {
 
 	@BeforeClass
 	@Parameters({ "browser", "env" })
-	public void SetUpBrowser(@Optional("chrome") String browser, @Optional("sit") String environment)
+	public void SetUpBrowser(@Optional("chrome") String browser, @Optional("qa") String environment)
 			throws AWTException, InterruptedException, IOException, SQLException {
 		conf = new ConfigRd(environment);
 
